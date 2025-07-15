@@ -23,7 +23,7 @@ export default function AppHeader() {
         <Collapse isOpen={isOpen} navbar>
           <Nav className="ms-auto" navbar>
             <NavItem>
-              <NavLink href="#homepage">Home</NavLink>
+              <NavLink href="#home">Home</NavLink>
             </NavItem>
             <NavItem>
               <NavLink href="#about">About</NavLink>
