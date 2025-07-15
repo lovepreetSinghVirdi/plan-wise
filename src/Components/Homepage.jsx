@@ -1,14 +1,6 @@
-// index.js
-import { createRoot } from 'react-dom/client';
-import 'bootstrap/dist/css/bootstrap.min.css';
-import './HomePage.css';
-
-const container = document.getElementById('root');
-const root = createRoot(container);
-root.render(<HomePage />);
-
-// HomePage.js
-import React, { useState } from 'react';
+// src/Components/Homepage.jsx
+import React from 'react';
+import { NavLink as RouterNavLink } from 'react-router-dom';  // ← import this
 import {
   Container,
   Row,
@@ -20,35 +12,38 @@ import {
   Button
 } from 'reactstrap';
 
-const cards = [
-  { title: 'Rogers', text: 'This is the first card.' },
-  { title: 'Bell ', text: 'This is the second card.' },
-  { title: 'Card ', text: 'This is the third card.' },
-  { title: 'Dodo', text: 'This is the fourth card.' }
+const plans = [
+  { key: 'rogers', title: 'Rogers', text: 'This is the first card.' },
+  { key: 'bell',   title: 'Bell',   text: 'This is the second card.' },
+  { key: 'vmedia', title: 'Vmedia', text: 'This is the third card.' },
+  { key: 'teksavvy',   title: 'Teksavvy',   text: 'This is the fourth card.' },
 ];
 
-export default function HomePage() {
-  const [isOpen, setIsOpen] = useState(true);
-  const toggle = () => setIsOpen(!isOpen);
-
+export default function Homepage() {
   return (
-    <div className="app-container">
- 
-      <Container className="content-container mt-4">
-        <Row>
-          {cards.map((card, idx) => (
-            <Col md="6" className="mb-4" key={idx}>
-              <Card className="shadow-sm content-card">
-                <CardBody>
-                  <CardTitle tag="h5">{card.title}</CardTitle>
-                  <CardText>{card.text}</CardText>
-                  <Button color="primary">Learn More</Button>
-                </CardBody>
-              </Card>
-            </Col>
-          ))}
-        </Row>
-      </Container>
-    </div>
+    <Container className="py-4">
+      <Row className="g-4">
+        {plans.map(({ key, title, text }) => (
+          <Col sm={12} md={6} key={key}>
+            <Card className="h-100 shadow-sm">
+              <CardBody className="d-flex flex-column">
+                <CardTitle tag="h5">{title}</CardTitle>
+                <CardText className="flex-grow-1">{text}</CardText>
+                <div className="mt-3">
+                  {/* turn this button into a React‑Router link */}
+                  <Button
+                    color="dark"
+                    tag={RouterNavLink}
+                    to={`/${key}`}
+                  >
+                    Learn More
+                  </Button>
+                </div>
+              </CardBody>
+            </Card>
+          </Col>
+        ))}
+      </Row>
+    </Container>
   );
 }

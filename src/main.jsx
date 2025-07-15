@@ -1,12 +1,18 @@
-import { StrictMode } from 'react'
+import React from 'react';
 import { createRoot } from 'react-dom/client';
+import { BrowserRouter } from 'react-router-dom';
+import App from './App';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import './index.css';
 
-import App from './App.jsx'
+const container = document.getElementById('root');
 
-createRoot(document.getElementById('root')).render(
-  <StrictMode>
+// guard against HMR re‑runs
+if (!window.__root) {
+  window.__root = createRoot(container);
+}
+
+window.__root.render(
+  <BrowserRouter>
     <App />
-  </StrictMode>,
-)
+  </BrowserRouter>
+);

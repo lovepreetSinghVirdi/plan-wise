@@ -1,16 +1,23 @@
-import Homepage from './Components/Homepage';
-import './App.css'
+import React from 'react';
+import { Routes, Route } from 'react-router-dom';
+import ErrorBoundary from './Components/ErrorBoundary';
 import AppHeader from './Components/AppHeader';
+import Homepage from './Components/Homepage';
+import ProvideDetails from './Components/ProvideDetails';
 
-function App() {
-
+export default function App() {
   return (
     <>
       <AppHeader />
-      <Homepage />
 
+      <ErrorBoundary>
+        <main className="container my-4">
+          <Routes>
+            <Route path="/" element={<Homepage />} />
+            <Route path=":plan" element={<ProvideDetails />} />
+          </Routes>
+        </main>
+      </ErrorBoundary>
     </>
-  )
+  );
 }
-
-export default App
