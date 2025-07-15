@@ -16,14 +16,14 @@ export default function AppHeader() {
   const toggle = () => setIsOpen(!isOpen);
 
   return (
-    <Navbar light expand="md" className="app-navbar bg-light">
-      <Container fluid>
+    <Navbar dark color='dark' expand="md" className="app-navbar sticky-top">
+      <Container className='align-items-center' fluid>
         <NavbarBrand href="#">{appName}</NavbarBrand>
         <NavbarToggler onClick={toggle} />
         <Collapse isOpen={isOpen} navbar>
           <Nav className="ms-auto" navbar>
             <NavItem>
-              <NavLink href="#home">Home</NavLink>
+              <NavLink href="#homepage">Home</NavLink>
             </NavItem>
             <NavItem>
               <NavLink href="#about">About</NavLink>

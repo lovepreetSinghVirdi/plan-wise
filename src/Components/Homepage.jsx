@@ -42,7 +42,7 @@ export default function HomePage() {
                 <CardBody>
                   <CardTitle tag="h5">{card.title}</CardTitle>
                   <CardText>{card.text}</CardText>
-                  <Button color="primary">Learn More</Button>
+                  <Button color="dark">Learn More</Button>
                 </CardBody>
               </Card>
             </Col>
