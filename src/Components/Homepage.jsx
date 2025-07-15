@@ -21,10 +21,10 @@ import {
 } from 'reactstrap';
 
 const cards = [
-  { title: 'Card 1', text: 'This is the first card.' },
-  { title: 'Card 2', text: 'This is the second card.' },
-  { title: 'Card 3', text: 'This is the third card.' },
-  { title: 'Card 4', text: 'This is the fourth card.' }
+  { title: 'Rogers', text: 'This is the first card.' },
+  { title: 'Bell ', text: 'This is the second card.' },
+  { title: 'Card ', text: 'This is the third card.' },
+  { title: 'Dodo', text: 'This is the fourth card.' }
 ];
 
 export default function HomePage() {
