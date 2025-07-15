@@ -15,15 +15,9 @@ export default function AppHeader() {
   const toggle = () => setIsOpen(!isOpen);
 
   return (
-    <Navbar light expand="md" className="app-navbar bg-light">
-      {/* Make this container a flex‐box */}
-      <Container fluid className="d-flex align-items-center">
-        {/* Brand on the left */}
-        <NavbarBrand href="#home" className="fw-bold">
-          PlanWise
-        </NavbarBrand>
-
-        {/* Toggler (will disappear on md+) */}
+    <Navbar dark color='dark' expand="md" className="app-navbar sticky-top">
+      <Container className='align-items-center' fluid>
+        <NavbarBrand href="#">{appName}</NavbarBrand>
         <NavbarToggler onClick={toggle} />
 
         {/* Collapse becomes a flex item too */}
