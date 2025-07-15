@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import {
   Navbar,
   NavbarBrand,
@@ -13,6 +13,7 @@ import {
 export default function AppHeader() {
   const [isOpen, setIsOpen] = useState(false);
   const toggle = () => setIsOpen(!isOpen);
+  const appName = 'PlanWise'
 
   return (
     <Navbar dark color='dark' expand="md" className="app-navbar sticky-top">
