@@ -26,3 +26,8 @@
 .read-the-docs {
   color: #888;
 }
+/* Space all nav‐links out and bump up the font weight */
+.app-navbar .nav-link {
+  margin-left: 1rem;
+  font-weight: 500;
+}
