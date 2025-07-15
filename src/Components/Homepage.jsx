@@ -1,10 +1,15 @@
-import React from 'react';
+// index.js
+import { createRoot } from 'react-dom/client';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import './HomePage.css';
+
+const container = document.getElementById('root');
+const root = createRoot(container);
+root.render(<HomePage />);
+
+// HomePage.js
+import React, { useState } from 'react';
 import {
-  Navbar,
-  NavbarBrand,
-  Nav,
-  NavItem,
-  NavLink,
   Container,
   Row,
   Col,
@@ -15,51 +20,35 @@ import {
   Button
 } from 'reactstrap';
 
-const Page = () => {
-  // Example card data
-  const cards = [
-    { title: 'Card 1', text: 'This is the first card.' },
-    { title: 'Card 2', text: 'This is the second card.' },
-    { title: 'Card 3', text: 'This is the third card.' },
-    { title: 'Card 4', text: 'This is the fourth card.' }
-  ];
+const cards = [
+  { title: 'Card 1', text: 'This is the first card.' },
+  { title: 'Card 2', text: 'This is the second card.' },
+  { title: 'Card 3', text: 'This is the third card.' },
+  { title: 'Card 4', text: 'This is the fourth card.' }
+];
+
+export default function HomePage() {
+  const [isOpen, setIsOpen] = useState(true);
+  const toggle = () => setIsOpen(!isOpen);
 
   return (
-    <>
-      {/* Navbar */}
-      <Navbar color="light" light expand="md">
-        <NavbarBrand href="#">My App</NavbarBrand>
-        <Nav className="ml-auto" navbar>
-          <NavItem>
-            <NavLink href="#home">Home</NavLink>
-          </NavItem>
-          <NavItem>
-            <NavLink href="#about">About</NavLink>
-          </NavItem>
-          <NavItem>
-            <NavLink href="#contact">Contact</NavLink>
-          </NavItem>
-        </Nav>
-      </Navbar>
-
-      {/* Main content */}
-      <Container className="mt-4">
+    <div className="app-container">
+ 
+      <Container className="content-container mt-4">
         <Row>
           {cards.map((card, idx) => (
             <Col md="6" className="mb-4" key={idx}>
-              <Card>
+              <Card className="shadow-sm content-card">
                 <CardBody>
                   <CardTitle tag="h5">{card.title}</CardTitle>
                   <CardText>{card.text}</CardText>
-                  <Button>Learn More</Button>
+                  <Button color="primary">Learn More</Button>
                 </CardBody>
               </Card>
             </Col>
           ))}
         </Row>
       </Container>
-    </>
+    </div>
   );
-};
-
-export default Page;
+}
