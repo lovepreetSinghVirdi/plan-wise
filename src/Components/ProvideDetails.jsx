@@ -16,7 +16,8 @@ import {
 } from '@mui/material';
 
 export default function ProvideDetails() {
-  const { plan } = useParams();
+  // const { plan } = useParams();
+  const plan = '';
   const [planData, setPlanData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError]   = useState(false);
