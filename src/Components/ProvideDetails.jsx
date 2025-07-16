@@ -1,6 +1,6 @@
 // src/Components/ProvideDetails.jsx
 import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+// import { useParams } from 'react-router-dom';
 
 import {
   Box,
@@ -21,7 +21,7 @@ export default function ProvideDetails() {
   const plan = '';
   const [planData, setPlanData] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(false);
+  const [error] = useState(false);
 
   useEffect(() => {
     // mock for preview
@@ -42,9 +42,11 @@ export default function ProvideDetails() {
 
   if (loading) {
     return (
-      <Box sx={{ py: 5, textAlign: 'center' }}>
-        <CircularProgress />
-      </Box>
+      <Container maxWidth="lg" sx={{ mt: 4, minHeight: '100vh' }}>
+        <Grid container justifyContent='center' spacing={2}>
+          <CircularProgress />
+        </Grid>
+      </Container>
     );
   }
 

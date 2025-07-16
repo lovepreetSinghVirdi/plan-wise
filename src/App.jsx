@@ -20,11 +20,11 @@ import './App.css'
 const App = () => {
   return (
     <BrowserRouter>
-      {/* persist your header/nav across all pages */}
+
       <AppHeader />
 
       <Routes>
-        <Route index element={<HomePage />} />
+        <Route path='/' element={<HomePage />} />
         <Route path="rogers" element={<RogersPlans />} />
         <Route path="plan" element={<ProvideDetails />} />
         {/* <Route path="bell"     element={<BellPage />} />
