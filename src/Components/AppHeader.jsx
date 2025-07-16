@@ -35,12 +35,14 @@ export default function AppHeader() {
   const drawer = (
     <Box onClick={handleDrawerToggle} sx={{ textAlign: 'center' }}>
       {/* Logo in the drawer */}
-      <Box
-        component="img"
-        src={logo}
-        alt="PlanWise logo"
-        sx={{ height: 48, my: 2 }}
-      />
+      <Link to="/" style={{ display: 'inline-flex', textDecoration: 'none', alignItems: 'center' }}>
+        <Box
+          component="img"
+          src={logo}
+          alt="PlanWise logo"
+          sx={{ height: 40, mr: 2 }}
+        />
+      </Link>
       <Typography
         component={Link}
         to="/"
@@ -80,15 +82,14 @@ export default function AppHeader() {
           </IconButton>
 
           {/* Logo */}
-          <Box
-            component="img"
-            src={logo}
-            alt="PlanWise logo"
-            sx={{
-              height: 40,
-              mr: 2,
-            }}
-          />
+          <Link to="/" style={{ display: 'inline-flex', textDecoration: 'none', alignItems: 'center' }}>
+            <Box
+              component="img"
+              src={logo}
+              alt="PlanWise logo"
+              sx={{ height: 40, mr: 2 }}
+            />
+          </Link>
 
           {/* App name (optional if your logo contains text) */}
           <Typography
