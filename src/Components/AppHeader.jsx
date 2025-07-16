@@ -18,7 +18,7 @@ export default function AppHeader() {
 
   const navItems = [
     { label: 'Home', href: '#home' },
-    { label: 'Rogers', href: '#rogers' },
+    { label: 'Rogers', href: 'rogers' },
     { label: 'Bell', href: '#bell' },
     { label: 'Vmedia', href: '#vmedia' },
     { label: 'Dodo', href: '#dodo' },
