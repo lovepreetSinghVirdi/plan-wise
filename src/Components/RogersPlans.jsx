@@ -1,6 +1,6 @@
+import React from 'react';
 import Container from '@mui/material/Container';
-import Box from '@mui/material/Box';
-import Grid from '@mui/material/Grid';
+import Grid from '@mui/material/Grid';         // CSS‑Grid API
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import CardActions from '@mui/material/CardActions';
@@ -8,44 +8,32 @@ import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 
 const rogersPlans = [
-  { id: 1, name: 'Rogers Basic',     description: 'Entry‑level plan',        price: '$39.99/mo' },
-  { id: 2, name: 'Rogers Unlimited', description: 'Unlimited data',          price: '$69.99/mo' },
-  { id: 3, name: 'Rogers Family',    description: 'Shareable family plan',   price: '$109.99/mo' },
+  { id: 1, name: 'Rogers Basic', description: 'Entry‑level plan', price: '$39.99/mo' },
+  { id: 2, name: 'Rogers Unlimited', description: 'Unlimited data', price: '$69.99/mo' },
+  { id: 3, name: 'Rogers Family', description: 'Shareable family plan', price: '$109.99/mo' },
 ];
 
 export default function RogersPlans() {
   return (
-    <Box component="section" sx={{ pt: 10 }}>
-      <Container maxWidth="lg">
-        <Typography variant="h4" component="h2" gutterBottom>
+    <Container maxWidth="lg" sx={{ mt: 4, minHeight: '100vh' }}>
+       <Typography variant="h4" component="h2" gutterBottom>
           Rogers Plans
         </Typography>
-
-        <Grid
-          container
-          spacing={4}
-          sx={{
-            display: 'grid',
-            gridTemplateColumns: {
-              xs: 'repeat(1, 1fr)',
-              sm: 'repeat(2, 1fr)',
-              md: 'repeat(3, 1fr)',
-              lg: 'repeat(4, 1fr)',
-            },
-          }}
-        >
-          {rogersPlans.map((plan) => (
+      <Grid container spacing={2}>
+        {rogersPlans.map((plan) => (
+          <Grid  size={{xs: 12, md:4, sm:6}}>
             <Card
               key={plan.id}
-              elevation={3}
+              // elevation={3}
               sx={{
+                width: '100%',          // fill the grid cell
+                height: '100%',         // match heights
                 display: 'flex',
                 flexDirection: 'column',
-                height: '100%',
               }}
             >
               <CardContent sx={{ flexGrow: 1 }}>
-                <Typography variant="h6" component="div" gutterBottom>
+                <Typography variant="h6" gutterBottom>
                   {plan.name}
                 </Typography>
                 <Typography variant="body2" color="text.secondary">
@@ -60,7 +48,7 @@ export default function RogersPlans() {
                   pb: 2,
                 }}
               >
-                <Typography variant="h6" component="div" gutterBottom>
+                <Typography variant="h6" gutterBottom>
                   {plan.price}
                 </Typography>
                 <Button fullWidth variant="contained">
@@ -68,9 +56,9 @@ export default function RogersPlans() {
                 </Button>
               </CardActions>
             </Card>
-          ))}
-        </Grid>
-      </Container>
-    </Box>
+          </Grid>
+        ))}
+      </Grid>
+    </Container>
   );
 }

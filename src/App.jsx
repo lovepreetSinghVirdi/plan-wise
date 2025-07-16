@@ -23,8 +23,8 @@ const App = () => {
       <AppHeader />
 
       <Routes>
-        <Route path="/" element={<HomePage />} />
-        <Route path="rogers"   element={<RogersPlans />} />
+        <Route index element={<HomePage />} />
+        <Route path="rogers" element={<RogersPlans />} />
         {/* <Route path="bell"     element={<BellPage />} />
         <Route path="vmedia"   element={<VmediaPage />} />
         <Route path="dodo"     element={<DodoPage />} />
