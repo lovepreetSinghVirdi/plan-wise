@@ -17,12 +17,12 @@ export default function AppHeader() {
   const appName = 'PlanWise';
 
   const navItems = [
-    { label: 'Home', href: '#home' },
-    { label: 'Rogers', href: 'rogers' },
-    { label: 'Bell', href: '#bell' },
-    { label: 'Vmedia', href: '#vmedia' },
-    { label: 'Teksavvy', href: '#teksavvy' },
-    { label: 'About Us', href: '#about' },
+    { label: 'Home', href: '/home' },
+    { label: 'Rogers', href: '/rogers' },
+    { label: 'Bell', href: '/bell' },
+    { label: 'Vmedia', href: '/vmedia' },
+    { label: 'Teksavvy', href: '/teksavvy' },
+    { label: 'About Us', href: '/about' },
   ];
 
   const handleDrawerToggle = () => {
