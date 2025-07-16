@@ -3,7 +3,7 @@ import CssBaseline from '@mui/material/CssBaseline';
 import './index.css';
 import { createTheme, ThemeProvider } from '@mui/material';
 
-import AppRoutes from './Routes/Routes';
+import App from './App';
 
 
 // Create a default MUI theme (customize if needed)
@@ -14,6 +14,6 @@ const root = createRoot(container);
 root.render(
   <ThemeProvider theme={theme}>
     <CssBaseline />
-    <AppRoutes />
+    <App />
   </ThemeProvider>
 );
