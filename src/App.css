@@ -3,16 +3,8 @@
   flex-direction: column;
   min-height: 100vh;
   overflow: hidden;
-  /* don’t let this root scroll horizontally */
-}
-
-.application-wrapper {
-
-  flex: 1;
-  overflow-y: 'auto';
-  background-image: url('/mainbg.png');
-  background-size: cover;
-  background-position: center;
+  background: url('/src/assets/bg1.png') center/cover no-repeat;
+  ;
 }
 
 

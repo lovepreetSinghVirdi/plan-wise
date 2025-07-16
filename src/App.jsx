@@ -22,7 +22,6 @@ const App = () => {
   return (
     <BrowserRouter>
 
-      <div className='application-wrapper'>
         <AppHeader />
         <Routes>
           <Route path='/' element={<HomePage />} />
@@ -36,7 +35,6 @@ const App = () => {
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
         <Footer />
-      </div>
 
     </BrowserRouter>
   );

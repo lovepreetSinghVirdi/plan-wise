@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Link } from 'react-router-dom';        // ← import Link
+import { Link } from 'react-router-dom';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
@@ -12,6 +12,8 @@ import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemText from '@mui/material/ListItemText';
+
+import logo from '../assets/logo.png';
 
 export default function AppHeader() {
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -27,18 +29,29 @@ export default function AppHeader() {
   ];
 
   const handleDrawerToggle = () => {
-    setMobileOpen((prev) => !prev);
+    setMobileOpen(prev => !prev);
   };
 
   const drawer = (
     <Box onClick={handleDrawerToggle} sx={{ textAlign: 'center' }}>
-      <Typography variant="h6" sx={{ my: 2 }}>
+      {/* Logo in the drawer */}
+      <Box
+        component="img"
+        src={logo}
+        alt="PlanWise logo"
+        sx={{ height: 48, my: 2 }}
+      />
+      <Typography
+        component={Link}
+        to="/"
+        variant="h6"
+        sx={{ textDecoration: 'none', color: 'inherit' }}
+      >
         {appName}
       </Typography>
       <List>
-        {navItems.map((item) => (
+        {navItems.map(item => (
           <ListItem key={item.label} disablePadding>
-            {/* Use ListItemButton as a Link */}
             <ListItemButton
               component={Link}
               to={item.to}
@@ -56,7 +69,7 @@ export default function AppHeader() {
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="sticky" color="primary">
         <Toolbar>
-          {/* Mobile hamburger */}
+          {/* Mobile menu button */}
           <IconButton
             color="inherit"
             edge="start"
@@ -66,23 +79,42 @@ export default function AppHeader() {
             <MenuIcon />
           </IconButton>
 
-          {/* Brand */}
+          {/* Logo */}
+          <Box
+            component="img"
+            src={logo}
+            alt="PlanWise logo"
+            sx={{
+              height: 40,
+              mr: 2,
+            }}
+          />
+
+          {/* App name (optional if your logo contains text) */}
           <Typography
             variant="h6"
-            component="div"
-            sx={{ flexGrow: 1, textAlign: { xs: 'center', sm: 'left' } }}
+            component={Link}
+            to="/"
+            sx={{
+              flexGrow: 1,
+              textDecoration: 'none',
+              color: 'inherit',
+              textAlign: { xs: 'center', sm: 'left' },
+            }}
           >
             {appName}
           </Typography>
 
-          {/* Desktop nav */}
+          {/* Desktop nav items */}
           <Box sx={{ display: { xs: 'none', sm: 'block' } }}>
-            {navItems.map((item) => (
+            {navItems.map(item => (
               <Button
                 key={item.label}
-                color="inherit"
+                variant="text"       // <–– make this one text
+                color="inherit"      // <–– white on the dark AppBar
                 component={Link}
                 to={item.to}
+                sx={{ ml: 1 }}
               >
                 {item.label}
               </Button>
@@ -96,7 +128,7 @@ export default function AppHeader() {
         variant="temporary"
         open={mobileOpen}
         onClose={handleDrawerToggle}
-        ModalProps={{ keepMounted: true }} 
+        ModalProps={{ keepMounted: true }}
         sx={{
           display: { xs: 'block', sm: 'none' },
           '& .MuiDrawer-paper': { boxSizing: 'border-box', width: 240 },
