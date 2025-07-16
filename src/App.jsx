@@ -11,6 +11,7 @@ import {
 } from 'react-router-dom';
 
 import './App.css'
+import Footer from './Components/Footer';
 
 // import BellPage   from './pages/BellPage';
 // import VmediaPage from './pages/VmediaPage';
@@ -21,19 +22,20 @@ const App = () => {
   return (
     <BrowserRouter>
 
-      <AppHeader />
-
-      <Routes>
-        <Route path='/' element={<HomePage />} />
-        <Route path="rogers" element={<RogersPlans />} />
-        <Route path="plan" element={<ProvideDetails />} />
-        {/* <Route path="bell"     element={<BellPage />} />
+        <AppHeader />
+        <Routes>
+          <Route path='/' element={<HomePage />} />
+          <Route path="rogers" element={<RogersPlans />} />
+          <Route path="plan" element={<ProvideDetails />} />
+          {/* <Route path="bell"     element={<BellPage />} />
         <Route path="vmedia"   element={<VmediaPage />} />
         <Route path="dodo"     element={<DodoPage />} />
         <Route path="about"    element={<AboutPage />} /> */}
 
-        <Route path="*" element={<Navigate to="/" replace />} />
-      </Routes>
+          <Route path="*" element={<Navigate to="/" replace />} />
+        </Routes>
+        <Footer />
+
     </BrowserRouter>
   );
 }
