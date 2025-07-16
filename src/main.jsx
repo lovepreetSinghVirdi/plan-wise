@@ -2,7 +2,8 @@ import { createRoot } from 'react-dom/client';
 import CssBaseline from '@mui/material/CssBaseline';
 import './index.css';
 import { createTheme, ThemeProvider } from '@mui/material';
-import App from './App';
+
+import AppRoutes from './Routes/Routes';
 
 
 // Create a default MUI theme (customize if needed)
@@ -13,6 +14,6 @@ const root = createRoot(container);
 root.render(
   <ThemeProvider theme={theme}>
     <CssBaseline />
-    <App />
+    <AppRoutes />
   </ThemeProvider>
 );
