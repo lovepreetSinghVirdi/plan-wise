@@ -12,7 +12,8 @@ import {
   ListItem,
   ListItemText,
   CircularProgress,
-  Alert
+  Alert,
+  Container
 } from '@mui/material';
 
 export default function ProvideDetails() {
@@ -20,7 +21,7 @@ export default function ProvideDetails() {
   const plan = '';
   const [planData, setPlanData] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [error, setError]   = useState(false);
+  const [error, setError] = useState(false);
 
   useEffect(() => {
     // mock for preview
@@ -58,9 +59,9 @@ export default function ProvideDetails() {
   }
 
   return (
-    <Box sx={{ py: 4 }}>
-      <Grid container justifyContent="center">
-        <Grid item xs={12} sm={10} md={8} lg={6}>
+    <Container maxWidth="lg" sx={{ mt: 4, minHeight: '100vh' }}>
+      <Grid container justifyContent='center' spacing={2}>
+        <Grid size={{ xs: 12, sm: 10, md: 8, lg: 6 }}>
           <Card elevation={2}>
             <CardContent>
               <Typography variant="h4" align="center" gutterBottom>
@@ -103,6 +104,6 @@ export default function ProvideDetails() {
           </Card>
         </Grid>
       </Grid>
-    </Box>
+    </Container>
   );
 }
