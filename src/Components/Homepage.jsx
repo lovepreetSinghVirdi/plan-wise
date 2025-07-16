@@ -1,16 +1,12 @@
-// src/Components/Homepage.jsx
-import React from 'react';
-import { NavLink as RouterNavLink } from 'react-router-dom';  // ← import this
 import {
   Container,
-  Row,
-  Col,
+  Grid,
   Card,
-  CardBody,
-  CardTitle,
-  CardText,
+  CardContent,
+  CardActions,
+  Typography,
   Button
-} from 'reactstrap';
+} from '@mui/material';
 
 const plans = [
   { key: 'rogers', title: 'Rogers', text: 'This is the first card.' },
@@ -19,31 +15,30 @@ const plans = [
   { key: 'teksavvy',   title: 'Teksavvy',   text: 'This is the fourth card.' },
 ];
 
-export default function Homepage() {
+export default function HomePage() {
   return (
-    <Container className="py-4">
-      <Row className="g-4">
-        {plans.map(({ key, title, text }) => (
-          <Col sm={12} md={6} key={key}>
-            <Card className="h-100 shadow-sm">
-              <CardBody className="d-flex flex-column">
-                <CardTitle tag="h5">{title}</CardTitle>
-                <CardText className="flex-grow-1">{text}</CardText>
-                <div className="mt-3">
-                  {/* turn this button into a React‑Router link */}
-                  <Button
-                    color="dark"
-                    tag={RouterNavLink}
-                    to={`/${key}`}
-                  >
-                    Learn More
-                  </Button>
-                </div>
-              </CardBody>
+    <Container maxWidth="lg" sx={{ mt: 4, minHeight: '100vh' }}>
+      <Grid container spacing={2}>
+        {plans.map((card, idx) => (
+          <Grid size={{ xs: 12, sm: 6 }} key={idx}>
+            <Card elevation={3} sx={{ textAlign: 'center' }}>
+              <CardContent>
+                <Typography variant="h5" component="div" gutterBottom>
+                  {card.title}
+                </Typography>
+                <Typography variant="body2" color="text.secondary">
+                  {card.text}
+                </Typography>
+              </CardContent>
+              <CardActions sx={{ justifyContent: 'center', pb: 2 }}>
+                <Button variant="contained" color="primary">
+                  Learn More
+                </Button>
+              </CardActions>
             </Card>
-          </Col>
+          </Grid>
         ))}
-      </Row>
+      </Grid>
     </Container>
   );
 }

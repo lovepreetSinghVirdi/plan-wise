@@ -1,17 +1,19 @@
+// src/Components/ProvideDetails.jsx
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
+
 import {
+  Box,
+  Grid,
   Card,
-  CardBody,
-  CardTitle,
-  ListGroup,
-  ListGroupItem,
-  Container,
-  Row,
-  Col,
-  Spinner,
+  CardContent,
+  Typography,
+  List,
+  ListItem,
+  ListItemText,
+  CircularProgress,
   Alert
-} from 'reactstrap';
+} from '@mui/material';
 
 export default function ProvideDetails() {
   const { plan } = useParams();
@@ -38,41 +40,68 @@ export default function ProvideDetails() {
 
   if (loading) {
     return (
-      <Container className="py-5 text-center">
-        <Spinner color="primary" />
-      </Container>
+      <Box sx={{ py: 5, textAlign: 'center' }}>
+        <CircularProgress />
+      </Box>
     );
   }
-  if (error) {
+
+  if (error || !planData) {
     return (
-      <Container className="py-5">
-        <Alert color="danger">
+      <Box sx={{ py: 5 }}>
+        <Alert severity="error">
           Sorry, we couldn’t load the <strong>{plan}</strong> plan.
         </Alert>
-      </Container>
+      </Box>
     );
   }
 
   return (
-    <Container className="py-4">
-      <Row className="justify-content-center">
-        <Col md={8} lg={6}>
-          <Card className="shadow-sm">
-            <CardBody>
-              <CardTitle tag="h3" className="text-center mb-3">
+    <Box sx={{ py: 4 }}>
+      <Grid container justifyContent="center">
+        <Grid item xs={12} sm={10} md={8} lg={6}>
+          <Card elevation={2}>
+            <CardContent>
+              <Typography variant="h4" align="center" gutterBottom>
                 {planData.name}
-              </CardTitle>
-              <ListGroup flush>
-                <ListGroupItem><strong>Cost:</strong> {planData.cost}</ListGroupItem>
-                <ListGroupItem><strong>Download Speed:</strong> {planData.downloadSpeed}</ListGroupItem>
-                <ListGroupItem><strong>Upload Speed:</strong> {planData.uploadSpeed}</ListGroupItem>
-                <ListGroupItem><strong>Devices Supported:</strong> {planData.devices}</ListGroupItem>
-                <ListGroupItem><strong>Description:</strong> {planData.description}</ListGroupItem>
-              </ListGroup>
-            </CardBody>
+              </Typography>
+
+              <List>
+                <ListItem>
+                  <ListItemText
+                    primary="Cost"
+                    secondary={planData.cost}
+                  />
+                </ListItem>
+                <ListItem>
+                  <ListItemText
+                    primary="Download Speed"
+                    secondary={planData.downloadSpeed}
+                  />
+                </ListItem>
+                <ListItem>
+                  <ListItemText
+                    primary="Upload Speed"
+                    secondary={planData.uploadSpeed}
+                  />
+                </ListItem>
+                <ListItem>
+                  <ListItemText
+                    primary="Devices Supported"
+                    secondary={planData.devices}
+                  />
+                </ListItem>
+                <ListItem>
+                  <ListItemText
+                    primary="Description"
+                    secondary={planData.description}
+                  />
+                </ListItem>
+              </List>
+            </CardContent>
           </Card>
-        </Col>
-      </Row>
-    </Container>
+        </Grid>
+      </Grid>
+    </Box>
   );
 }

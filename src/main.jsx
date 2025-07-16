@@ -1,18 +1,19 @@
-import React from 'react';
 import { createRoot } from 'react-dom/client';
-import { BrowserRouter } from 'react-router-dom';
+import CssBaseline from '@mui/material/CssBaseline';
+import './index.css';
+import { createTheme, ThemeProvider } from '@mui/material';
+
 import App from './App';
-import 'bootstrap/dist/css/bootstrap.min.css';
+
+
+// Create a default MUI theme (customize if needed)
+const theme = createTheme();
 
 const container = document.getElementById('root');
-
-// guard against HMR re‑runs
-if (!window.__root) {
-  window.__root = createRoot(container);
-}
-
-window.__root.render(
-  <BrowserRouter>
+const root = createRoot(container);
+root.render(
+  <ThemeProvider theme={theme}>
+    <CssBaseline />
     <App />
-  </BrowserRouter>
+  </ThemeProvider>
 );

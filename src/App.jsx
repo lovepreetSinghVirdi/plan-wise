@@ -1,23 +1,40 @@
-import React from 'react';
-import { Routes, Route } from 'react-router-dom';
-import ErrorBoundary from './Components/ErrorBoundary';
 import AppHeader from './Components/AppHeader';
-import Homepage from './Components/Homepage';
-import ProvideDetails from './Components/ProvideDetails';
+import HomePage from './Components/Homepage';
+import RogersPlans from './Components/RogersPlans'
+import ProvideDetails from './Components/ProvideDetails'
 
-export default function App() {
+import {
+  BrowserRouter,
+  Routes,
+  Route,
+  Navigate
+} from 'react-router-dom';
+
+import './App.css'
+
+// import BellPage   from './pages/BellPage';
+// import VmediaPage from './pages/VmediaPage';
+// import DodoPage   from './pages/DodoPage';
+// import AboutPage  from './pages/AboutPage';
+
+const App = () => {
   return (
-    <>
+    <BrowserRouter>
+      {/* persist your header/nav across all pages */}
       <AppHeader />
 
-      <ErrorBoundary>
-        <main className="container my-4">
-          <Routes>
-            <Route path="/" element={<Homepage />} />
-            <Route path=":plan" element={<ProvideDetails />} />
-          </Routes>
-        </main>
-      </ErrorBoundary>
-    </>
+      <Routes>
+        <Route path="/" element={<HomePage />} />
+        <Route path="rogers"   element={<RogersPlans />} />
+        <Route path="plan" element={<ProvideDetails />} />
+        {/* <Route path="bell"     element={<BellPage />} />
+        <Route path="vmedia"   element={<VmediaPage />} />
+        <Route path="dodo"     element={<DodoPage />} />
+        <Route path="about"    element={<AboutPage />} /> */}
+
+        <Route path="*" element={<Navigate to="/" replace />} />
+      </Routes>
+    </BrowserRouter>
   );
 }
+export default App;
