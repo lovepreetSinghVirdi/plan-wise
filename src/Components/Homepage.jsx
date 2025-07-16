@@ -17,7 +17,7 @@ const cards = [
 
 export default function HomePage() {
   return (
-    <Container maxWidth="md" sx={{ mt: 4, minHeight: '100vh' }}>
+    <Container maxWidth="lg" sx={{ mt: 4, minHeight: '100vh' }}>
       <Grid container spacing={2}>
         {cards.map((card, idx) => (
           <Grid size={{ xs: 12, sm: 6 }} key={idx}>
