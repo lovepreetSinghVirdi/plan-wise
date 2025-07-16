@@ -21,7 +21,7 @@ const plans = [
 
 export default function HomePage() {
   return (
-    <Container maxWidth="lg" sx={{ mt: 4, minHeight: '100vh' }}>
+    <Container maxWidth="lg" sx={{ mt: 4 }}>
 
       {/* ─── First row: Search bar centered with 2‑col offsets ─── */}
       <Grid container spacing={2} sx={{ mt: 20 }}>
