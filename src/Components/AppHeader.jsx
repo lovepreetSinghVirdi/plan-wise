@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { Link } from 'react-router-dom';        // ← import Link
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
@@ -16,13 +17,14 @@ export default function AppHeader() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const appName = 'PlanWise';
 
+  // use `to` instead of `href`
   const navItems = [
-    { label: 'Home', href: '#home' },
-    { label: 'Rogers', href: 'rogers' },
-    { label: 'Bell', href: '#bell' },
-    { label: 'Vmedia', href: '#vmedia' },
-    { label: 'Dodo', href: '#dodo' },
-    { label: 'About Us', href: '#about' },
+    { label: 'Home',    to: '/' },
+    { label: 'Rogers',  to: '/rogers' },
+    { label: 'Bell',    to: '/bell' },
+    { label: 'Vmedia',  to: '/vmedia' },
+    { label: 'Dodo',    to: '/dodo' },
+    { label: 'About Us',to: '/about' },
   ];
 
   const handleDrawerToggle = () => {
@@ -37,7 +39,12 @@ export default function AppHeader() {
       <List>
         {navItems.map((item) => (
           <ListItem key={item.label} disablePadding>
-            <ListItemButton component="a" href={item.href} sx={{ textAlign: 'center' }}>
+            {/* Use ListItemButton as a Link */}
+            <ListItemButton
+              component={Link}
+              to={item.to}
+              sx={{ textAlign: 'center' }}
+            >
               <ListItemText primary={item.label} />
             </ListItemButton>
           </ListItem>
@@ -50,7 +57,7 @@ export default function AppHeader() {
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="sticky" color="primary">
         <Toolbar>
-          {/* Mobile menu button */}
+          {/* Mobile hamburger */}
           <IconButton
             color="inherit"
             edge="start"
@@ -60,7 +67,7 @@ export default function AppHeader() {
             <MenuIcon />
           </IconButton>
 
-          {/* App name / brand */}
+          {/* Brand */}
           <Typography
             variant="h6"
             component="div"
@@ -69,10 +76,15 @@ export default function AppHeader() {
             {appName}
           </Typography>
 
-          {/* Desktop nav items */}
+          {/* Desktop nav */}
           <Box sx={{ display: { xs: 'none', sm: 'block' } }}>
             {navItems.map((item) => (
-              <Button key={item.label} color="inherit" href={item.href}>
+              <Button
+                key={item.label}
+                color="inherit"
+                component={Link}
+                to={item.to}
+              >
                 {item.label}
               </Button>
             ))}
@@ -85,7 +97,7 @@ export default function AppHeader() {
         variant="temporary"
         open={mobileOpen}
         onClose={handleDrawerToggle}
-        ModalProps={{ keepMounted: true }} // Better performance on mobile
+        ModalProps={{ keepMounted: true }} 
         sx={{
           display: { xs: 'block', sm: 'none' },
           '& .MuiDrawer-paper': { boxSizing: 'border-box', width: 240 },
