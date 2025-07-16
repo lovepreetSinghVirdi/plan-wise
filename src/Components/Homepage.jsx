@@ -8,18 +8,18 @@ import {
   Button
 } from '@mui/material';
 
-const cards = [
-  { title: 'Rogers', text: 'This is the first card.' },
-  { title: 'Bell', text: 'This is the second card.' },
-  { title: 'Card', text: 'This is the third card.' },
-  { title: 'Dodo', text: 'This is the fourth card.' }
+const plans = [
+  { key: 'rogers', title: 'Rogers', text: 'This is the first card.' },
+  { key: 'bell',   title: 'Bell',   text: 'This is the second card.' },
+  { key: 'vmedia', title: 'Vmedia', text: 'This is the third card.' },
+  { key: 'teksavvy',   title: 'Teksavvy',   text: 'This is the fourth card.' },
 ];
 
 export default function HomePage() {
   return (
     <Container maxWidth="lg" sx={{ mt: 4, minHeight: '100vh' }}>
       <Grid container spacing={2}>
-        {cards.map((card, idx) => (
+        {plans.map((card, idx) => (
           <Grid size={{ xs: 12, sm: 6 }} key={idx}>
             <Card elevation={3} sx={{ textAlign: 'center' }}>
               <CardContent>

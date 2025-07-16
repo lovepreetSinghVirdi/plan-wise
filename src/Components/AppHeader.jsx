@@ -17,14 +17,13 @@ export default function AppHeader() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const appName = 'PlanWise';
 
-  // use `to` instead of `href`
   const navItems = [
-    { label: 'Home',    to: '/' },
-    { label: 'Rogers',  to: '/rogers' },
-    { label: 'Bell',    to: '/bell' },
-    { label: 'Vmedia',  to: '/vmedia' },
-    { label: 'Dodo',    to: '/dodo' },
-    { label: 'About Us',to: '/about' },
+    { label: 'Home', to: '/home' },
+    { label: 'Rogers', to: '/rogers' },
+    { label: 'Bell', to: '/plan' },
+    { label: 'Vmedia', to: '/vmedia' },
+    { label: 'Teksavvy', to: '/teksavvy' },
+    { label: 'About Us', to: '/about' },
   ];
 
   const handleDrawerToggle = () => {

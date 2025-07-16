@@ -1,6 +1,7 @@
 import AppHeader from './Components/AppHeader';
 import HomePage from './Components/Homepage';
 import RogersPlans from './Components/RogersPlans'
+import ProvideDetails from './Components/ProvideDetails'
 
 import {
   BrowserRouter,
@@ -25,6 +26,7 @@ const App = () => {
       <Routes>
         <Route index element={<HomePage />} />
         <Route path="rogers" element={<RogersPlans />} />
+        <Route path="plan" element={<ProvideDetails />} />
         {/* <Route path="bell"     element={<BellPage />} />
         <Route path="vmedia"   element={<VmediaPage />} />
         <Route path="dodo"     element={<DodoPage />} />
