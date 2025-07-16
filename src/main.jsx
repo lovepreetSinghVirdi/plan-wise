@@ -1,12 +1,18 @@
-import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client';
-import 'bootstrap/dist/css/bootstrap.min.css';
+import CssBaseline from '@mui/material/CssBaseline';
 import './index.css';
+import { createTheme, ThemeProvider } from '@mui/material';
+import App from './App';
 
-import App from './App.jsx'
 
-createRoot(document.getElementById('root')).render(
-  <StrictMode>
+// Create a default MUI theme (customize if needed)
+const theme = createTheme();
+
+const container = document.getElementById('root');
+const root = createRoot(container);
+root.render(
+  <ThemeProvider theme={theme}>
+    <CssBaseline />
     <App />
-  </StrictMode>,
-)
+  </ThemeProvider>
+);

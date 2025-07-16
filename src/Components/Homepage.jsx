@@ -1,54 +1,44 @@
-// index.js
-import { createRoot } from 'react-dom/client';
-import 'bootstrap/dist/css/bootstrap.min.css';
-import './HomePage.css';
-
-const container = document.getElementById('root');
-const root = createRoot(container);
-root.render(<HomePage />);
-
-// HomePage.js
-import React, { useState } from 'react';
 import {
   Container,
-  Row,
-  Col,
+  Grid,
   Card,
-  CardBody,
-  CardTitle,
-  CardText,
+  CardContent,
+  CardActions,
+  Typography,
   Button
-} from 'reactstrap';
+} from '@mui/material';
 
 const cards = [
   { title: 'Rogers', text: 'This is the first card.' },
-  { title: 'Bell ', text: 'This is the second card.' },
-  { title: 'Card ', text: 'This is the third card.' },
+  { title: 'Bell', text: 'This is the second card.' },
+  { title: 'Card', text: 'This is the third card.' },
   { title: 'Dodo', text: 'This is the fourth card.' }
 ];
 
 export default function HomePage() {
-  const [isOpen, setIsOpen] = useState(true);
-  const toggle = () => setIsOpen(!isOpen);
-
   return (
-    <div className="app-container">
- 
-      <Container className="content-container mt-4">
-        <Row>
-          {cards.map((card, idx) => (
-            <Col md="6" className="mb-4" key={idx}>
-              <Card className="shadow-sm content-card">
-                <CardBody>
-                  <CardTitle tag="h5">{card.title}</CardTitle>
-                  <CardText>{card.text}</CardText>
-                  <Button color="dark">Learn More</Button>
-                </CardBody>
-              </Card>
-            </Col>
-          ))}
-        </Row>
-      </Container>
-    </div>
+    <Container maxWidth="md" sx={{ mt: 4, minHeight: '100vh' }}>
+      <Grid container spacing={2}>
+        {cards.map((card, idx) => (
+          <Grid size={{ xs: 12, sm: 6 }} key={idx}>
+            <Card elevation={3} sx={{ textAlign: 'center' }}>
+              <CardContent>
+                <Typography variant="h5" component="div" gutterBottom>
+                  {card.title}
+                </Typography>
+                <Typography variant="body2" color="text.secondary">
+                  {card.text}
+                </Typography>
+              </CardContent>
+              <CardActions sx={{ justifyContent: 'center', pb: 2 }}>
+                <Button variant="contained" color="primary">
+                  Learn More
+                </Button>
+              </CardActions>
+            </Card>
+          </Grid>
+        ))}
+      </Grid>
+    </Container>
   );
 }
