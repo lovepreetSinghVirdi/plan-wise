@@ -1,5 +1,6 @@
 import AppHeader from './Components/AppHeader';
 import HomePage from './Components/Homepage';
+import RogersPlans from './Components/RogersPlans'
 
 import {
   BrowserRouter,
@@ -10,8 +11,6 @@ import {
 
 import './App.css'
 
-
-// import RogersPage from './pages/RogersPage';
 // import BellPage   from './pages/BellPage';
 // import VmediaPage from './pages/VmediaPage';
 // import DodoPage   from './pages/DodoPage';
@@ -25,8 +24,8 @@ const App = () => {
 
       <Routes>
         <Route path="/" element={<HomePage />} />
-        {/* <Route path="rogers"   element={<RogersPage />} />
-        <Route path="bell"     element={<BellPage />} />
+        <Route path="rogers"   element={<RogersPlans />} />
+        {/* <Route path="bell"     element={<BellPage />} />
         <Route path="vmedia"   element={<VmediaPage />} />
         <Route path="dodo"     element={<DodoPage />} />
         <Route path="about"    element={<AboutPage />} /> */}
