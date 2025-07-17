@@ -1,4 +1,3 @@
-import React from 'react';
 import { NavLink as RouterNavLink } from 'react-router-dom';
 import {
   Container,
@@ -8,21 +7,21 @@ import {
   CardActions,
   Typography,
   Button,
-  Autocomplete,
-  TextField,
   CardHeader,
   Box,
 } from '@mui/material';
 import MainSearch from './FormComponents/MainSearch';
-import RogersLogo   from '../assets/Rogers.svg';
-import BellLogo      from '../assets/Bell_Canada.svg';
-import VmediaLogo    from '../assets/vmedia.svg';
-import TeksavvyLogo  from '../assets/teksavvy.svg';
+import { useNavigate } from 'react-router-dom';
+import rogersLogo from '../assets/Rogers.svg';
+import bellLogo from '../assets/Bell_Canada.svg';
+import vmediaLogo from '../assets/vmedia.svg';
+import teksavvyLogo from '../assets/teksavvy.svg';
+
 const logos = {
-  rogers:   RogersLogo,
-  bell:     BellLogo,
-  vmedia:   VmediaLogo,
-  teksavvy: TeksavvyLogo,
+  rogers: rogersLogo,
+  bell: bellLogo,
+  vmedia: vmediaLogo,
+  teksavvy: teksavvyLogo,
 };
 
 const plans = [
@@ -32,7 +31,17 @@ const plans = [
   { key: 'teksavvy', title: 'Teksavvy', text: 'This is the fourth card.' },
 ];
 
-export default function HomePage() {
+const HomePage = () => {
+  const navigate = useNavigate();
+  const handleOptionSelect = (_, newVal) => {
+
+    navigate('/available-plans', {
+      state: {
+        keyword: newVal,
+      }
+    })
+
+  }
   return (
     <Container maxWidth="lg" sx={{ mt: 4 }}>
 
@@ -43,7 +52,7 @@ export default function HomePage() {
           offset={{ sm: 2 }}
           sx={{ display: 'flex' }}
         >
-          <MainSearch />
+          <MainSearch onSelect={handleOptionSelect} />
         </Grid>
       </Grid>
 
@@ -63,21 +72,21 @@ export default function HomePage() {
                 flexDirection: 'column',
               }}
             >
-             
+
               <CardHeader
-              title={plan.title}
-              action={
-                <Box component="img" src={logos[plan.key]} alt={`${plan.title} logo`}  sx={{ width: 90, height: 90 }}/>
-              }
-              sx={{ pb: 0 }}
+                title={plan.title}
+                action={
+                  <Box component="img" src={logos[plan.key]} alt={`${plan.title} logo`} sx={{ width: 90, height: 90 }} />
+                }
+                sx={{ pb: 0 }}
               />
-              <CardContent sx={{ flexGrow: 1, pt: 1}}>
+              <CardContent sx={{ flexGrow: 1, pt: 1 }}>
                 <Typography variant="body2" color="text.secpndary">
                   {plan.text}
                 </Typography>
               </CardContent>
               <CardActions sx={{ justifyContent: 'center', pb: 2 }}>
-                <Button component={RouterNavLink}  to={`/${plan.key}`} fullWidth variant="contained"  >
+                <Button component={RouterNavLink} to={`/${plan.key}`} fullWidth variant="contained"  >
                   Learn More
                 </Button>
               </CardActions>
@@ -89,3 +98,4 @@ export default function HomePage() {
     </Container>
   );
 }
+export default HomePage;

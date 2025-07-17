@@ -5,7 +5,7 @@ import {
     Box,
 } from '@mui/material';
 
-export default function PlanSearch({ onChange }) {
+export default function PlanSearch({ onSelect }) {
     const [inputValue, setInputValue] = useState('');
     const [value, setValue] = useState(null);
     const [options, setOptions] = useState([]);
@@ -37,9 +37,9 @@ export default function PlanSearch({ onChange }) {
                     if (reason === 'selectOption') {
                         console.log('User picked:', newVal);
                         console.log('Details about that option:', details);
-                        // do whatever you need with the selected option here
+                        onSelect?.(_, newVal, reason, details);
+
                     }
-                    onChange?.(newVal);
                 }}
 
                 inputValue={inputValue}

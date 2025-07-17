@@ -21,9 +21,7 @@ root.render(
   <ThemeProvider theme={darkTheme}>
     <CssBaseline />
     <CssBaseline />
-
-
-      <App />
+    <App />
 
   </ThemeProvider>
 );
