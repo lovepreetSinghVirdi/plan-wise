@@ -7,10 +7,9 @@ import {
   CardActions,
   Typography,
   Button,
-  Autocomplete,
-  TextField,
 } from '@mui/material';
 import MainSearch from './FormComponents/MainSearch';
+import { useNavigate } from 'react-router-dom';
 
 const plans = [
   { key: 'rogers', title: 'Rogers', text: 'This is the first card.' },
@@ -19,7 +18,17 @@ const plans = [
   { key: 'teksavvy', title: 'Teksavvy', text: 'This is the fourth card.' },
 ];
 
-export default function HomePage() {
+const HomePage = () => {
+  const navigate = useNavigate();
+  const handleOptionSelect = (_, newVal) => {
+
+    navigate('/available-plans', {
+      state: {
+        keyword: newVal,
+      }
+    })
+
+  }
   return (
     <Container maxWidth="lg" sx={{ mt: 4 }}>
 
@@ -30,7 +39,7 @@ export default function HomePage() {
           offset={{ sm: 2 }}
           sx={{ display: 'flex' }}
         >
-          <MainSearch />
+          <MainSearch onSelect={handleOptionSelect} />
         </Grid>
       </Grid>
 
@@ -71,3 +80,4 @@ export default function HomePage() {
     </Container>
   );
 }
+export default HomePage;

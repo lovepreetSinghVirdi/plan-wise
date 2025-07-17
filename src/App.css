@@ -7,6 +7,19 @@
   ;
 }
 
+.no-bullets-ul {
+  list-style: none;
+  /* remove bullet points */
+  margin: 0;
+  /* reset default margins */
+  padding: 0;
+  /* reset default padding */
+}
+.no-bullets-ul li span:first-of-type {
+  margin-right: 2rem;
+}
+
+
 
 
 @keyframes logo-spin {

@@ -12,29 +12,27 @@ import {
 
 import './App.css'
 import Footer from './Components/Footer';
+import AvailablePlans from './Components/AvailablePlans';
+// import AppLoader from './Components/FormComponents/Loader';
+// import { useState } from 'react';
 
-// import BellPage   from './pages/BellPage';
-// import VmediaPage from './pages/VmediaPage';
-// import DodoPage   from './pages/DodoPage';
-// import AboutPage  from './pages/AboutPage';
 
 const App = () => {
+  // const [isLoading, _] = useState(true);
   return (
     <BrowserRouter>
+      {/* {isLoading ? <AppLoader message={'Please wait....'} /> : null} */}
+      <AppHeader />
 
-        <AppHeader />
-        <Routes>
-          <Route path='/' element={<HomePage />} />
-          <Route path="rogers" element={<RogersPlans />} />
-          <Route path="plan" element={<ProvideDetails />} />
-          {/* <Route path="bell"     element={<BellPage />} />
-        <Route path="vmedia"   element={<VmediaPage />} />
-        <Route path="dodo"     element={<DodoPage />} />
-        <Route path="about"    element={<AboutPage />} /> */}
+      <Routes>
+        <Route path='/' element={<HomePage />} />
+        <Route path="rogers" element={<RogersPlans />} />
+        <Route path="plan" element={<ProvideDetails />} />
+        <Route path='/available-plans' element={<AvailablePlans />} />
 
-          <Route path="*" element={<Navigate to="/" replace />} />
-        </Routes>
-        <Footer />
+        <Route path="*" element={<Navigate to="/" replace />} />
+      </Routes>
+      <Footer />
 
     </BrowserRouter>
   );
