@@ -1,4 +1,5 @@
-
+import React from 'react';
+import { NavLink as RouterNavLink } from 'react-router-dom';
 import {
   Container,
   Grid,
@@ -59,7 +60,7 @@ export default function HomePage() {
                 </Typography>
               </CardContent>
               <CardActions sx={{ justifyContent: 'center', pb: 2 }}>
-                <Button fullWidth variant="contained">
+                <Button component={RouterNavLink}  to={`/${plan.key}`} fullWidth variant="contained"  >
                   Learn More
                 </Button>
               </CardActions>

@@ -1,7 +1,11 @@
-import AppHeader from './Components/AppHeader';
-import HomePage from './Components/Homepage';
-import RogersPlans from './Components/RogersPlans'
-import ProvideDetails from './Components/ProvideDetails'
+// src/App.jsx
+import AppHeader   from './Components/AppHeader';
+import HomePage    from './Components/Homepage';
+import RogersPlans from './Components/RogersPlans';
+import BellPlans   from './Components/BellPlans';
+import VmediaPlans from './Components/VmediaPlans';
+import TeksavvyPlans from './Components/TeksavvyPlans';
+import Footer      from './Components/Footer';
 
 import {
   BrowserRouter,
@@ -10,33 +14,25 @@ import {
   Navigate
 } from 'react-router-dom';
 
-import './App.css'
-import Footer from './Components/Footer';
+import './App.css';
 
-// import BellPage   from './pages/BellPage';
-// import VmediaPage from './pages/VmediaPage';
-// import DodoPage   from './pages/DodoPage';
-// import AboutPage  from './pages/AboutPage';
-
-const App = () => {
+export default function App() {
   return (
     <BrowserRouter>
+      <AppHeader />
 
-        <AppHeader />
-        <Routes>
-          <Route path='/' element={<HomePage />} />
-          <Route path="rogers" element={<RogersPlans />} />
-          <Route path="plan" element={<ProvideDetails />} />
-          {/* <Route path="bell"     element={<BellPage />} />
-        <Route path="vmedia"   element={<VmediaPage />} />
-        <Route path="dodo"     element={<DodoPage />} />
-        <Route path="about"    element={<AboutPage />} /> */}
+      <Routes>
+        <Route path="/"      element={<HomePage />} />
+        <Route path="rogers" element={<RogersPlans />} />
+        <Route path="bell"   element={<BellPlans />} />
+        <Route path="vmedia" element={<VmediaPlans />} />
+        <Route path="teksavvy" element={<TeksavvyPlans />} />
 
-          <Route path="*" element={<Navigate to="/" replace />} />
-        </Routes>
-        <Footer />
+        {/* fallback */}
+        <Route path="*" element={<Navigate to="/" replace />} />
+      </Routes>
 
+      <Footer />
     </BrowserRouter>
   );
 }
-export default App;
