@@ -1,4 +1,5 @@
-import { useState } from 'react';
+// src/Components/AppHeader.jsx
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
@@ -20,45 +21,26 @@ export default function AppHeader() {
   const appName = 'PlanWise';
 
   const navItems = [
-    { label: 'Home', to: '/home' },
-    { label: 'Rogers', to: '/rogers' },
-    { label: 'Bell', to: '/plan' },
-    { label: 'Vmedia', to: '/vmedia' },
-    { label: 'Teksavvy', to: '/teksavvy' },
-    { label: 'About Us', to: '/about' },
+    { label: 'Home',    to: '/' },
+    { label: 'Rogers',  to: '/rogers' },
+    { label: 'Bell',    to: '/bell' },
+    { label: 'Vmedia',  to: '/vmedia' },
+    { label: 'Teksavvy',to: '/teksavvy' },
+    { label: 'About Us',to: '/aboutus' },
   ];
 
-  const handleDrawerToggle = () => {
-    setMobileOpen(prev => !prev);
-  };
+  const handleDrawerToggle = () => setMobileOpen(open => !open);
 
   const drawer = (
     <Box onClick={handleDrawerToggle} sx={{ textAlign: 'center' }}>
-      {/* Logo in the drawer */}
       <Link to="/" style={{ display: 'inline-flex', textDecoration: 'none', alignItems: 'center' }}>
-        <Box
-          component="img"
-          src={logo}
-          alt="PlanWise logo"
-          sx={{ height: 40, mr: 2 }}
-        />
+        <Box component="img" src={logo} alt="PlanWise logo" sx={{ height: 40, mr: 2 }} />
+        <Typography variant="h6" sx={{ color: 'inherit' }}>{appName}</Typography>
       </Link>
-      <Typography
-        component={Link}
-        to="/"
-        variant="h6"
-        sx={{ textDecoration: 'none', color: 'inherit' }}
-      >
-        {appName}
-      </Typography>
       <List>
         {navItems.map(item => (
           <ListItem key={item.label} disablePadding>
-            <ListItemButton
-              component={Link}
-              to={item.to}
-              sx={{ textAlign: 'center' }}
-            >
+            <ListItemButton component={Link} to={item.to} sx={{ textAlign: 'center' }}>
               <ListItemText primary={item.label} />
             </ListItemButton>
           </ListItem>
@@ -69,9 +51,8 @@ export default function AppHeader() {
 
   return (
     <Box sx={{ flexGrow: 1 }}>
-      <AppBar position="sticky" color="primary">
+      <AppBar position="sticky">
         <Toolbar>
-          {/* Mobile menu button */}
           <IconButton
             color="inherit"
             edge="start"
@@ -81,17 +62,10 @@ export default function AppHeader() {
             <MenuIcon />
           </IconButton>
 
-          {/* Logo */}
           <Link to="/" style={{ display: 'inline-flex', textDecoration: 'none', alignItems: 'center' }}>
-            <Box
-              component="img"
-              src={logo}
-              alt="PlanWise logo"
-              sx={{ height: 40, mr: 2 }}
-            />
+            <Box component="img" src={logo} alt="PlanWise logo" sx={{ height: 40, mr: 2 }} />
           </Link>
 
-          {/* App name (optional if your logo contains text) */}
           <Typography
             variant="h6"
             component={Link}
@@ -106,25 +80,22 @@ export default function AppHeader() {
             {appName}
           </Typography>
 
-          {/* Desktop nav items */}
           <Box sx={{ display: { xs: 'none', sm: 'block' } }}>
             {navItems.map(item => (
               <Button
                 key={item.label}
-                variant="text"       // <–– make this one text
-                color="inherit"      // <–– white on the dark AppBar
+                color="inherit"
                 component={Link}
                 to={item.to}
                 sx={{ ml: 1 }}
               >
-                {item.label}
+                {item.label.toUpperCase()}
               </Button>
             ))}
           </Box>
         </Toolbar>
       </AppBar>
 
-      {/* Mobile drawer */}
       <Drawer
         variant="temporary"
         open={mobileOpen}

@@ -1,43 +1,41 @@
 import React from 'react';
 import Container from '@mui/material/Container';
-import Grid from '@mui/material/Grid';         // CSS‑Grid API
+import Grid from '@mui/material/Grid';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import CardActions from '@mui/material/CardActions';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
-
  import CardHeader  from '@mui/material/CardHeader';
  import Box         from '@mui/material/Box';
-import RogersLogo from '../assets/Rogers.svg';
-const rogersPlans = [
-  { id: 1, name: 'Rogers Basic', description: 'Entry‑level plan', price: '$39.99/mo' },
-  { id: 2, name: 'Rogers Unlimited', description: 'Unlimited data', price: '$69.99/mo' },
-  { id: 3, name: 'Rogers Family', description: 'Shareable family plan', price: '$109.99/mo' },
+import RogersLogo from '../assets/teksavvy.svg';
+
+const teksavvyPlans = [
+  { id: 1, name: 'TekSavvy Basic',    description: 'Affordable starter',  price: '$34.95/mo' },
+  { id: 2, name: 'TekSavvy Standard', description: 'Steady performance',  price: '$54.95/mo' },
+  { id: 3, name: 'TekSavvy Premium',  description: 'Blazing fast speeds', price: '$74.95/mo' },
 ];
 
-export default function RogersPlans() {
+export default function TekSavvyPlans() {
   return (
     <Container maxWidth="lg" sx={{ mt: 4, minHeight: '100vh' }}>
-       <Typography variant="h4" component="h2" gutterBottom>
-          Rogers Plans
-        </Typography>
+      <Typography variant="h4" component="h2" gutterBottom>
+        TekSavvy Plans
+      </Typography>
+
       <Grid container spacing={2}>
-        {rogersPlans.map((plan) => (
-          <Grid  size={{xs: 12, md:4, sm:6}}>
+        {teksavvyPlans.map((plan) => (
+          <Grid size={{xs: 12, sm: 6, md: 4}} >
             <Card
-              key={plan.id}
-              // elevation={3}
               sx={{
-                width: '100%',          // fill the grid cell
-                height: '100%',         // match heights
                 display: 'flex',
                 flexDirection: 'column',
+                height: '100%',
               }}
             >
-            <CardHeader title={plan.name}
+          <CardHeader title={plan.name}
                action={
-              <Box component="img" src={RogersLogo} alt="Rogers logo" sx={{ width:90, height:90 }}/>
+              <Box component="img" src={RogersLogo} alt="Rogers logo" sx={{ width:80, height:80 }}/>
              }
             sx={{ pb: 0 }}
              />
@@ -53,7 +51,8 @@ export default function RogersPlans() {
                 sx={{
                   flexDirection: 'column',
                   alignItems: 'center',
-                  pb: 2,
+                  mb: 2,
+                  mt: 'auto'
                 }}
               >
                 <Typography variant="h6" gutterBottom>

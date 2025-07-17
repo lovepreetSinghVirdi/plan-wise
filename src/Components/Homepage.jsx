@@ -1,4 +1,4 @@
-
+import { NavLink as RouterNavLink } from 'react-router-dom';
 import {
   Container,
   Grid,
@@ -7,9 +7,22 @@ import {
   CardActions,
   Typography,
   Button,
+  CardHeader,
+  Box,
 } from '@mui/material';
 import MainSearch from './FormComponents/MainSearch';
 import { useNavigate } from 'react-router-dom';
+import rogersLogo from '../assets/Rogers.svg';
+import bellLogo from '../assets/Bell_Canada.svg';
+import vmediaLogo from '../assets/vmedia.svg';
+import teksavvyLogo from '../assets/teksavvy.svg';
+
+const logos = {
+  rogers: rogersLogo,
+  bell: bellLogo,
+  vmedia: vmediaLogo,
+  teksavvy: teksavvyLogo,
+};
 
 const plans = [
   { key: 'rogers', title: 'Rogers', text: 'This is the first card.' },
@@ -59,16 +72,21 @@ const HomePage = () => {
                 flexDirection: 'column',
               }}
             >
-              <CardContent sx={{ flexGrow: 1 }}>
-                <Typography variant="h6" gutterBottom>
-                  {plan.title}
-                </Typography>
-                <Typography variant="body2" color="text.secondary">
+
+              <CardHeader
+                title={plan.title}
+                action={
+                  <Box component="img" src={logos[plan.key]} alt={`${plan.title} logo`} sx={{ width: 90, height: 90 }} />
+                }
+                sx={{ pb: 0 }}
+              />
+              <CardContent sx={{ flexGrow: 1, pt: 1 }}>
+                <Typography variant="body2" color="text.secpndary">
                   {plan.text}
                 </Typography>
               </CardContent>
               <CardActions sx={{ justifyContent: 'center', pb: 2 }}>
-                <Button fullWidth variant="contained">
+                <Button component={RouterNavLink} to={`/${plan.key}`} fullWidth variant="contained"  >
                   Learn More
                 </Button>
               </CardActions>
