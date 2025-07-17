@@ -5,7 +5,9 @@ import RogersPlans from './Components/RogersPlans';
 import BellPlans   from './Components/BellPlans';
 import VmediaPlans from './Components/VmediaPlans';
 import TeksavvyPlans from './Components/TeksavvyPlans';
+import Aboutus from './Components/Aboutus';
 import Footer      from './Components/Footer';
+
 
 import {
   BrowserRouter,
@@ -27,6 +29,7 @@ export default function App() {
         <Route path="bell"   element={<BellPlans />} />
         <Route path="vmedia" element={<VmediaPlans />} />
         <Route path="teksavvy" element={<TeksavvyPlans />} />
+        <Route path="aboutus"   element={<Aboutus />} />
 
         {/* fallback */}
         <Route path="*" element={<Navigate to="/" replace />} />

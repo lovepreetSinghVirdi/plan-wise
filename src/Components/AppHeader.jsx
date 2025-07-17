@@ -26,7 +26,7 @@ export default function AppHeader() {
     { label: 'Bell',    to: '/bell' },
     { label: 'Vmedia',  to: '/vmedia' },
     { label: 'Teksavvy',to: '/teksavvy' },
-    { label: 'About Us',to: '/about' },
+    { label: 'About Us',to: '/aboutus' },
   ];
 
   const handleDrawerToggle = () => setMobileOpen(open => !open);
