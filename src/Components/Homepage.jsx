@@ -16,6 +16,7 @@ import rogersLogo from '../assets/Rogers.svg';
 import bellLogo from '../assets/Bell_Canada.svg';
 import vmediaLogo from '../assets/vmedia.svg';
 import teksavvyLogo from '../assets/teksavvy.svg';
+import CustomCard  from '../Components/FormComponents/CustomCard'
 
 const logos = {
   rogers: rogersLogo,
@@ -64,14 +65,7 @@ const HomePage = () => {
             size={{ xs: 12, sm: 6, md: 3 }}
             sx={{ display: 'flex' }}
           >
-            <Card
-              elevation={3}
-              sx={{
-                width: '100%',
-                display: 'flex',
-                flexDirection: 'column',
-              }}
-            >
+            <CustomCard>
 
               <CardHeader
                 title={plan.title}
@@ -90,7 +84,7 @@ const HomePage = () => {
                   Learn More
                 </Button>
               </CardActions>
-            </Card>
+            </CustomCard>
           </Grid>
         ))}
       </Grid>
