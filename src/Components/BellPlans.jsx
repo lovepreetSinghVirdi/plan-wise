@@ -6,7 +6,9 @@ import CardContent from '@mui/material/CardContent';
 import CardActions from '@mui/material/CardActions';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
-
+ import CardHeader  from '@mui/material/CardHeader';
+ import Box         from '@mui/material/Box';
+import RogersLogo from '../assets/Bell_Canada.svg';
 // mock data for Bell
 const bellPlans = [
   { id: 1, name: 'Bell Fibe 75',      description: 'Fast home internet',    price: '$49.99/mo' },
@@ -25,8 +27,15 @@ export default function BellPlans() {
         {bellPlans.map((plan) => (
           <Grid size={{xs: 12, sm: 6, md: 4}} >
             <Card sx={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
-              <CardContent sx={{ flexGrow: 1 }}>
-                <Typography variant="h6">{plan.name}</Typography>
+              <CardHeader title={plan.name}
+               action={
+              <Box component="img" src={RogersLogo} alt="Rogers logo" sx={{ width:80, height:80 }}/>
+             }
+            sx={{ pb: 0 }}
+             />
+
+              {/* Drop the plan.name Typography; only description */}
+              <CardContent sx={{ flexGrow:1, pt:1 }}>
                 <Typography variant="body2" color="text.secondary">
                   {plan.description}
                 </Typography>

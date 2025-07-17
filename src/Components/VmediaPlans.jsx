@@ -6,6 +6,9 @@ import CardContent from '@mui/material/CardContent';
 import CardActions from '@mui/material/CardActions';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
+ import CardHeader  from '@mui/material/CardHeader';
+ import Box         from '@mui/material/Box';
+import RogersLogo from '../assets/vmedia.svg';
 
 const vmediaPlans = [
   { id: 1, name: 'Vmedia Essentials', description: 'Budget friendly',       price: '$39.99/mo' },
@@ -30,10 +33,15 @@ export default function VmediaPlans() {
                 height: '100%',
               }}
             >
-              <CardContent sx={{ flexGrow: 1 }}>
-                <Typography variant="h6" gutterBottom>
-                  {plan.name}
-                </Typography>
+              <CardHeader title={plan.name}
+               action={
+              <Box component="img" src={RogersLogo} alt="Rogers logo" sx={{ width:90, height:90 }}/>
+             }
+            sx={{ pb: 0 }}
+             />
+
+              {/* Drop the plan.name Typography; only description */}
+              <CardContent sx={{ flexGrow:1, pt:1 }}>
                 <Typography variant="body2" color="text.secondary">
                   {plan.description}
                 </Typography>
