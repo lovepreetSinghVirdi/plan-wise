@@ -87,7 +87,16 @@ export default function AppHeader() {
                 color="inherit"
                 component={Link}
                 to={item.to}
-                sx={{ ml: 1 }}
+                sx={{ ml: 1,
+                bgcolor: 'transparent',
+                '&.active': {
+                  color: 'secondary.main',            // highlight text
+                  borderBottom: '2px solid',          // add an underline
+                  borderColor: 'secondary.main',
+                  borderRadius: 0,                    // no rounded corners on the underline
+                } 
+
+                }}
               >
                 {item.label.toUpperCase()}
               </Button>

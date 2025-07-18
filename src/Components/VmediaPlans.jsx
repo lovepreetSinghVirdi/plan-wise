@@ -9,6 +9,7 @@ import Button from '@mui/material/Button';
  import CardHeader  from '@mui/material/CardHeader';
  import Box         from '@mui/material/Box';
 import RogersLogo from '../assets/vmedia.svg';
+import CustomCard from './FormComponents/CustomCard';
 
 const vmediaPlans = [
   { id: 1, name: 'Vmedia Essentials', description: 'Budget friendly',       price: '$39.99/mo' },
@@ -26,7 +27,7 @@ export default function VmediaPlans() {
       <Grid container spacing={2}>
         {vmediaPlans.map((plan) => (
           <Grid size={{xs: 12, sm: 6, md: 4}} >
-            <Card
+            <CustomCard
               sx={{
                 display: 'flex',
                 flexDirection: 'column',
@@ -62,7 +63,7 @@ export default function VmediaPlans() {
                   Choose
                 </Button>
               </CardActions>
-            </Card>
+            </CustomCard>
           </Grid>
         ))}
       </Grid>

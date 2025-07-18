@@ -9,6 +9,7 @@ import Button from '@mui/material/Button';
  import CardHeader  from '@mui/material/CardHeader';
  import Box         from '@mui/material/Box';
 import RogersLogo from '../assets/Bell_Canada.svg';
+import CustomCard from './FormComponents/CustomCard';
 // mock data for Bell
 const bellPlans = [
   { id: 1, name: 'Bell Fibe 75',      description: 'Fast home internet',    price: '$49.99/mo' },
@@ -26,7 +27,8 @@ export default function BellPlans() {
       <Grid container spacing={2}>
         {bellPlans.map((plan) => (
           <Grid size={{xs: 12, sm: 6, md: 4}} >
-            <Card sx={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
+           
+            <CustomCard sx={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
               <CardHeader title={plan.name}
                action={
               <Box component="img" src={RogersLogo} alt="Rogers logo" sx={{ width:80, height:80 }}/>
@@ -44,7 +46,8 @@ export default function BellPlans() {
                 <Typography variant="h6">{plan.price}</Typography>
                 <Button fullWidth variant="contained">Choose</Button>
               </CardActions>
-            </Card>
+            </CustomCard>
+           
           </Grid>
         ))}
       </Grid>

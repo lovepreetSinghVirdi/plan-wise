@@ -9,6 +9,7 @@ import Button from '@mui/material/Button';
  import CardHeader  from '@mui/material/CardHeader';
  import Box         from '@mui/material/Box';
 import RogersLogo from '../assets/teksavvy.svg';
+import CustomCard from './FormComponents/CustomCard';
 
 const teksavvyPlans = [
   { id: 1, name: 'TekSavvy Basic',    description: 'Affordable starter',  price: '$34.95/mo' },
@@ -26,7 +27,8 @@ export default function TekSavvyPlans() {
       <Grid container spacing={2}>
         {teksavvyPlans.map((plan) => (
           <Grid size={{xs: 12, sm: 6, md: 4}} >
-            <Card
+            
+            <CustomCard
               sx={{
                 display: 'flex',
                 flexDirection: 'column',
@@ -62,7 +64,8 @@ export default function TekSavvyPlans() {
                   Choose
                 </Button>
               </CardActions>
-            </Card>
+         
+            </CustomCard>
           </Grid>
         ))}
       </Grid>
