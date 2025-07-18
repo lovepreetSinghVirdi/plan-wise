@@ -19,8 +19,26 @@ const teksavvyPlans = [
 
 export default function TekSavvyPlans() {
   return (
-    <Container maxWidth="lg" sx={{ mt: 4, minHeight: '100vh' }}>
-      <Typography variant="h4" component="h2" gutterBottom>
+    <Container maxWidth="lg" 
+    sx={{
+         mt: 4,
+          minHeight: '100vh',
+          width: '100%',
+          }}>
+      <Typography
+       variant="h4"
+        component="h2" 
+        align='center' 
+        gutterBottom
+        sx={{
+        fontWeight: 700,
+        fontSize: '2.5rem',
+        background: 'linear-gradient(45deg, #ff8161ff, #16598cff)',
+        WebkitBackgroundClip: 'text',
+        WebkitTextFillColor: 'transparent',
+        mb: 4,
+      }}
+        >
         TekSavvy Plans
       </Typography>
 
@@ -44,7 +62,9 @@ export default function TekSavvyPlans() {
 
               {/* Drop the plan.name Typography; only description */}
               <CardContent sx={{ flexGrow:1, pt:1 }}>
-                <Typography variant="body2" color="text.secondary">
+                <Typography variant="body2" 
+                color="text.secondary"
+                >
                   {plan.description}
                 </Typography>
               </CardContent>

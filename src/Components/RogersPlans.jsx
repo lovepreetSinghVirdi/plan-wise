@@ -19,17 +19,36 @@ const rogersPlans = [
 
 export default function RogersPlans() {
   return (
-    <Container maxWidth="lg" sx={{ mt: 4, minHeight: '100vh' }}>
-      <Typography variant="h4" component="h2" gutterBottom>
+    <Container maxWidth="lg"
+     sx={{
+       mt: 4,
+        minHeight: '100vh',
+        width: '100%',
+         }}>
+      <Typography 
+      variant="h4"
+       component="h2"
+       align='center' 
+       gutterBottom
+        sx={{
+        fontWeight: 700,
+        fontSize: '2.5rem',
+        background: 'linear-gradient(45deg, #ff8161ff, #16598cff)',
+        WebkitBackgroundClip: 'text',
+        WebkitTextFillColor: 'transparent',
+        mb: 4,
+      }}
+      >
         Rogers Plans
       </Typography>
       <Grid container spacing={2}>
         {rogersPlans.map((plan) => (
-          <Grid size={{ xs: 12, md: 4, sm: 6 }} key={plan.id}>
+          <Grid size={{ xs: 12, md:4, sm: 6 }} key={plan.id}>
             <CustomCard
               key={plan.id}
               // elevation={3}
               sx={{
+
                 width: '100%',          // fill the grid cell
                 height: '100%',         // match heights
                 display: 'flex',

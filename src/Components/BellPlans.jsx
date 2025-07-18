@@ -19,8 +19,26 @@ const bellPlans = [
 
 export default function BellPlans() {
   return (
-    <Container maxWidth="lg" sx={{ mt: 4, minHeight: '100vh' }}>
-      <Typography variant="h4" gutterBottom>
+    <Container maxWidth="lg" 
+    sx={{
+         mt: 4, 
+         minHeight: '100vh',
+          width: '100%'
+         }}>
+      <Typography
+       variant="h4"
+         component="h2" 
+      align='center' 
+        gutterBottom
+        sx={{
+        fontWeight: 700,
+        fontSize: '2.5rem',
+        background: 'linear-gradient(45deg, #ff8161ff, #16598cff)',
+        WebkitBackgroundClip: 'text',
+        WebkitTextFillColor: 'transparent',
+        mb: 4,
+      }}
+        >
         Bell Plans
       </Typography>
 

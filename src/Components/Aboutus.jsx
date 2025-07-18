@@ -205,11 +205,15 @@ export default function AboutUs() {
       <Grid container spacing={4} justifyContent="center" mb={6}>
         {values.map(val => (
           <Grid key={val.title} item xs={12} sm={4} display="flex" justifyContent="center">
-            <Box sx={{ maxWidth:300, textAlign:'center', px:2 }}>
-              <Typography variant="h6" sx={{ fontWeight:600, mb:1 }}>
+            <Box sx={{
+                 maxWidth:300,
+                  textAlign:'center', 
+                  px:2
+                   }}>
+              <Typography variant="h6" sx={{  fontStyle:'italic',fontWeight:600, mb:1 }}>
                 {val.title}
               </Typography>
-              <Typography variant="body2" color="text.secondary" sx={{ lineHeight:1.6 }}>
+              <Typography variant="body2" color="text.secondary" sx={{  fontStyle:'italic',lineHeight:1.6 }}>
                 {val.text}
               </Typography>
             </Box>
