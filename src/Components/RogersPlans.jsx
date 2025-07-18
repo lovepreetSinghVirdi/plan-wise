@@ -25,7 +25,7 @@ export default function RogersPlans() {
       </Typography>
       <Grid container spacing={2}>
         {rogersPlans.map((plan) => (
-          <Grid size={{ xs: 12, md: 4, sm: 6 }}>
+          <Grid size={{ xs: 12, md: 4, sm: 6 }} key={plan.id}>
             <CustomCard
               key={plan.id}
               // elevation={3}
