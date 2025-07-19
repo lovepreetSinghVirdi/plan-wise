@@ -1,5 +1,10 @@
 #root {
-  width: 100%;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  overflow: hidden;
+  background: url('/src/assets/bg1.png') center/cover no-repeat;
+  ;
 }
 
 .no-bullets-ul {
@@ -24,6 +29,7 @@
   from {
     transform: rotate(0deg);
   }
+
   to {
     transform: rotate(360deg);
   }
@@ -42,4 +48,3 @@
 .read-the-docs {
   color: #888;
 }
-

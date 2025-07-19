@@ -7,6 +7,10 @@ import CardActions from '@mui/material/CardActions';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 
+import CardHeader from '@mui/material/CardHeader';
+import Box from '@mui/material/Box';
+import RogersLogo from '../assets/Rogers.svg';
+import CustomCard from './FormComponents/CustomCard';
 const rogersPlans = [
   { id: 1, name: 'Rogers Basic', description: 'Entry‑level plan', price: '$39.99/mo' },
   { id: 2, name: 'Rogers Unlimited', description: 'Unlimited data', price: '$69.99/mo' },
@@ -51,10 +55,15 @@ export default function RogersPlans() {
                 flexDirection: 'column',
               }}
             >
-              <CardContent sx={{ flexGrow: 1 }}>
-                <Typography variant="h6" gutterBottom>
-                  {plan.name}
-                </Typography>
+              <CardHeader title={plan.name}
+                action={
+                  <Box component="img" src={RogersLogo} alt="Rogers logo" sx={{ width: 90, height: 90 }} />
+                }
+                sx={{ pb: 0 }}
+              />
+
+              {/* Drop the plan.name Typography; only description */}
+              <CardContent sx={{ flexGrow: 1, pt: 1 }}>
                 <Typography variant="body2" color="text.secondary">
                   {plan.description}
                 </Typography>

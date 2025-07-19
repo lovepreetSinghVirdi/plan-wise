@@ -1,5 +1,5 @@
-import { useState } from 'react';
-
+// src/Components/AppHeader.jsx
+import React, { useState }    from 'react'
 import { NavLink }             from 'react-router-dom'
 import AppBar                  from '@mui/material/AppBar'
 import Box                     from '@mui/material/Box'
@@ -21,17 +21,15 @@ export default function AppHeader() {
   const appName = 'PlanWise'
 
   const navItems = [
-    { label: 'Home', to: '/home' },
-    { label: 'Rogers', to: '/rogers' },
-    { label: 'Bell', to: '/plan' },
-    { label: 'Vmedia', to: '/vmedia' },
+    { label: 'Home',     to: '/'       },
+    { label: 'Rogers',   to: '/rogers' },
+    { label: 'Bell',     to: '/bell'   },
+    { label: 'Vmedia',   to: '/vmedia' },
     { label: 'Teksavvy', to: '/teksavvy' },
-    { label: 'About Us', to: '/about' },
-  ];
+    { label: 'About Us', to: '/aboutus' },
+  ]
 
-  const handleDrawerToggle = () => {
-    setMobileOpen((prev) => !prev);
-  };
+  const handleDrawerToggle = () => setMobileOpen(o => !o)
 
   // mobile‐drawer contents
   const drawer = (
@@ -71,7 +69,7 @@ export default function AppHeader() {
 
   return (
     <Box sx={{ flexGrow: 1 }}>
-      <AppBar position="sticky" color="primary">
+      <AppBar position="sticky">
         <Toolbar>
           {/* Hamburger menu (mobile) */}
           <IconButton
@@ -129,19 +127,18 @@ export default function AppHeader() {
                   '&:hover': { bgcolor: 'transparent' },
                 }}
               >
-                {item.label}
+                {item.label.toUpperCase()}
               </Button>
             ))}
           </Box>
         </Toolbar>
       </AppBar>
 
-      {/* Mobile drawer */}
       <Drawer
         variant="temporary"
         open={mobileOpen}
         onClose={handleDrawerToggle}
-        ModalProps={{ keepMounted: true }} 
+        ModalProps={{ keepMounted: true }}
         sx={{
           display: { xs: 'block', sm: 'none' },
           '& .MuiDrawer-paper': { boxSizing: 'border-box', width: 240 },

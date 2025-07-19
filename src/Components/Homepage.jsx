@@ -1,5 +1,5 @@
 // src/Components/HomePage.jsx
-
+import React from 'react';
 import { NavLink as RouterNavLink, useNavigate } from 'react-router-dom';
 import {
   Container,
