@@ -2,6 +2,24 @@
   width: 100%;
 }
 
+.no-bullets-ul {
+  list-style: none;
+  /* remove bullet points */
+  margin: 0;
+  /* reset default margins */
+  padding: 0;
+  /* reset default padding */
+}
+.no-bullets-ul li span:first-of-type {
+  margin-right: 2rem;
+}
+@keyframes slideInUp {
+  0%   { transform: translateY(20px); opacity: 0; }
+  100% { transform: translateY( 0  ); opacity: 1; }
+}
+
+
+
 @keyframes logo-spin {
   from {
     transform: rotate(0deg);
