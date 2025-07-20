@@ -11,30 +11,53 @@ import {
     ListItemIcon,
     ListItemText,
 } from '@mui/material';
-import { useEffect } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import FiberManualRecordIcon from '@mui/icons-material/FiberManualRecord';
+import { apiURL, makePlansFromRawData, searchPlanByTextUrl } from '../Helpers/helpers';
+import axios from 'axios';
+import AppLoader from './FormComponents/Loader';
 
-const AvailablePlans = ({ plans = [
-    { key: 'rogers', title: 'Rogers', text: 'This is the first card.' },
-    { key: 'bell', title: 'Bell', text: 'This is the second card.' },
-    { key: 'vmedia', title: 'Vmedia', text: 'This is the third card.' },
-    { key: 'teksavvy', title: 'Teksavvy', text: 'This is the fourth card.' },
-] }) => {
+const AvailablePlans = () => {
+
     const navigate = useNavigate();
     const location = useLocation();
+    const [plans, setPlans] = useState([]);
+    const [isLoading, setLoading] = useState(false);
 
     // Safely grab keyword (or default to empty string)
     const keyword = location.state?.keyword?.trim() ?? '';
 
+
+
+    const fetchPageData = useCallback(async () => {
+        try {
+            setLoading(true);
+            const url = `${apiURL}${searchPlanByTextUrl}`;
+            const { data } = await axios.get(url, {
+                params: { q: keyword, max: 50 }
+            });
+
+            const parsedPlans = makePlansFromRawData(data)
+            setPlans(parsedPlans);
+
+        } catch {
+            setPlans([]);
+        } finally {
+            setTimeout(()=>setLoading(false), 3000);
+
+        }
+    }, [keyword]);
+
     useEffect(() => {
+
         if (!keyword) {
             // replace so user can't go back to this invalid page
             navigate('/', { replace: true });
         } else {
-            console.log('keyword is ----', keyword);
+            fetchPageData(keyword)
         }
-    }, [keyword, navigate]);
+    }, [fetchPageData, keyword, navigate]);
 
     // If we redirect, this render won't actually show—
     // but you can optionally early-return null here.
@@ -84,8 +107,10 @@ const AvailablePlans = ({ plans = [
     }
 
     return (
+
         <Container maxWidth="lg" sx={{ mt: 4, minHeight: '100vh' }}>
-            {renderCards()}
+            {isLoading ? <AppLoader /> :
+                renderCards()}
         </Container>
     );
 };

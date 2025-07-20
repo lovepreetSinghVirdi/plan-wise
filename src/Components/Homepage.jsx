@@ -11,64 +11,57 @@ import {
   Button,
   Box,
 } from '@mui/material';
-import { motion } from 'framer-motion';
+import { motion as Motion } from 'framer-motion';
 import MainSearch from './FormComponents/MainSearch';
-import rogersLogo   from '../assets/Rogers.svg';
-import iprimusLogo     from '../assets/iprimus_logo.svg';
-import vmediaLogo   from '../assets/vmedia.svg';
+import rogersLogo from '../assets/Rogers.svg';
+import iprimusLogo from '../assets/iprimus_logo.svg';
+import vmediaLogo from '../assets/vmedia.svg';
 import teksavvyLogo from '../assets/teksavvy.svg';
-import CustomCard   from '../Components/FormComponents/CustomCard';
+import CustomCard from './FormComponents/CustomCard';
 
 const logos = {
-  rogers:   rogersLogo,
-  iprimus:   iprimusLogo,
-  vmedia:   vmediaLogo,
+  rogers: rogersLogo,
+  iprimus: iprimusLogo,
+  vmedia: vmediaLogo,
   teksavvy: teksavvyLogo,
 };
 
 const plans = [
-  { key: 'rogers',   title: 'Rogers',   text: 'This is the first card.' },
-  { key: 'iprimus',     title: 'IPrimus',     text: 'This is the second card.' },
-  { key: 'vmedia',   title: 'Vmedia',   text: 'This is the third card.' },
+  { key: 'rogers', title: 'Rogers', text: 'This is the first card.' },
+  { key: 'iprimus', title: 'IPrimus', text: 'This is the second card.' },
+  { key: 'vmedia', title: 'Vmedia', text: 'This is the third card.' },
   { key: 'teksavvy', title: 'Teksavvy', text: 'This is the fourth card.' },
 ];
 
 export default function HomePage() {
   const navigate = useNavigate();
 
-  const handleOptionSelect = (_, newVal) => {
-    navigate('/available-plans', {
-      state: { keyword: newVal }
-    });
+  const handleOptionSelect = (keyword) => {
+    navigate('/available-plans', { state: { keyword } });
   };
 
   return (
-    <Container maxWidth="lg" sx={{ mt: 4 }}>
-      {/* ─── Search bar row (unchanged) ─── */}
-      <Grid container spacing={2} sx={{ mt: 20 }}>
-        <Grid
-          size={{ xs: 12, sm: 8 }}
-          offset={{ sm: 2 }}
-          sx={{ display: 'flex' }}
-        >
-          <MainSearch onSelect={handleOptionSelect} />
-        </Grid>
+    <Container maxWidth="lg" sx={{ mt: 4, width: '100%', justifyContent: 'center' }}>
+      {/* ─── Main Searchbar row ─── */}
+      < Grid container spacing={2} sx={{ mt: 20 }}>
+        <MainSearch onSelect={handleOptionSelect} />
+
       </Grid>
 
       {/* ─── Plan cards row ─── */}
       <Grid container spacing={2} sx={{ mt: 20 }}>
         {plans.map((plan, index) => (
           <Grid
-            key={plan.key}
+            key={`plan_${index}_${plan.key}`}
             size={{ xs: 12, sm: 6, md: 3 }}
             sx={{ display: 'flex' }}
           >
-            
-            <motion.div
+
+            <Motion.div
               initial={{ y: 20, opacity: 0 }}
-              animate={{ y: 0,  opacity: 1 }}
+              animate={{ y: 0, opacity: 1 }}
               transition={{ delay: index * 0.2, duration: 0.6 }}
-              style={{ width: '100%' }} 
+              style={{ width: '100%' }}
             >
               <CustomCard>
                 <CardHeader
@@ -99,7 +92,7 @@ export default function HomePage() {
                   </Button>
                 </CardActions>
               </CustomCard>
-            </motion.div>
+            </Motion.div>
           </Grid>
         ))}
       </Grid>
