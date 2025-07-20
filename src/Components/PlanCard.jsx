@@ -7,20 +7,31 @@ import CardActions from '@mui/material/CardActions';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import Box from '@mui/material/Box';
+import CustomCard from './FormComponents/CustomCard';
 
 export default function PlanCard({ plan }) {
+  // pull name/description/price/features/logo 
   const {
     name,
     description,
-    downloadSpeed,
-    uploadSpeed,
-    features = [],
     price,
+    features = [],
     logo
   } = plan;
 
+  // fallback to raw JSON keys if camelCase isn't provided
+  const downloadSpeed =
+    plan.downloadSpeed ?? plan.DownloadingSpeed ?? null;
+  const uploadSpeed =
+    plan.uploadSpeed   ?? plan.uploadingspeed  ?? null;
+
   return (
-    <Card sx={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
+    <CustomCard 
+    sx={{ 
+        display: 'flex', 
+        flexDirection: 'column',
+         flexGrow:1
+          }}>
       <CardHeader
         title={name}
         action={
@@ -73,7 +84,9 @@ export default function PlanCard({ plan }) {
           flexDirection: 'column',
           alignItems: 'center',
           mt: 'auto',
-          mb: 2,
+          justifyContent: 'center',
+          pb: 2,
+          mb:2
         }}
       >
         <Typography variant="h6" gutterBottom>
@@ -83,6 +96,7 @@ export default function PlanCard({ plan }) {
           Choose
         </Button>
       </CardActions>
-    </Card>
+    </CustomCard>
   );
+
 }

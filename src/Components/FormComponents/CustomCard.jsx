@@ -1,11 +1,12 @@
 // CustomCard.jsx
 import { Card } from '@mui/material';
 
-const CustomCard = ({ children, sx = {} }) => (
+const CustomCard = ({ children, sx = { height: '100%', display: 'flex', flexDirection: 'column'} }) => (
   <Card
     elevation={6}
     sx={{
       width: '100%',
+      height: '100%',
       minHeight: 300,
       display: 'flex',
       flexDirection: 'column',
