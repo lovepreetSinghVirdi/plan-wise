@@ -52,15 +52,15 @@ export default function HomePage() {
       <Grid container spacing={2} sx={{ mt: 20 }}>
         {plans.map((plan, index) => (
           <Grid
-            key={plan.key}
+            key={`plan_${index}_${plan.key}`}
             size={{ xs: 12, sm: 6, md: 3 }}
             sx={{ display: 'flex' }}
           >
 
-            <motion.div
+            <Motion.div
               initial={{ y: 20, opacity: 0 }}
               animate={{ y: 0, opacity: 1 }}
-              transition={{ delay: i * 0.2, duration: 0.6 }}
+              transition={{ delay: index * 0.2, duration: 0.6 }}
               style={{ width: '100%' }}
             >
               <CustomCard>
