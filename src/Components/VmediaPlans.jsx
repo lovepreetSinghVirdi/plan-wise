@@ -1,4 +1,5 @@
 import React from 'react';
+import { useTheme } from '@emotion/react';
 import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid';
 import Card from '@mui/material/Card';
@@ -10,7 +11,7 @@ import Button from '@mui/material/Button';
  import Box         from '@mui/material/Box';
 import RogersLogo from '../assets/vmedia.svg';
 import CustomCard from './FormComponents/CustomCard';
-
+import { motion } from 'framer-motion';
 const vmediaPlans = [
   { id: 1, name: 'Vmedia Essentials', description: 'Budget friendly',       price: '$39.99/mo' },
   { id: 2, name: 'Vmedia Plus',      description: 'More speed, more data', price: '$59.99/mo' },
@@ -18,6 +19,7 @@ const vmediaPlans = [
 ];
 
 export default function VmediaPlans() {
+  const theme = useTheme();
   return (
     <Container maxWidth="lg" 
     sx={{ 
@@ -33,9 +35,7 @@ export default function VmediaPlans() {
         sx={{
         fontWeight: 700,
         fontSize: '2.5rem',
-        background: 'linear-gradient(45deg, #ff8161ff, #16598cff)',
-        WebkitBackgroundClip: 'text',
-        WebkitTextFillColor: 'transparent',
+        color: theme.palette.primary.main,
         mb: 4,
       }}
        >
@@ -43,8 +43,14 @@ export default function VmediaPlans() {
       </Typography>
 
       <Grid container spacing={2}>
-        {vmediaPlans.map((plan) => (
+        {vmediaPlans.map((plan,index) => (
           <Grid size={{xs: 12, sm: 6, md: 4}} >
+                <motion.div
+                  initial={{ y: 20, opacity: 0 }}
+                  animate={{ y: 0,  opacity: 1 }}
+                  transition={{ delay: index * 0.2, duration: 0.6 }}
+                  style={{ width: '100%' }} 
+                >       
             <CustomCard
               sx={{
                 display: 'flex',
@@ -82,6 +88,7 @@ export default function VmediaPlans() {
                 </Button>
               </CardActions>
             </CustomCard>
+            </motion.div>
           </Grid>
         ))}
       </Grid>
