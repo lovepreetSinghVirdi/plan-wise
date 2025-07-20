@@ -4,10 +4,39 @@ export const suggestionsURL = 'spellcheck';
 export const searchPlanByTextUrl = 'search';
 
 
-export const makePlansFromRawData = (data = []) => {
+import rogersLogo from '../assets/Rogers.svg';
+import iprimusLogo from '../assets/iprimus_logo.svg';
+import vmediaLogo from '../assets/vmedia.svg';
+import teksavvyLogo from '../assets/teksavvy.svg';
 
-    return data.map(() => {
-        return { key: 'rogers', title: 'Rogers', text: 'This is the first card.' }
+export const capitalize = (str = '') => {
+    return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
+}
+
+
+export const brandLogo = (site = '') => {
+    switch (site.toLowerCase()) {
+        case 'rogers':
+            return rogersLogo;
+        case 'iprimus':
+            return iprimusLogo;
+        case 'vmedia':
+            return vmediaLogo;
+        case 'teksavvy':
+            return teksavvyLogo;
+        default:
+            return '';
+
+
+    }
+};
+
+
+
+export const makePlansFromRawData = (plans = []) => {
+
+    return plans.map((plan) => {
+        return { ...plan, planName: plan?.site?.toUpperCase() === 'DODO' ? (plan.features || '') : plan.planName }
     })
 
 }

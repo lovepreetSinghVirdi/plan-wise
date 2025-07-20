@@ -5,7 +5,7 @@ import TwitterIcon from '@mui/icons-material/Twitter';
 
 export default function Footer() {
   return (
-    <Box component="footer" className="footer"  sx={{ mt: 20 }}>
+    <Box component="footer" className="footer" sx={{ mt: 20 }}>
       <Container maxWidth="lg" className="footer-container">
         <Box className="footer-links">
           <Link href="/about" color="inherit" underline="hover">

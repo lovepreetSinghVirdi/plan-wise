@@ -16,10 +16,15 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import FiberManualRecordIcon from '@mui/icons-material/FiberManualRecord';
 import { apiURL, makePlansFromRawData, searchPlanByTextUrl } from '../Helpers/helpers';
 import axios from 'axios';
+import { useTheme } from '@mui/material/styles';
+import { motion as Motion } from 'framer-motion';
+
 import AppLoader from './FormComponents/Loader';
+import PlanCard from './FormComponents/PlanCard';
 
 const AvailablePlans = () => {
 
+    const theme = useTheme();
     const navigate = useNavigate();
     const location = useLocation();
     const [plans, setPlans] = useState([]);
@@ -44,7 +49,7 @@ const AvailablePlans = () => {
         } catch {
             setPlans([]);
         } finally {
-            setTimeout(()=>setLoading(false), 3000);
+            setTimeout(() => setLoading(false), 3000);
 
         }
     }, [keyword]);
@@ -69,40 +74,47 @@ const AvailablePlans = () => {
             </Typography>
         )
 
-        return (
-            <>
-                <Typography variant="h4" component="h2" gutterBottom>
-                    Available Plans
-                </Typography>
-                <Grid container spacing={2} sx={{ mt: 2 }}>
-                    {plans.map(plan => {
-                        const details = Object.keys(plan);
+        return (<>
+            <Typography
+                variant="h4"
+                align="center"
+                gutterBottom
+                sx={{
+                    fontWeight: 700,
+                    fontSize: '2.5rem',
+                    color: theme.palette.primary.main,
+                    mb: 4
+                }}
+            >
+                Available Plans
+            </Typography>
+            <Grid container spacing={2} justifyContent="center">
+                {plans.map((plan, index) => {
 
-                        return (<Grid
-                            key={plan.key}
-                            item
-                            xs={12} sm={6} md={3}
+                    return (
+                        <Grid
+                            key={`${plan.site}_${index}`}
                             sx={{ display: 'flex' }}
+                            size={{ xs: 12, sm: 6, md: 4 }}
                         >
-                            <Card elevation={3} sx={{ width: '100%', display: 'flex', flexDirection: 'column' }}>
-                                <CardContent>
-                                    {/* Main heading */}
-                                    <Typography variant="h5" component="h2" gutterBottom>
-                                        {plan.title}
-                                    </Typography>
-
-                                    <ul className="no-bullets-ul">
-                                        {details.map((detail, idx) => (
-                                            <li key={idx}><Typography component="span" >{`${detail}:`}</Typography><Typography component="span" color="text.secondary">{plan[detail]}</Typography></li>
-                                        ))}
-                                    </ul>
-
-                                </CardContent>
-                            </Card>
-                        </Grid>)
-                    })}
-                </Grid>
-            </>
+                            <Motion.div
+                                initial={{ y: 20, opacity: 0 }}
+                                animate={{ y: 0, opacity: 1 }}
+                                transition={{ delay: index * 0.2, duration: 0.6 }}
+                                style={{
+                                    flex: 1,
+                                    display: 'flex',
+                                    flexDirection: 'column',
+                                    height: '100%'   /* ➋ fill the grid‐cell vertically */
+                                }}
+                            >
+                                <PlanCard plan={plan} />
+                            </Motion.div>
+                        </Grid>
+                    )
+                })}
+            </Grid>
+        </>
         )
     }
 
