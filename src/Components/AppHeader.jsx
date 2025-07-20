@@ -1,30 +1,30 @@
 // src/Components/AppHeader.jsx
-import React, { useState }    from 'react'
-import { NavLink }             from 'react-router-dom'
-import AppBar                  from '@mui/material/AppBar'
-import Box                     from '@mui/material/Box'
-import Toolbar                 from '@mui/material/Toolbar'
-import IconButton              from '@mui/material/IconButton'
-import MenuIcon                from '@mui/icons-material/Menu'
-import Typography              from '@mui/material/Typography'
-import Button                  from '@mui/material/Button'
-import Drawer                  from '@mui/material/Drawer'
-import List                    from '@mui/material/List'
-import ListItem                from '@mui/material/ListItem'
-import ListItemButton          from '@mui/material/ListItemButton'
-import ListItemText            from '@mui/material/ListItemText'
+import React, { useState } from 'react'
+import { NavLink } from 'react-router-dom'
+import AppBar from '@mui/material/AppBar'
+import Box from '@mui/material/Box'
+import Toolbar from '@mui/material/Toolbar'
+import IconButton from '@mui/material/IconButton'
+import MenuIcon from '@mui/icons-material/Menu'
+import Typography from '@mui/material/Typography'
+import Button from '@mui/material/Button'
+import Drawer from '@mui/material/Drawer'
+import List from '@mui/material/List'
+import ListItem from '@mui/material/ListItem'
+import ListItemButton from '@mui/material/ListItemButton'
+import ListItemText from '@mui/material/ListItemText'
 
-import logo                    from '../assets/logo.png'
+import logo from '../assets/logo.png'
 
 export default function AppHeader() {
   const [mobileOpen, setMobileOpen] = useState(false)
   const appName = 'PlanWise'
 
   const navItems = [
-    { label: 'Home',     to: '/'       },
-    { label: 'Rogers',   to: '/rogers' },
-    { label: 'Bell',     to: '/bell'   },
-    { label: 'Vmedia',   to: '/vmedia' },
+    { label: 'Home', to: '/' },
+    { label: 'Rogers', to: '/rogers' },
+    { label: 'Bell', to: '/bell' },
+    { label: 'Vmedia', to: '/vmedia' },
     { label: 'Teksavvy', to: '/teksavvy' },
     { label: 'About Us', to: '/aboutus' },
   ]
@@ -69,7 +69,8 @@ export default function AppHeader() {
 
   return (
     <Box sx={{ flexGrow: 1 }}>
-      <AppBar position="sticky">
+      <AppBar position="sticky"
+        sx={{ top: 0 }}       >
         <Toolbar>
           {/* Hamburger menu (mobile) */}
           <IconButton
@@ -116,7 +117,7 @@ export default function AppHeader() {
                 disableRipple
                 color="inherit"
                 style={({ isActive }) => ({
-                  color:        isActive ? '#FDAD5E' : '#fff',
+                  color: isActive ? '#FDAD5E' : '#fff',
                   borderBottom: isActive
                     ? '2px solid #FDAD5E'
                     : '2px solid transparent',

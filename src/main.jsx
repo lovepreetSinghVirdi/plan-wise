@@ -20,7 +20,6 @@ const root = createRoot(container);
 root.render(
   <ThemeProvider theme={darkTheme}>
     <CssBaseline />
-    <CssBaseline />
     <App />
 
   </ThemeProvider>

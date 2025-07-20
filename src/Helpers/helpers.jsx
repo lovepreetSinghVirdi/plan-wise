@@ -1,1 +1,4 @@
-export const apiURL = 'localhost:3001/api';
+export const apiURL = 'http://localhost:8080/api/';
+export const autocompleteURL = 'autocomplete';
+export const suggestionsURL = 'spellcheck';
+export const searchPlanByTextUrl = 'search';
