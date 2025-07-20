@@ -3,7 +3,7 @@ import './App.css';
 import AppHeader from './Components/AppHeader';
 import HomePage from './Components/Homepage';
 import RogersPlans from './Components/RogersPlans';
-import BellPlans from './Components/BellPlans';
+import IprimusPlans from './Components/IprimusPlans';
 import VmediaPlans from './Components/VmediaPlans';
 import TeksavvyPlans from './Components/TeksavvyPlans';
 import Aboutus from './Components/Aboutus';
@@ -32,11 +32,11 @@ const App = () => {
 
       <Routes>
         <Route path='/' element={<HomePage />} />
-        <Route path="rogers" element={<RogersPlans />} />
+        
         <Route path='/available-plans' element={<AvailablePlans />} />
 
         <Route path="rogers" element={<RogersPlans />} />
-        <Route path="bell" element={<BellPlans />} />
+        <Route path="iprimus" element={<IprimusPlans />} />
         <Route path="vmedia" element={<VmediaPlans />} />
         <Route path="teksavvy" element={<TeksavvyPlans />} />
         <Route path="aboutus" element={<Aboutus />} />

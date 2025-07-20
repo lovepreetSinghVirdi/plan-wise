@@ -1,4 +1,5 @@
 import React from 'react';
+import { useTheme }    from '@mui/material/styles';
 import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid';
 import Card from '@mui/material/Card';
@@ -6,10 +7,11 @@ import CardContent from '@mui/material/CardContent';
 import CardActions from '@mui/material/CardActions';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
- import CardHeader  from '@mui/material/CardHeader';
- import Box         from '@mui/material/Box';
+import CardHeader  from '@mui/material/CardHeader';
+import Box         from '@mui/material/Box';
 import RogersLogo from '../assets/teksavvy.svg';
 import CustomCard from './FormComponents/CustomCard';
+import { motion } from 'framer-motion';
 
 const teksavvyPlans = [
   { id: 1, name: 'TekSavvy Basic',    description: 'Affordable starter',  price: '$34.95/mo' },
@@ -18,6 +20,7 @@ const teksavvyPlans = [
 ];
 
 export default function TekSavvyPlans() {
+  const theme = useTheme();
   return (
     <Container maxWidth="lg" 
     sx={{
@@ -33,9 +36,7 @@ export default function TekSavvyPlans() {
         sx={{
         fontWeight: 700,
         fontSize: '2.5rem',
-        background: 'linear-gradient(45deg, #ff8161ff, #16598cff)',
-        WebkitBackgroundClip: 'text',
-        WebkitTextFillColor: 'transparent',
+        color: theme.palette.primary.main,
         mb: 4,
       }}
         >
@@ -43,9 +44,14 @@ export default function TekSavvyPlans() {
       </Typography>
 
       <Grid container spacing={2}>
-        {teksavvyPlans.map((plan) => (
+        {teksavvyPlans.map((plan,index) => (
           <Grid size={{xs: 12, sm: 6, md: 4}} >
-            
+            <motion.div
+              initial={{ y: 20, opacity: 0 }}
+              animate={{ y: 0,  opacity: 1 }}
+              transition={{ delay: index * 0.2, duration: 0.6 }}
+              style={{ width: '100%' }} 
+            >
             <CustomCard
               sx={{
                 display: 'flex',
@@ -86,6 +92,7 @@ export default function TekSavvyPlans() {
               </CardActions>
          
             </CustomCard>
+            </motion.div>
           </Grid>
         ))}
       </Grid>
