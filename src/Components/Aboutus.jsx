@@ -42,7 +42,10 @@ export default function AboutUs() {
           variant="h2"
           component="h1"
           gutterBottom
-          sx={{ fontWeight:700, letterSpacing:2, color: theme.palette.primary.main }}
+          sx={{ 
+            fontWeight:700,
+             letterSpacing:2,
+              color: theme.palette.primary.main }}
         >
           About Us
         </Typography>

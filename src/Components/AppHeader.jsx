@@ -23,7 +23,7 @@ export default function AppHeader() {
   const navItems = [
     { label: 'Home',     to: '/'       },
     { label: 'Rogers',   to: '/rogers' },
-    { label: 'Bell',     to: '/bell'   },
+    { label: 'iPrimus',   to: '/iprimus'   },
     { label: 'Vmedia',   to: '/vmedia' },
     { label: 'Teksavvy', to: '/teksavvy' },
     { label: 'About Us', to: '/aboutus' },
