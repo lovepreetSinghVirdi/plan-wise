@@ -1,21 +1,21 @@
 // src/Components/RogersPlans.jsx
 import React, { useState, useEffect } from 'react'
-import axios        from 'axios'
+import axios from 'axios'
 import { useTheme } from '@mui/material/styles'
-import Container    from '@mui/material/Container'
-import Grid         from '@mui/material/Grid'
-import Typography   from '@mui/material/Typography'
-import { motion }   from 'framer-motion'
+import Container from '@mui/material/Container'
+import Grid from '@mui/material/Grid'
+import Typography from '@mui/material/Typography'
+import { motion as Motion } from 'framer-motion';
 
-import Loader       from './FormComponents/Loader'
-import PlanCard     from './PlanCard'
-import RogersLogo   from '../assets/Rogers.svg'
+import Loader from './FormComponents/Loader'
+import PlanCard from './FormComponents/PlanCard'
+import RogersLogo from '../assets/Rogers.svg'
 
 export default function RogersPlans() {
   const theme = useTheme()
-  const [plans, setPlans]     = useState([])
+  const [plans, setPlans] = useState([])
   const [loading, setLoading] = useState(true)
-  const [error, setError]     = useState(null)
+  const [error, setError] = useState(null)
 
   useEffect(() => {
     axios.get('/plans.json')
@@ -62,10 +62,10 @@ export default function RogersPlans() {
         {plans.map((plan, i) => (
           <Grid
             key={plan.id}
-            item xs={12} sm={6} md={4}
             sx={{ display: 'flex' }}
+            size={{ xs: 12, sm: 6, md: 4 }}
           >
-            <motion.div
+            <Motion.div
               initial={{ y: 20, opacity: 0 }}
               animate={{ y: 0, opacity: 1 }}
               transition={{ delay: i * 0.2, duration: 0.6 }}
@@ -78,7 +78,7 @@ export default function RogersPlans() {
               }}
             >
               <PlanCard plan={plan} />
-            </motion.div>
+            </Motion.div>
           </Grid>
         ))}
       </Grid>
