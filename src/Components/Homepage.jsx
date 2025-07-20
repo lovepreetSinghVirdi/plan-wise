@@ -36,7 +36,7 @@ const plans = [
 export default function HomePage() {
   const navigate = useNavigate();
 
-  const handleOptionSelect = (_, keyword) => {
+  const handleOptionSelect = (keyword) => {
     navigate('/available-plans', { state: { keyword } });
   };
 

@@ -1,54 +1,57 @@
 // src/Components/AppHeader.jsx
-import React, { useState } from 'react'
-import { NavLink } from 'react-router-dom'
-import AppBar from '@mui/material/AppBar'
-import Box from '@mui/material/Box'
-import Toolbar from '@mui/material/Toolbar'
-import IconButton from '@mui/material/IconButton'
-import MenuIcon from '@mui/icons-material/Menu'
-import Typography from '@mui/material/Typography'
-import Button from '@mui/material/Button'
-import Drawer from '@mui/material/Drawer'
-import List from '@mui/material/List'
-import ListItem from '@mui/material/ListItem'
-import ListItemButton from '@mui/material/ListItemButton'
-import ListItemText from '@mui/material/ListItemText'
+import React, { useState } from 'react';
+import { NavLink }          from 'react-router-dom';
+import AppBar               from '@mui/material/AppBar';
+import Box                  from '@mui/material/Box';
+import Toolbar              from '@mui/material/Toolbar';
+import IconButton           from '@mui/material/IconButton';
+import MenuIcon             from '@mui/icons-material/Menu';
+import Typography           from '@mui/material/Typography';
+import Button               from '@mui/material/Button';
+import Drawer               from '@mui/material/Drawer';
+import List                 from '@mui/material/List';
+import ListItem             from '@mui/material/ListItem';
+import ListItemButton       from '@mui/material/ListItemButton';
+import ListItemText         from '@mui/material/ListItemText';
 
-import logo from '../assets/logo.png'
+import logo from '../assets/logo.png';
 
 export default function AppHeader() {
-  const [mobileOpen, setMobileOpen] = useState(false)
-  const appName = 'PlanWise'
-
+  const [mobileOpen, setMobileOpen] = useState(false);
   const navItems = [
-    { label: 'Home', to: '/' },
-    { label: 'Rogers', to: '/rogers' },
-    { label: 'Bell', to: '/bell' },
-    { label: 'Vmedia', to: '/vmedia' },
+    { label: 'Home',     to: '/'       },
+    { label: 'Rogers',   to: '/rogers' },
+    { label: 'Bell',     to: '/bell'   },
+    { label: 'Vmedia',   to: '/vmedia' },
     { label: 'Teksavvy', to: '/teksavvy' },
     { label: 'About Us', to: '/aboutus' },
-  ]
+  ];
 
-  const handleDrawerToggle = () => setMobileOpen(o => !o)
+  const toggleDrawer = () => setMobileOpen(o => !o);
 
-  // mobile‐drawer contents
+  // mobile drawer
   const drawer = (
-    <Box onClick={handleDrawerToggle} sx={{ textAlign: 'center' }}>
-      <NavLink
+    <Box onClick={toggleDrawer} sx={{ textAlign: 'center' }}>
+      {/* Logo + Title */}
+      <Box
+        component={NavLink}
         to="/"
         end
-        className={({ isActive }) => (isActive ? 'active-navlink' : '')}
         sx={{
           display: 'inline-flex',
           alignItems: 'center',
           textDecoration: 'none',
-          color: '#000',
-          py: 2
+          color: 'text.primary',
+          py: 2,
+          '&.active': {
+            color: 'secondary.main',
+            borderBottom: '2px solid secondary.main',
+          }
         }}
       >
         <Box component="img" src={logo} alt="logo" sx={{ height: 40, mr: 1 }} />
-        <Typography variant="h6">{appName}</Typography>
-      </NavLink>
+        <Typography variant="h6">PlanWise</Typography>
+      </Box>
 
       <List>
         {navItems.map(item => (
@@ -57,7 +60,12 @@ export default function AppHeader() {
               component={NavLink}
               to={item.to}
               end
-              sx={{ textAlign: 'center' }}
+              sx={{
+                textAlign: 'center',
+                '&.active .MuiListItemText-root': {
+                  color: 'primary.main',
+                }
+              }}
             >
               <ListItemText primary={item.label} />
             </ListItemButton>
@@ -65,29 +73,27 @@ export default function AppHeader() {
         ))}
       </List>
     </Box>
-  )
+  );
 
   return (
     <Box sx={{ flexGrow: 1 }}>
-      <AppBar position="sticky"
-        sx={{ top: 0 }}       >
+      <AppBar position="sticky" sx={{ top: 0 }}>
         <Toolbar>
-          {/* Hamburger menu (mobile) */}
+          {/* Mobile hamburger */}
           <IconButton
             color="inherit"
             edge="start"
-            onClick={handleDrawerToggle}
+            onClick={toggleDrawer}
             sx={{ mr: 2, display: { sm: 'none' } }}
           >
             <MenuIcon />
           </IconButton>
 
-          {/* Logo + PlanWise title as one NavLink */}
+          {/* Logo + Title (desktop) */}
           <Box
             component={NavLink}
             to="/"
             end
-            className={({ isActive }) => (isActive ? 'active-navlink' : '')}
             sx={{
               display: 'inline-flex',
               alignItems: 'center',
@@ -95,18 +101,14 @@ export default function AppHeader() {
               flexGrow: 1,
               color: 'common.white',
               py: 1,
-              '&:hover': { color: 'common.white' },
-              '&.active-navlink': {
-                color: '#FDAD5E',
-                borderBottom: '2px solid #FDAD5E',
-              },
+              '&:hover': { color: 'common.white' }
             }}
           >
             <Box component="img" src={logo} alt="logo" sx={{ height: 40, mr: 1 }} />
-            <Typography variant="h6">{appName}</Typography>
+            <Typography variant="h6">PlanWise</Typography>
           </Box>
 
-          {/* Desktop nav */}
+          {/* Desktop nav buttons */}
           <Box sx={{ display: { xs: 'none', sm: 'flex' } }}>
             {navItems.map(item => (
               <Button
@@ -115,17 +117,17 @@ export default function AppHeader() {
                 to={item.to}
                 end
                 disableRipple
-                color="inherit"
-                style={({ isActive }) => ({
-                  color: isActive ? '#FDAD5E' : '#fff',
-                  borderBottom: isActive
-                    ? '2px solid #FDAD5E'
-                    : '2px solid transparent',
-                })}
                 sx={{
                   ml: 1,
-                  bgcolor: 'transparent',
-                  '&:hover': { bgcolor: 'transparent' },
+                  color: 'common.white',
+                  borderBottom: 2,
+                  borderColor: 'transparent',
+                  '&.active': {
+                    color: 'secondary.main',
+                    borderColor: 'secondary.main',
+                    '&:hover': { bgcolor: 'transparent' }
+                  },
+                  '&:hover': { bgcolor: 'secondary.main' }
                 }}
               >
                 {item.label.toUpperCase()}
@@ -135,18 +137,19 @@ export default function AppHeader() {
         </Toolbar>
       </AppBar>
 
+      {/* Mobile drawer */}
       <Drawer
         variant="temporary"
         open={mobileOpen}
-        onClose={handleDrawerToggle}
+        onClose={toggleDrawer}
         ModalProps={{ keepMounted: true }}
         sx={{
           display: { xs: 'block', sm: 'none' },
-          '& .MuiDrawer-paper': { boxSizing: 'border-box', width: 240 },
+          '& .MuiDrawer-paper': { width: 240 },
         }}
       >
         {drawer}
       </Drawer>
     </Box>
-  )
+  );
 }
