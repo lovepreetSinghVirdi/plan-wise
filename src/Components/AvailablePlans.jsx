@@ -96,6 +96,7 @@ const AvailablePlans = () => {
                             key={`${plan.site}_${index}`}
                             sx={{ display: 'flex' }}
                             size={{ xs: 12, sm: 6, md: 4 }}
+                            offset={{ md: plans.length === 1 ? 4 : 0 }}
                         >
                             <Motion.div
                                 initial={{ y: 20, opacity: 0 }}

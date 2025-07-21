@@ -1,5 +1,5 @@
 // src/Components/HomePage.jsx
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { NavLink as RouterNavLink, useNavigate } from 'react-router-dom';
 import {
   Container,
@@ -13,18 +13,9 @@ import {
 } from '@mui/material';
 import { motion as Motion } from 'framer-motion';
 import MainSearch from './FormComponents/MainSearch';
-import rogersLogo from '../assets/Rogers.svg';
-import iprimusLogo from '../assets/iprimus_logo.svg';
-import vmediaLogo from '../assets/vmedia.svg';
-import teksavvyLogo from '../assets/teksavvy.svg';
 import CustomCard from './FormComponents/CustomCard';
-
-const logos = {
-  rogers: rogersLogo,
-  iprimus: iprimusLogo,
-  vmedia: vmediaLogo,
-  teksavvy: teksavvyLogo,
-};
+import axios from 'axios';
+import { apiURL, brandLogo, getWordOccurencesURL } from '../Helpers/helpers';
 
 const plans = [
   { key: 'rogers', title: 'Rogers', text: 'This is the first card.' },
@@ -34,7 +25,23 @@ const plans = [
 ];
 
 export default function HomePage() {
+  const [topSearchedWords, setTopSearchedWords] = useState([]);
   const navigate = useNavigate();
+
+  useEffect(() => {
+    const fetchTopSearches = async () => {
+
+      try {
+        const config = { params: { keyword: '' } };
+        const result = await axios.get(`${apiURL}${getWordOccurencesURL}`, config);
+        setTopSearchedWords(result);
+
+      } catch (error) {
+        console.log("error---", error)
+      }
+    }
+    fetchTopSearches();
+  }, [])
 
   const handleOptionSelect = (keyword) => {
     navigate('/available-plans', { state: { keyword } });
@@ -47,9 +54,36 @@ export default function HomePage() {
         <MainSearch onSelect={handleOptionSelect} />
 
       </Grid>
+      <Grid container spacing={2} sx={{ mt: 4 }}>
+        <Grid size={{ xs: 12, sm: 8 }} offset={{ sm: 2 }} sx={{ mt: 6 }}>
+          <Box
+            sx={{
+              display: 'flex',
+              flexWrap: 'wrap',
+              alignItems: 'center',
+
+              //reserve space so layout never jumps:
+              minHeight: '2rem',
+            }}
+          >
+            {topSearchedWords.length > 0 && topSearchedWords.map((s) => (
+              <Chip
+                key={s}
+                label={s}
+                size="small"
+                color="primary"
+                onClick={() => { }}
+                sx={{ ml: 1 }}
+              />
+            ))}
+
+          </Box>
+        </Grid>
+      </Grid>
+
 
       {/* ─── Plan cards row ─── */}
-      <Grid container spacing={2} sx={{ mt: 20 }}>
+      <Grid container spacing={2} sx={{ mt: 10 }}>
         {plans.map((plan, index) => (
           <Grid
             key={`plan_${index}_${plan.key}`}
@@ -69,8 +103,8 @@ export default function HomePage() {
                   action={
                     <Box
                       component="img"
-                      src={logos[plan.key]}
-                      alt={`${plan.title} logo`}
+                      src={brandLogo(plan.site)}
+                      alt={`${plan.site} logo`}
                       sx={{ width: 90, height: 90 }}
                     />
                   }
