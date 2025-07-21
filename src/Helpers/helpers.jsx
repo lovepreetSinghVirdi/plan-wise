@@ -8,6 +8,7 @@ import rogersLogo from '../assets/Rogers.svg';
 import iprimusLogo from '../assets/iprimus_logo.svg';
 import vmediaLogo from '../assets/vmedia.svg';
 import teksavvyLogo from '../assets/teksavvy.svg';
+import dodoLogo from  '../assets/dodo.svg';
 
 export const capitalize = (str = '') => {
     return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
@@ -24,6 +25,8 @@ export const brandLogo = (site = '') => {
             return vmediaLogo;
         case 'teksavvy':
             return teksavvyLogo;
+        case 'dodo':
+            return dodoLogo;
         default:
             return '';
 
@@ -32,11 +35,16 @@ export const brandLogo = (site = '') => {
 };
 
 
+const parseFeatures = (features = '') => {
+    return features.split('|');
+}
 
 export const makePlansFromRawData = (plans = []) => {
 
     return plans.map((plan) => {
-        return { ...plan, planName: plan?.site?.toUpperCase() === 'DODO' ? (plan.features || '') : plan.planName }
+        const features = parseFeatures(plan.features);
+
+        return { ...plan, features: plan?.site?.toUpperCase() === 'DODO' ? [] : features, planName: plan?.site?.toUpperCase() === 'DODO' ? (plan.features || '') : plan.planName }
     })
 
 }

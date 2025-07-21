@@ -44,7 +44,7 @@ export default function PlanCard(props) {
       />
 
       <CardContent sx={{ flexGrow: 1, mt: 2 }}>
-         <Typography variant="h6">
+        <Typography variant="h6">
           {planName}
         </Typography>
         <Typography variant="body2" color="text.secondary">
@@ -62,11 +62,29 @@ export default function PlanCard(props) {
           </Typography>
         )}
 
-        {description && (
+        {features?.length > 0 && (<>
           <Typography sx={{ display: 'flex' }} variant="body2" color="text.secondary">
-            <strong style={{ marginRight: '1rem' }}>Features:</strong>  <Box component={'span'}>  {description}</Box>
+            <strong style={{ marginRight: '1rem' }}>Features:</strong>
           </Typography>
-        )}
+          <Box
+            component="ul"
+            sx={{
+              pl: 2,         // indent
+              m: 0,          // remove default margin
+              '& li': {
+                mb: 0.5,    // vertical spacing between items
+                color: 'text.secondary',
+              },
+            }}
+          >
+            {features.map((feat, i) => (
+              <Box component="li" key={i}>
+                {feat}
+              </Box>
+            ))}
+          </Box>
+        </>)
+        }
       </CardContent>
 
       <CardActions
@@ -79,7 +97,7 @@ export default function PlanCard(props) {
           mb: 2
         }}
       >
-        <Typography variant="h6" gutterBottom>
+        <Typography variant="h5" gutterBottom>
           {price}
         </Typography>
         <Button fullWidth variant="contained">

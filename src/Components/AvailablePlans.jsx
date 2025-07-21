@@ -88,7 +88,7 @@ const AvailablePlans = () => {
             >
                 Available Plans
             </Typography>
-            <Grid container spacing={2} justifyContent="center">
+            <Grid container spacing={2} >
                 {plans.map((plan, index) => {
 
                     return (
