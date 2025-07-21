@@ -1,6 +1,3 @@
-// src/Components/PlanCard.jsx
-import React from 'react';
-import Card from '@mui/material/Card';
 import CardHeader from '@mui/material/CardHeader';
 import CardContent from '@mui/material/CardContent';
 import CardActions from '@mui/material/CardActions';
@@ -30,12 +27,12 @@ export default function PlanCard(props) {
         flexGrow: 1
       }}>
       <CardHeader
-        title={capitalize(plan.provider)}
+        title={capitalize(plan.site)}
         action={
           <Box
             component="img"
-            src={brandLogo(plan.provider)}
-            alt={`${plan.provider} logo`}
+            src={brandLogo(plan.site)}
+            alt={`${plan.site} logo`}
             sx={{ width: 80, height: 80 }}
           />
 

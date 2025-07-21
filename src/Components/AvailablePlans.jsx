@@ -49,7 +49,7 @@ const AvailablePlans = () => {
         } catch {
             setPlans([]);
         } finally {
-            setTimeout(() => setLoading(false), 3000);
+            setTimeout(() => setLoading(false), 2000);
 
         }
     }, [keyword]);
