@@ -8,8 +8,8 @@ import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import Box from '@mui/material/Box';
 import CustomCard from './CustomCard';
-import { brandLogo, capitalize } from '../../Helpers/helpers';
-
+ import { brandLogo, capitalize } from '../../Helpers/helpers';
+ 
 
 export default function PlanCard(props) {
   const { plan } = props;
@@ -30,12 +30,12 @@ export default function PlanCard(props) {
         flexGrow: 1
       }}>
       <CardHeader
-        title={capitalize(plan.site)}
+        title={capitalize(plan.provider)}
         action={
           <Box
             component="img"
-            src={brandLogo(plan.site)}
-            alt={`${plan.site} logo`}
+            src={brandLogo(plan.provider)}
+            alt={`${plan.provider} logo`}
             sx={{ width: 80, height: 80 }}
           />
 
