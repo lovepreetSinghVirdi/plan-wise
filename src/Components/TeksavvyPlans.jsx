@@ -1,33 +1,33 @@
 // src/Components/TekSavvyPlans.jsx
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
-import { useTheme } from '@mui/material/styles';
-import Container from '@mui/material/Container';
-import Grid from '@mui/material/Grid';
-import Typography from '@mui/material/Typography';
-import { motion as Motion } from 'framer-motion';
-import Loader from './FormComponents/Loader';
-import teksavvyLogo from '../assets/teksavvy.svg';
-import PlanCard from './FormComponents/PlanCard';
+import axios            from 'axios';
+import { useTheme }     from '@mui/material/styles';
+import Container        from '@mui/material/Container';
+import Grid             from '@mui/material/Grid';
+import Typography       from '@mui/material/Typography';
+import { motion as Motion}       from 'framer-motion';
+import Loader           from './FormComponents/Loader';
+import PlanCard         from './PlanCard';
+import teksavvyLogo     from '../assets/teksavvy.svg';
 
 export default function TekSavvyPlans() {
   const theme = useTheme();
-  const [plans, setPlans] = useState([]);
+  const [plans,   setPlans]   = useState([]);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+  const [error,   setError]   = useState(null);
 
   useEffect(() => {
-    axios
-      .get('/plans.json')
-      .then(res => {
-        const rogersOnly = res.data
-          .filter(p => p.provider === 'teksavvy')
-          .map(p => ({ ...p, logo: teksavvyLogo }));
-        setPlans(rogersOnly);
-      })
-      .catch(err => setError(err.message))
-      .finally(() => setLoading(false));
-  }, []);
+  axios
+    .get('/plans.json')          
+    .then(res => {
+      const rogersOnly = res.data
+        .filter(p => p.provider === 'teksavvy')
+        .map(p => ({ ...p, logo: teksavvyLogo}));
+      setPlans(rogersOnly);
+    })
+    .catch(err => setError(err.message))
+    .finally(() => setLoading(false));
+}, []);
 
   if (loading) {
     return <Loader message="Loading TekSavvy plans…" />;
@@ -59,21 +59,25 @@ export default function TekSavvyPlans() {
         TekSavvy Plans
       </Typography>
 
-      <Grid container spacing={2}>
+      <Grid container spacing={4} alignContent="stretch">
         {plans.map((plan, index) => (
           <Grid
             key={plan.id}
-            item
-            xs={12}
-            sm={6}
-            md={4}
             sx={{ display: 'flex' }}
+            size={{ xs: 12, sm: 6, md: 4 }}
           >
             <Motion.div
               initial={{ y: 20, opacity: 0 }}
               animate={{ y: 0, opacity: 1 }}
               transition={{ delay: index * 0.2, duration: 0.6 }}
-              style={{ width: '100%' }}
+            
+              style={{ 
+               flex: 1,
+                width: '100%',
+                display: 'flex',
+                flexDirection: 'column',
+                height: '100%' 
+               }}
             >
               <PlanCard plan={plan} />
             </Motion.div>

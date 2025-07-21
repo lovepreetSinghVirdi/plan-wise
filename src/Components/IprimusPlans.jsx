@@ -62,15 +62,12 @@ export default function IprimusPlans() {
         Iprimus Plans
       </Typography>
 
-      <Grid container spacing={2}>
+      <Grid container spacing={4} alignContent="center">
         {plans.map((plan, index) => (
           <Grid
             key={plan.id}
-            item
-            xs={12}
-            sm={6}
-            md={4}
             sx={{ display: 'flex' }}
+            size={{ xs: 12, sm: 6, md: 4 }}
           >
             <Motion.div
               initial={{ y: 20, opacity: 0 }}
