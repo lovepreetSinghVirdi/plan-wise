@@ -156,14 +156,15 @@ export default function AboutUs() {
             gridTemplateColumns={{ xs: '1fr', sm: '1fr 1fr' }}
             gap={2}
           >
-            <TextField label="Your Name" variant="standard" fullWidth />
-            <TextField label="Your E‑mail" variant="standard" fullWidth />
+            <TextField label="Your Name" variant="standard" fullWidth  placeholder="John Doe"/>
+            <TextField label="Your E‑mail" variant="standard" fullWidth placeholder="you@example.com"/>
 
-            <TextField label="Enter Phone Number" variant="standard" fullWidth />
-            <TextField label="Subject" variant="standard" fullWidth />
+            <TextField label="Enter Phone Number" variant="standard" fullWidth placeholder="(555) 123‑4567" />
+            <TextField label="Your Address" variant="standard" fullWidth placeholder="123 Main St, City, State, postal code"/>
 
             <TextField
               label="Message"
+              placeholder="Type your message here…"
               variant="standard"
               fullWidth
               multiline
@@ -173,13 +174,14 @@ export default function AboutUs() {
 
             <Box gridColumn="1 / -1" textAlign={isMdUp ? 'right' : 'center'} mt={2}>
               <Button
+              fullWidth
                 variant="contained"
                 sx={{
                   backgroundColor: theme.palette.primary.main,
                   color: '#fff',
                   px: 4,
                   py: 1.5,
-                  minWidth: 1000,
+                  
                   '&:hover': { backgroundColor: theme.palette.primary.dark },
                 }}
               >

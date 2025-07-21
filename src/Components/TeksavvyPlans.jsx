@@ -7,39 +7,38 @@ import Grid             from '@mui/material/Grid';
 import Typography       from '@mui/material/Typography';
 import { motion as Motion}       from 'framer-motion';
 import Loader           from './FormComponents/Loader';
-import PlanCard         from './PlanCard';
-import teksavvyLogo     from '../assets/teksavvy.svg';
+import PlanCard         from './FormComponents/PlanCard';
+import TeksavvyLogo     from '../assets/teksavvy.svg';
 
 export default function TekSavvyPlans() {
-  const theme = useTheme();
-  const [plans,   setPlans]   = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error,   setError]   = useState(null);
+  const theme = useTheme()
+  const [plans, setPlans] = useState([])
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState(null)
 
   useEffect(() => {
-  axios
-    .get('/plans.json')          
-    .then(res => {
-      const rogersOnly = res.data
-        .filter(p => p.provider === 'teksavvy')
-        .map(p => ({ ...p, logo: teksavvyLogo}));
-      setPlans(rogersOnly);
-    })
-    .catch(err => setError(err.message))
-    .finally(() => setLoading(false));
-}, []);
+    axios.get('/plans.json')
+      .then(res => {
+        const teksavy = res.data
+          .filter(p => p.provider === 'teksavvy')
+          .map(p => ({ ...p, logo: TeksavvyLogo }))
+        setPlans(teksavy)
+      })
+      .catch(err => setError(err.message))
+      .finally(() => setLoading(false))
+  }, [])
 
   if (loading) {
-    return <Loader message="Loading TekSavvy plans…" />;
+    return <Loader message="Loading teksavvy plans…" />
   }
   if (error) {
     return (
-      <Container maxWidth="lg" sx={{ mt: 4, minHeight: '100vh', width: '100%' }}>
+      <Container maxWidth="lg" sx={{ mt: 4, minHeight: '100vh' }}>
         <Typography color="error" align="center">
           Failed to load plans: {error}
         </Typography>
       </Container>
-    );
+    )
   }
 
   return (

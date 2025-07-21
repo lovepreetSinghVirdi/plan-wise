@@ -19,8 +19,7 @@ export default function PlanCard({ plan }) {
     logo
   } = plan;
   const featureList = features.length
-    ? features
-    : description.split(',').map(s => s.trim());
+    
   // fallback to raw JSON keys if camelCase isn't provided
   const downloadSpeed =
     plan.downloadSpeed ?? plan.DownloadingSpeed ?? null;
