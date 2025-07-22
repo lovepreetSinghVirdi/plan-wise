@@ -18,10 +18,10 @@ import { useCallback, useState } from 'react';
 import AppLoader from './FormComponents/AppLoader';
 
 const plans = [
-  { key: 'rogers', title: 'Rogers', text: 'This is the first card.' },
-  { key: 'iprimus', title: 'IPrimus', text: 'This is the second card.' },
-  { key: 'vmedia', title: 'Vmedia', text: 'This is the third card.' },
-  { key: 'teksavvy', title: 'Teksavvy', text: 'This is the fourth card.' },
+  { site: 'rogers', title: 'Rogers', text: 'This is the first card.' },
+  { site: 'iprimus', title: 'IPrimus', text: 'This is the second card.' },
+  { site: 'vmedia', title: 'Vmedia', text: 'This is the third card.' },
+  { site: 'teksavvy', title: 'Teksavvy', text: 'This is the fourth card.' },
 ];
 
 export default function HomePage() {
@@ -33,7 +33,6 @@ export default function HomePage() {
     navigate('/available-plans', { state: { keyword } });
   };
   const handleLoading = useCallback((loading) => {
-    debugger
     setLoading(!!loading);
   }, [setLoading])
 
