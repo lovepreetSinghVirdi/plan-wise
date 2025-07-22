@@ -19,7 +19,7 @@ import axios from 'axios';
 import { useTheme } from '@mui/material/styles';
 import { motion as Motion } from 'framer-motion';
 
-import AppLoader from './FormComponents/Loader';
+import AppLoader from './FormComponents/AppLoader';
 import PlanCard from './FormComponents/PlanCard';
 
 const AvailablePlans = () => {
@@ -96,6 +96,7 @@ const AvailablePlans = () => {
                             key={`${plan.site}_${index}`}
                             sx={{ display: 'flex' }}
                             size={{ xs: 12, sm: 6, md: 4 }}
+                            offset={{ md: plans.length === 1 ? 4 : 0 }}
                         >
                             <Motion.div
                                 initial={{ y: 20, opacity: 0 }}

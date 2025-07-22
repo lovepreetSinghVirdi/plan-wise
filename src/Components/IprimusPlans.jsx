@@ -6,7 +6,7 @@ import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 import { motion as Motion } from 'framer-motion';
-import Loader from './FormComponents/Loader';
+import AppLoader from './FormComponents/AppLoader';
 import iprimusLogo from '../assets/iprimus_logo.svg';
 import PlanCard from './FormComponents/PlanCard';
 import{
@@ -42,7 +42,7 @@ export default function IprimusPlans() {
   }, []);
 
   if (loading) {
-    return <Loader message="Loading Iprimus plans…" />;
+    return <AppLoader message="Loading Iprimus plans…" />;
   }
   if (error) {
     return (
