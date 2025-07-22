@@ -75,7 +75,7 @@ export default function DodoPlans() {
       <Grid container spacing={4} alignItems="stretch">
         {plans.map((plan, i) => (
           <Grid
-          item
+            item
             key={plan.id}
             xs={12}
             sm={6}
