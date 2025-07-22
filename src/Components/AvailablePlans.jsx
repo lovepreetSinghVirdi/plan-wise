@@ -19,7 +19,7 @@ import axios from 'axios';
 import { useTheme } from '@mui/material/styles';
 import { motion as Motion } from 'framer-motion';
 
-import AppLoader from './FormComponents/Loader';
+import AppLoader from './FormComponents/AppLoader';
 import PlanCard from './FormComponents/PlanCard';
 
 const AvailablePlans = () => {

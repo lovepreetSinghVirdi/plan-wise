@@ -1,0 +1,32 @@
+.custom-chip,
+.custom-chip-red-icon {
+    color: #000 !important;
+    background-color: #fff !important;
+}
+
+.custom-chip .MuiChip-icon {
+    color: green !important;
+}
+
+.custom-chip-red-icon .MuiChip-icon {
+    color: red !important;
+}
+
+.suggestions-chip {
+    display: inline-flex !important;
+    justify-content: space-between !important;
+    max-width: 10rem !important;
+    margin-right: 1rem !important;
+}
+
+.suggestions-chip .MuiChip-label {
+    margin-right: 1rem;
+}
+
+/* push the icon to the right */
+.suggestions-chip .MuiChip-icon {
+    order: 1;
+    /* put the icon after the label */
+    margin-left: auto;
+
+}

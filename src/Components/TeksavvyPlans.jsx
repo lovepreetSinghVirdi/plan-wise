@@ -6,7 +6,7 @@ import Container        from '@mui/material/Container';
 import Grid             from '@mui/material/Grid';
 import Typography       from '@mui/material/Typography';
 import { motion as Motion}       from 'framer-motion';
-import Loader           from './FormComponents/Loader';
+import AppLoader           from './FormComponents/AppLoader';
 import PlanCard         from './FormComponents/PlanCard';
 import TeksavvyLogo     from '../assets/teksavvy.svg';
 
@@ -29,7 +29,7 @@ export default function TekSavvyPlans() {
   }, [])
 
   if (loading) {
-    return <Loader message="Loading teksavvy plans…" />
+    return <AppLoader message="Loading teksavvy plans…" />
   }
   if (error) {
     return (

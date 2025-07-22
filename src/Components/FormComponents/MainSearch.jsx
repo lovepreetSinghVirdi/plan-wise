@@ -1,4 +1,4 @@
-// src/Components/FormComponents/MainSearch.jsx
+import './MainSearch.css';
 import React, { useState, useEffect } from 'react';
 import {
     Autocomplete,
@@ -10,17 +10,38 @@ import {
     Chip
 } from '@mui/material';
 import axios from 'axios';
-import { apiURL, autocompleteURL, suggestionsURL } from '../../Helpers/helpers';
+import TrendingUpIcon from '@mui/icons-material/TrendingUp';
+import TroubleshootIcon from '@mui/icons-material/Troubleshoot';
+import LaunchIcon from '@mui/icons-material/Launch';
+import { apiURL, autocompleteURL, getMostSearchedWordsURL, suggestionsURL } from '../../Helpers/helpers';
 
-export default function MainSearch({ onSelect }) {
+export default function MainSearch({ handleLoadingFromParent = () => { }, onSelect }) {
     const [inputValue, setInputValue] = useState('');
     const [options, setOptions] = useState([]);
-    const [suggestions, setSuggestions] = useState([])
+    const [suggestions, setSuggestions] = useState([]);
+    const [mostSearchedWords, setMostSearchedWords] = useState([])
     const [loading, setLoading] = useState(false);
     const [value, setValue] = useState(null);
     const handleSuggestionClick = (s) => {
         if (onSelect) onSelect(s);
     }
+    useEffect(() => {
+        const fetchTopSearches = async () => {
+
+            try {
+                setLoading(true);
+                const config = { params: { keyword: '' } };
+                const result = await axios.get(`${apiURL}${getMostSearchedWordsURL}`, config);
+                console.log('result---', result)
+                setMostSearchedWords(['ab', 'xd']);
+            } catch {
+                setMostSearchedWords([]);
+            } finally {
+                setLoading(false);
+            }
+        }
+        fetchTopSearches();
+    }, [])
 
     useEffect(() => {
         if (inputValue.length < 2) {
@@ -53,6 +74,12 @@ export default function MainSearch({ onSelect }) {
         }, 500);
         return () => clearTimeout(timer);
     }, [inputValue]);
+
+    // useEffect(() => {
+    //     if (handleLoadingFromParent) handleLoadingFromParent(loading);
+    // }, [handleLoadingFromParent, loading])
+    const isDoYouMean = inputValue?.length > 2 && !options.length && suggestions.length > 0;
+    const showMostSearchedWords = !isDoYouMean && mostSearchedWords.length > 0;
 
     return (
         <>
@@ -110,9 +137,48 @@ export default function MainSearch({ onSelect }) {
 
             </Grid>
 
+            {/* Row 2: “Most Searched Words” row*/}
+            {
+                showMostSearchedWords ?
+                    <Grid size={{ xs: 12, sm: 8 }} offset={{ sm: 2 }}>
+                        <Box
+                            sx={{
+                                display: 'flex',
+                                flexWrap: 'wrap',
+                                alignItems: 'center',
 
-            {/* Row 2: always‑there “Did you mean” row (reserves ~2rem even when empty) */}
-            <Grid size={{ xs: 12, sm: 8 }} offset={{ sm: 2 }} sx={{ mt: 6 }}>
+                                //reserve space so layout never jumps:
+                                minHeight: '2rem',
+                            }}
+                        >
+
+                            <Typography
+                                variant="subtitle1"
+                                component="span"
+                                sx={{ mr: 3 }}
+                            >
+                                <Chip icon={<TrendingUpIcon />} className='custom-chip' label='Most searched words' />
+                            </Typography>
+                            {mostSearchedWords.map((s) => (
+                                <Chip
+                                    key={s}
+                                    label={s}
+                                    size="small"
+                                    color="primary"
+                                    className='suggestions-chip'
+                                    onClick={() => handleSuggestionClick(s)}
+                                    sx={{ ml: 1 }}
+                                    deleteIcon={<LaunchIcon />}
+                                    onDelete={() => handleSuggestionClick(s)}
+                                />
+                            ))}
+                        </Box>
+                    </Grid>
+                    : null}
+
+
+            {/* Row 3: “Did you mean” row*/}
+            {isDoYouMean ? <Grid size={{ xs: 12, sm: 8 }} offset={{ sm: 2 }} sx={{ mt: 6 }}>
                 <Box
                     sx={{
                         display: 'flex',
@@ -123,29 +189,31 @@ export default function MainSearch({ onSelect }) {
                         minHeight: '2rem',
                     }}
                 >
-                    {inputValue && !options.length && suggestions.length > 0 && (
-                        <>
-                            <Typography
-                                variant="subtitle1"
-                                component="span"
-                                sx={{ mr: 1 }}
-                            >
-                                Did you mean:
-                            </Typography>
-                            {suggestions.map((s) => (
-                                <Chip
-                                    key={s}
-                                    label={s}
-                                    size="small"
-                                    color="primary"
-                                    onClick={() => handleSuggestionClick(s)}
-                                    sx={{ ml: 1 }}
-                                />
-                            ))}
-                        </>
-                    )}
+
+                    <Typography
+                        variant="subtitle1"
+                        component="span"
+                        sx={{ mr: 3 }}
+                    >
+                        <Chip icon={<TroubleshootIcon />} className='custom-chip-red-icon' label='Did you mean' />
+                    </Typography>
+                    {suggestions.map((s) => (
+                        <Chip
+                            key={s}
+                            label={s}
+                            size="small"
+                            className='suggestions-chip'
+
+                            color="primary"
+                            onClick={() => handleSuggestionClick(s)}
+                            sx={{ ml: 1 }}
+                            deleteIcon={<LaunchIcon />}
+                            onDelete={() => handleSuggestionClick(s)}
+                        />
+                    ))}
                 </Box>
-            </Grid>
+            </Grid> : null}
+
         </>
     );
 }

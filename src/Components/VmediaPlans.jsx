@@ -6,7 +6,7 @@ import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 import { motion as Motion } from 'framer-motion';
-import Loader from './FormComponents/Loader';
+import AppLoader from './FormComponents/AppLoader';
 import vmediaLogo from '../assets/vmedia.svg';
 import PlanCard from './FormComponents/PlanCard';
 
@@ -30,7 +30,7 @@ export default function VmediaPlans() {
   }, []);
 
   if (loading) {
-    return <Loader message="Loading Vmedia plans…" />;
+    return <AppLoader message="Loading Vmedia plans…" />;
   }
   if (error) {
     return (
