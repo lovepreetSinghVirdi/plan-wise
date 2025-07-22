@@ -72,7 +72,6 @@ export default function HomePage() {
                           sx={{ width: 90, height: 90 }}
                         />
                       }
-                      sx={{ pb: 0 }}
                     />
                     <CardContent sx={{ flexGrow: 1, pt: 1 }}>
                       <Typography variant="body2" color="text.secondary">
