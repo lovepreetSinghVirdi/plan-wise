@@ -9,7 +9,11 @@ import { motion as Motion}       from 'framer-motion';
 import AppLoader           from './FormComponents/AppLoader';
 import PlanCard         from './FormComponents/PlanCard';
 import TeksavvyLogo     from '../assets/teksavvy.svg';
-
+import{
+  apiURL,
+  searchPlanByTextUrl,
+  makePlansFromRawData
+} from '../Helpers/helpers'
 export default function TekSavvyPlans() {
   const theme = useTheme()
   const [plans, setPlans] = useState([])
@@ -17,16 +21,26 @@ export default function TekSavvyPlans() {
   const [error, setError] = useState(null)
 
   useEffect(() => {
-    axios.get('/plans.json')
-      .then(res => {
-        const teksavy = res.data
-          .filter(p => p.provider === 'teksavvy')
-          .map(p => ({ ...p, logo: TeksavvyLogo }))
-        setPlans(teksavy)
+    axios
+      .get(`${apiURL}${searchPlanByTextUrl}`, {
+        params: { q: 'teksavvy' },
       })
-      .catch(err => setError(err.message))
-      .finally(() => setLoading(false))
-  }, [])
+      .then(({ data }) => {
+        
+        const allPlans = makePlansFromRawData(data);
+        const tekSavvyPlans = allPlans
+          .filter(p => p.site === 'TekSavvy')
+          .map(p => ({ ...p, logo: TeksavvyLogo }));
+        setPlans(tekSavvyPlans);
+      })
+      .catch(err => {
+        setError(err.message);
+      })
+      .finally(() => {
+        setLoading(false);
+      });
+  }, []);
+
 
   if (loading) {
     return <AppLoader message="Loading teksavvy plans…" />

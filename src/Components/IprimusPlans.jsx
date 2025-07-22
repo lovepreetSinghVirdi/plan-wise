@@ -9,7 +9,11 @@ import { motion as Motion } from 'framer-motion';
 import AppLoader from './FormComponents/AppLoader';
 import iprimusLogo from '../assets/iprimus_logo.svg';
 import PlanCard from './FormComponents/PlanCard';
-
+import{
+  apiURL,
+  searchPlanByTextUrl,
+  makePlansFromRawData
+} from '../Helpers/helpers'
 export default function IprimusPlans() {
   const theme = useTheme();
   const [plans, setPlans] = useState([]);
@@ -18,15 +22,23 @@ export default function IprimusPlans() {
 
   useEffect(() => {
     axios
-      .get('/plans.json')
-      .then(res => {
-        const rogersOnly = res.data
-          .filter(p => p.provider === 'iprimus')
-          .map(p => ({ ...p, logo: iprimusLogo }));
-        setPlans(rogersOnly);
+      .get(`${apiURL}${searchPlanByTextUrl}`, {
+        params: { q: 'iprimus' },
       })
-      .catch(err => setError(err.message))
-      .finally(() => setLoading(false));
+      .then(({ data }) => {
+        
+        const allPlans = makePlansFromRawData(data);
+        const IprimusPlans = allPlans
+          .filter(p => p.site === 'Iprimus')
+          .map(p => ({ ...p, logo: iprimusLogo }));
+        setPlans(IprimusPlans);
+      })
+      .catch(err => {
+        setError(err.message);
+      })
+      .finally(() => {
+        setLoading(false);
+      });
   }, []);
 
   if (loading) {

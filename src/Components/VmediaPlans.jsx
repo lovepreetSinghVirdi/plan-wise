@@ -9,7 +9,11 @@ import { motion as Motion } from 'framer-motion';
 import AppLoader from './FormComponents/AppLoader';
 import vmediaLogo from '../assets/vmedia.svg';
 import PlanCard from './FormComponents/PlanCard';
-
+import{
+  apiURL,
+  searchPlanByTextUrl,
+  makePlansFromRawData
+} from '../Helpers/helpers'
 export default function VmediaPlans() {
   const theme = useTheme();
   const [plans, setPlans] = useState([]);
@@ -18,15 +22,23 @@ export default function VmediaPlans() {
 
   useEffect(() => {
     axios
-      .get('/plans.json')
-      .then(res => {
-        const rogersOnly = res.data
-          .filter(p => p.provider === 'vmedia')
-          .map(p => ({ ...p, logo: vmediaLogo }));
-        setPlans(rogersOnly);
+      .get(`${apiURL}${searchPlanByTextUrl}`, {
+        params: { q: 'vmedia' },
       })
-      .catch(err => setError(err.message))
-      .finally(() => setLoading(false));
+      .then(({ data }) => {
+        
+        const allPlans = makePlansFromRawData(data);
+        const VmediaPlans = allPlans
+          .filter(p => p.site === 'VMEDIA')
+          .map(p => ({ ...p, logo: vmediaLogo }));
+        setPlans(VmediaPlans);
+      })
+      .catch(err => {
+        setError(err.message);
+      })
+      .finally(() => {
+        setLoading(false);
+      });
   }, []);
 
   if (loading) {

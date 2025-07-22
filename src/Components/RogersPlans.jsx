@@ -10,7 +10,11 @@ import { motion as Motion } from 'framer-motion';
 import AppLoader from './FormComponents/AppLoader'
 import PlanCard from './FormComponents/PlanCard'
 import RogersLogo from '../assets/Rogers.svg'
-
+import{
+  apiURL,
+  searchPlanByTextUrl,
+  makePlansFromRawData
+} from '../Helpers/helpers'
 export default function RogersPlans() {
   const theme = useTheme()
   const [plans, setPlans] = useState([])
@@ -18,16 +22,25 @@ export default function RogersPlans() {
   const [error, setError] = useState(null)
 
   useEffect(() => {
-    axios.get('/plans.json')
-      .then(res => {
-        const rogers = res.data
-          .filter(p => p.provider === 'rogers')
-          .map(p => ({ ...p, logo: RogersLogo }))
-        setPlans(rogers)
+    axios
+      .get(`${apiURL}${searchPlanByTextUrl}`, {
+        params: { q: 'rogers' },
       })
-      .catch(err => setError(err.message))
-      .finally(() => setLoading(false))
-  }, [])
+      .then(({ data }) => {
+        
+        const allPlans = makePlansFromRawData(data);
+        const rogersPlans = allPlans
+          .filter(p => p.site === 'Rogers')
+          .map(p => ({ ...p, logo: RogersLogo }));
+        setPlans(rogersPlans);
+      })
+      .catch(err => {
+        setError(err.message);
+      })
+      .finally(() => {
+        setLoading(false);
+      });
+  }, []);
 
   if (loading) {
     return <AppLoader message="Loading Rogers plans…" />
