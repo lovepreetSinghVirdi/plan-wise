@@ -1,30 +1,30 @@
 // src/Components/AppHeader.jsx
 import React, { useState } from 'react';
-import { NavLink }          from 'react-router-dom';
-import AppBar               from '@mui/material/AppBar';
-import Box                  from '@mui/material/Box';
-import Toolbar              from '@mui/material/Toolbar';
-import IconButton           from '@mui/material/IconButton';
-import MenuIcon             from '@mui/icons-material/Menu';
-import Typography           from '@mui/material/Typography';
-import Button               from '@mui/material/Button';
-import Drawer               from '@mui/material/Drawer';
-import List                 from '@mui/material/List';
-import ListItem             from '@mui/material/ListItem';
-import ListItemButton       from '@mui/material/ListItemButton';
-import ListItemText         from '@mui/material/ListItemText';
+import { NavLink } from 'react-router-dom';
+import AppBar from '@mui/material/AppBar';
+import Box from '@mui/material/Box';
+import Toolbar from '@mui/material/Toolbar';
+import IconButton from '@mui/material/IconButton';
+import MenuIcon from '@mui/icons-material/Menu';
+import Typography from '@mui/material/Typography';
+import Button from '@mui/material/Button';
+import Drawer from '@mui/material/Drawer';
+import List from '@mui/material/List';
+import ListItem from '@mui/material/ListItem';
+import ListItemButton from '@mui/material/ListItemButton';
+import ListItemText from '@mui/material/ListItemText';
 
 import logo from '../assets/logo.png';
 
 export default function AppHeader() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const navItems = [
-    { label: 'Home',     to: '/'       },
-    { label: 'Rogers',   to: '/rogers' },
-    { label: 'iPrimus',   to: '/iprimus'   },
-    { label: 'Vmedia',   to: '/vmedia' },
+    { label: 'Home', to: '/' },
+    { label: 'Rogers', to: '/rogers' },
+    { label: 'iPrimus', to: '/iprimus' },
+    { label: 'Vmedia', to: '/vmedia' },
     { label: 'Teksavvy', to: '/teksavvy' },
-     { label: 'Dodo', to: '/dodo' },
+    { label: 'Dodo', to: '/dodo' },
     { label: 'About Us', to: '/aboutus' },
   ];
 

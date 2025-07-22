@@ -1,15 +1,15 @@
 // src/Components/TekSavvyPlans.jsx
 import React, { useState, useEffect } from 'react';
-import axios            from 'axios';
-import { useTheme }     from '@mui/material/styles';
-import Container        from '@mui/material/Container';
-import Grid             from '@mui/material/Grid';
-import Typography       from '@mui/material/Typography';
-import { motion as Motion}       from 'framer-motion';
-import AppLoader           from './FormComponents/AppLoader';
-import PlanCard         from './FormComponents/PlanCard';
-import TeksavvyLogo     from '../assets/teksavvy.svg';
-import{
+import axios from 'axios';
+import { useTheme } from '@mui/material/styles';
+import Container from '@mui/material/Container';
+import Grid from '@mui/material/Grid';
+import Typography from '@mui/material/Typography';
+import { motion as Motion } from 'framer-motion';
+import AppLoader from './FormComponents/AppLoader';
+import PlanCard from './FormComponents/PlanCard';
+import TeksavvyLogo from '../assets/teksavvy.svg';
+import {
   apiURL,
   searchPlanByTextUrl,
   makePlansFromRawData
@@ -26,11 +26,11 @@ export default function TekSavvyPlans() {
         params: { q: 'teksavvy' },
       })
       .then(({ data }) => {
-        
+
         const allPlans = makePlansFromRawData(data);
         const tekSavvyPlans = allPlans
           .filter(p => p.site === 'TekSavvy')
-          .map(p => ({ ...p, logo: TeksavvyLogo, name:p.planName}));
+          .map(p => ({ ...p, logo: TeksavvyLogo, name: p.planName }));
         setPlans(tekSavvyPlans);
       })
       .catch(err => {
@@ -83,14 +83,14 @@ export default function TekSavvyPlans() {
               initial={{ y: 20, opacity: 0 }}
               animate={{ y: 0, opacity: 1 }}
               transition={{ delay: index * 0.2, duration: 0.6 }}
-            
-              style={{ 
-               flex: 1,
+
+              style={{
+                flex: 1,
                 width: '100%',
                 display: 'flex',
                 flexDirection: 'column',
-                height: '100%' 
-               }}
+                height: '100%'
+              }}
             >
               <PlanCard plan={plan} />
             </Motion.div>
