@@ -24,6 +24,7 @@ export default function AppHeader() {
     { label: 'iPrimus',   to: '/iprimus'   },
     { label: 'Vmedia',   to: '/vmedia' },
     { label: 'Teksavvy', to: '/teksavvy' },
+     { label: 'Dodo', to: '/dodo' },
     { label: 'About Us', to: '/aboutus' },
   ];
 
