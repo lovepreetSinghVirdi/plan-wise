@@ -1,22 +1,22 @@
-// src/Components/RogersPlans.jsx
+// src/Components/DodoPlans.jsx
 import React, { useState, useEffect } from 'react'
 import axios from 'axios'
 import { useTheme } from '@mui/material/styles'
 import Container from '@mui/material/Container'
 import Grid from '@mui/material/Grid'
 import Typography from '@mui/material/Typography'
-import { motion as Motion } from 'framer-motion';
+import { motion as Motion } from 'framer-motion'
 
-import AppLoader from './FormComponents/AppLoader'
+import Loader from './FormComponents/Loader'
 import PlanCard from './FormComponents/PlanCard'
-import RogersLogo from '../assets/Rogers.svg'
-
-import{
+import DodoLogo from '../assets/Rogers.svg'
+import {
   apiURL,
   searchPlanByTextUrl,
   makePlansFromRawData
 } from '../Helpers/helpers'
-export default function RogersPlans() {
+
+export default function DodoPlans() {
   const theme = useTheme()
   const [plans, setPlans] = useState([])
   const [loading, setLoading] = useState(true)
@@ -25,27 +25,27 @@ export default function RogersPlans() {
   useEffect(() => {
     axios
       .get(`${apiURL}${searchPlanByTextUrl}`, {
-        params: { q: 'rogers' },
+        params: { q: 'dodo' },
       })
       .then(({ data }) => {
-        
-        const allPlans = makePlansFromRawData(data);
-        const rogersPlans = allPlans
-          .filter(p => p.site === 'Rogers')
-          .map(p => ({ ...p, logo: RogersLogo }));
-        setPlans(rogersPlans);
+        const allPlans = makePlansFromRawData(data)
+        const dodoPlans = allPlans
+          .filter(p => p.site === 'Dodo')
+          .map(p => ({ ...p, logo: DodoLogo }))
+        setPlans(dodoPlans)
       })
       .catch(err => {
-        setError(err.message);
+        setError(err.message)
       })
       .finally(() => {
-        setLoading(false);
-      });
-  }, []);
+        setLoading(false)
+      })
+  }, [])
 
   if (loading) {
-    return <AppLoader message="Loading Rogers plans…" />
+    return <Loader message="Loading Dodo plans…" />
   }
+
   if (error) {
     return (
       <Container maxWidth="lg" sx={{ mt: 4, minHeight: '100vh' }}>
@@ -66,18 +66,21 @@ export default function RogersPlans() {
           fontWeight: 700,
           fontSize: '2.5rem',
           color: theme.palette.primary.main,
-          mb: 4
+          mb: 4,
         }}
       >
-        Rogers Plans
+        Dodo Plans
       </Typography>
 
       <Grid container spacing={4} alignItems="stretch">
         {plans.map((plan, i) => (
           <Grid
+          item
             key={plan.id}
+            xs={12}
+            sm={6}
+            md={4}
             sx={{ display: 'flex' }}
-            size={{ xs: 12, sm: 6, md: 4 }}
           >
             <Motion.div
               initial={{ y: 20, opacity: 0 }}
@@ -88,14 +91,15 @@ export default function RogersPlans() {
                 width: '100%',
                 display: 'flex',
                 flexDirection: 'column',
-                height: '100%'   /* ➋ fill the grid‐cell vertically */
+                height: '100%',
               }}
             >
               <PlanCard plan={plan} />
             </Motion.div>
           </Grid>
         ))}
-      </Grid>
+      </Grid>s
     </Container>
   )
 }
+
