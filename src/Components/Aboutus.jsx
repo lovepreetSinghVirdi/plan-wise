@@ -1,5 +1,5 @@
 // src/Components/AboutUs.jsx
-import React from 'react';
+import React, { useState } from 'react';
 import { useTheme } from '@mui/material/styles';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import Container from '@mui/material/Container';
@@ -20,9 +20,9 @@ import lovepreetImg from '../assets/lovepreet.jpg';
 
 const teamMembers = [
   { name: 'Lovepreet Singh Virdi', role: 'Team Leader', avatar: lovepreetImg },
-  { name: 'Tusharbir Singh Mutty', role: 'Back‑End Developer' },
-  { name: 'Kunal Rastogi', role: 'Back‑End Developer' },
-  { name: 'Dipti Patel', role: 'Front‑End Developer', avatar: diptiImg },
+  { name: 'Tusharbir Singh Mutty', role: 'Back-End Developer' },
+  { name: 'Kunal Rastogi', role: 'Back-End Developer' },
+  { name: 'Dipti Patel', role: 'Front-End Developer', avatar: diptiImg },
 ];
 
 const values = [
@@ -34,6 +34,83 @@ const values = [
 export default function AboutUs() {
   const theme = useTheme();
   const isMdUp = useMediaQuery(theme.breakpoints.up('md'));
+
+  // ─── Validation State & Handlers ───
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    phone: '',
+    address: '',
+    message: '',
+  });
+  const [errors, setErrors] = useState({});
+
+  const validateField = (name, value) => {
+    let error = '';
+    switch (name) {
+      case 'name':
+        if (!value.trim()) error = 'Name is required';
+        break;
+      case 'email':
+        if (!value.trim()) error = 'Email is required';
+        const emailRegex = /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,3}$/;
+        if (!emailRegex.test(value.trim())) {
+          error = 'Email is invalid';
+        }
+        break;
+      case 'phone':
+        if (!/^\d{10}$/.test(value.replace(/\D/g, ''))) error = 'Phone must be 10 digits';
+        break;
+      case 'address':
+      if (!value.trim()) {
+        error = 'Address is required';
+      } else {
+        // 1) Must start with a street number
+        if (!/^\d+[\s,]+/.test(value.trim())) {
+          error = 'Address must start with a street number (e.g., "123 Main St, ...")';
+        }
+        // 2) Must include a valid Canadian postal code anywhere
+        else {
+          const postalRegex = /[A-Za-z]\d[A-Za-z]\s?\d[A-Za-z]\d$/;
+          if (!postalRegex.test(value)) {
+            error = 'Include a valid Canadian postal code (e.g., A1A 1A1)';
+          }
+        }
+      }
+      break;
+
+      case 'message':
+        if (!value.trim()) error = 'Message is required';
+        break;
+      default:
+        break;
+    }
+    setErrors(prev => ({ ...prev, [name]: error }));
+  };
+
+  const handleChange = e => {
+    const { name, value } = e.target;
+    setFormData(prev => ({ ...prev, [name]: value }));
+    validateField(name, value);
+  };
+
+  const handleSubmit = e => {
+    e.preventDefault();
+
+    // run validation on all fields
+    Object.entries(formData).forEach(([key, val]) => validateField(key, val));
+
+    // if no errors, proceed
+    const hasErrors = Object.values(formData).some((val, i) => {
+      const field = Object.keys(formData)[i];
+      return !val || errors[field];
+    });
+
+    if (!hasErrors) {
+      alert('Form submitted!');
+      // ... your submission logic
+    }
+  };
 
   return (
     <Container maxWidth="xl" sx={{ py: 6 }}>
@@ -95,13 +172,7 @@ export default function AboutUs() {
               <Avatar
                 src={member.avatar}
                 alt={member.name}
-                sx={{
-                  width: 200,
-                  height: 200,
-                  mx: 'auto',
-                  mb: 2,
-                  mt: 2
-                }}
+                sx={{ width: 200, height: 200, mx: 'auto', mb: 2, mt: 2 }}
               />
               <CardContent sx={{ p: 1, textAlign: 'center' }}>
                 <Typography variant="h6" sx={{ fontWeight: 600, mb: 1 }}>
@@ -117,14 +188,7 @@ export default function AboutUs() {
       </Grid>
 
       {/* ─── Contact Us Section ─── */}
-      <Box
-        display="flex"
-        flexDirection={{ xs: 'column', md: 'row' }}
-        alignItems="stretch"
-        gap={4}
-      >
-        <Box sx={{ my: 2 }} />
-        {/* contact us  */}
+      <Box display="flex" flexDirection={{ xs: 'column', md: 'row' }} gap={4}>
         <Paper
           elevation={3}
           sx={{
@@ -146,42 +210,85 @@ export default function AboutUs() {
           </Typography>
         </Paper>
 
-        {/*  form section  */}
         <Box flexBasis={{ xs: '100%', md: '70%' }}>
           <Box
             component="form"
+            onSubmit={handleSubmit}
             noValidate
             autoComplete="off"
             display="grid"
             gridTemplateColumns={{ xs: '1fr', sm: '1fr 1fr' }}
             gap={2}
           >
-            <TextField label="Your Name" variant="standard" fullWidth  placeholder="John Doe"/>
-            <TextField label="Your E‑mail" variant="standard" fullWidth placeholder="you@example.com"/>
-
-            <TextField label="Enter Phone Number" variant="standard" fullWidth placeholder="(555) 123‑4567" />
-            <TextField label="Your Address" variant="standard" fullWidth placeholder="123 Main St, City, State, postal code"/>
-
+            <TextField
+              label="Your Name"
+              name="name"
+              variant="standard"
+              fullWidth
+              placeholder="John Doe"
+              value={formData.name}
+              onChange={handleChange}
+              error={!!errors.name}
+              helperText={errors.name}
+            />
+            <TextField
+              label="Your E-mail"
+              name="email"
+              variant="standard"
+              fullWidth
+              placeholder="you@example.com"
+              value={formData.email}
+              onChange={handleChange}
+              error={!!errors.email}
+              helperText={errors.email}
+            />
+            <TextField
+              label="Enter Phone Number"
+              name="phone"
+              variant="standard"
+              fullWidth
+              placeholder="(555) 123-4567"
+              value={formData.phone}
+              onChange={handleChange}
+              error={!!errors.phone}
+              helperText={errors.phone}
+            />
+            <TextField
+              label="Your Address"
+              name="address"
+              variant="standard"
+              fullWidth
+              placeholder="123 Main St, City, State, postal code"
+              value={formData.address}
+              onChange={handleChange}
+              error={!!errors.address}
+              helperText={errors.address}
+            />
             <TextField
               label="Message"
-              placeholder="Type your message here…"
+              name="message"
               variant="standard"
               fullWidth
               multiline
               rows={6}
+              placeholder="Type your message here…"
               sx={{ gridColumn: '1 / -1' }}
+              value={formData.message}
+              onChange={handleChange}
+              error={!!errors.message}
+              helperText={errors.message}
             />
 
             <Box gridColumn="1 / -1" textAlign={isMdUp ? 'right' : 'center'} mt={2}>
               <Button
-              fullWidth
+                type="submit"
+                fullWidth
                 variant="contained"
                 sx={{
                   backgroundColor: theme.palette.primary.main,
                   color: '#fff',
                   px: 4,
                   py: 1.5,
-                  
                   '&:hover': { backgroundColor: theme.palette.primary.dark },
                 }}
               >
@@ -208,11 +315,7 @@ export default function AboutUs() {
       <Grid container spacing={4} justifyContent="center" mb={6}>
         {values.map(val => (
           <Grid key={val.title} item xs={12} sm={4} display="flex" justifyContent="center">
-            <Box sx={{
-              maxWidth: 300,
-              textAlign: 'center',
-              px: 2
-            }}>
+            <Box sx={{ maxWidth: 300, textAlign: 'center', px: 2 }}>
               <Typography variant="h6" sx={{ fontStyle: 'italic', fontWeight: 600, mb: 1 }}>
                 {val.title}
               </Typography>
@@ -223,7 +326,6 @@ export default function AboutUs() {
           </Grid>
         ))}
       </Grid>
-
     </Container>
   );
 }
