@@ -30,7 +30,7 @@ export default function TekSavvyPlans() {
         const allPlans = makePlansFromRawData(data);
         const tekSavvyPlans = allPlans
           .filter(p => p.site === 'TekSavvy')
-          .map(p => ({ ...p, logo: TeksavvyLogo }));
+          .map(p => ({ ...p, logo: TeksavvyLogo, name:p.planName}));
         setPlans(tekSavvyPlans);
       })
       .catch(err => {

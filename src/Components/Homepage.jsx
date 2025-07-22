@@ -16,6 +16,7 @@ import MainSearch from './FormComponents/MainSearch';
 import rogersLogo from '../assets/Rogers.svg';
 import iprimusLogo from '../assets/iprimus_logo.svg';
 import vmediaLogo from '../assets/vmedia.svg';
+import dodoLogo from '../assets/Rogers.svg';
 import teksavvyLogo from '../assets/teksavvy.svg';
 import CustomCard from './FormComponents/CustomCard';
 
@@ -24,6 +25,7 @@ const logos = {
   iprimus: iprimusLogo,
   vmedia: vmediaLogo,
   teksavvy: teksavvyLogo,
+  dodo: dodoLogo,
 };
 
 const plans = [
@@ -31,6 +33,7 @@ const plans = [
   { key: 'iprimus', title: 'IPrimus', text: 'This is the second card.' },
   { key: 'vmedia', title: 'Vmedia', text: 'This is the third card.' },
   { key: 'teksavvy', title: 'Teksavvy', text: 'This is the fourth card.' },
+  { key: 'dodo', title: 'Dodo', text: 'This is the fourth card.' },
 ];
 
 export default function HomePage() {

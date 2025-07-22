@@ -75,7 +75,10 @@ export default function VmediaPlans() {
           <Grid
             key={plan.id}
             sx={{ display: 'flex' }}
-            size={{ xs: 12, sm: 6, md: 4 }}
+            size={{ 
+              xs: 12, 
+              sm: 6,
+               md: 4 }}
           >
             <Motion.div
               initial={{ y: 20, opacity: 0 }}

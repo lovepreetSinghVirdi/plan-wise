@@ -8,7 +8,7 @@ import rogersLogo from '../assets/Rogers.svg';
 import iprimusLogo from '../assets/iprimus_logo.svg';
 import vmediaLogo from '../assets/vmedia.svg';
 import teksavvyLogo from '../assets/teksavvy.svg';
-
+//import dodoLogo from '../assets/Rogers.svg';
 export const capitalize = (str = '') => {
     return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
 }
@@ -24,6 +24,7 @@ export const brandLogo = (site = '') => {
             return vmediaLogo;
         case 'teksavvy':
             return teksavvyLogo;
+       
         default:
             return '';
 
