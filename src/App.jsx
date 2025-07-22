@@ -8,7 +8,7 @@ import VmediaPlans from './Components/VmediaPlans';
 import TeksavvyPlans from './Components/TeksavvyPlans';
 import Aboutus from './Components/Aboutus';
 import Footer from './Components/Footer';
-import DodoPlans      from './Components/DodoPlans'
+import DodoPlans from './Components/DodoPlans'
 
 
 import {
@@ -33,9 +33,9 @@ const App = () => {
 
       <Routes>
         <Route path='/' element={<HomePage />} />
-        
+
         <Route path='/available-plans' element={<AvailablePlans />} />
-         <Route path="dodo"     element={<DodoPlans />} />
+        <Route path="dodo" element={<DodoPlans />} />
         <Route path="rogers" element={<RogersPlans />} />
         <Route path="iprimus" element={<IprimusPlans />} />
         <Route path="vmedia" element={<VmediaPlans />} />

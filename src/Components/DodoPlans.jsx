@@ -7,7 +7,7 @@ import Grid from '@mui/material/Grid'
 import Typography from '@mui/material/Typography'
 import { motion as Motion } from 'framer-motion'
 
-import Loader from './FormComponents/Loader'
+import AppLoader from './FormComponents/AppLoader'
 import PlanCard from './FormComponents/PlanCard'
 import DodoLogo from '../assets/Rogers.svg'
 import {
@@ -43,7 +43,7 @@ export default function DodoPlans() {
   }, [])
 
   if (loading) {
-    return <Loader message="Loading Dodo plans…" />
+    return <AppLoader message="Loading Dodo plans…" />
   }
 
   if (error) {
@@ -77,9 +77,8 @@ export default function DodoPlans() {
           <Grid
             item
             key={plan.id}
-            xs={12}
-            sm={6}
-            md={4}
+            size={{ xs: 12, sm: 6, md: 4 }}
+            offset={{ md: plans.length === 1 ? 4 : 0 }}
             sx={{ display: 'flex' }}
           >
             <Motion.div
