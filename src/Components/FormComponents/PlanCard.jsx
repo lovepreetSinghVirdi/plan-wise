@@ -5,8 +5,8 @@ import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import Box from '@mui/material/Box';
 import CustomCard from './CustomCard';
- import { brandLogo, capitalize } from '../../Helpers/helpers';
- 
+import { brandLogo, capitalize } from '../../Helpers/helpers';
+
 
 export default function PlanCard(props) {
   const { plan } = props;

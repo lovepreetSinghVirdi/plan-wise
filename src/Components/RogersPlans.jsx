@@ -7,7 +7,7 @@ import Grid from '@mui/material/Grid'
 import Typography from '@mui/material/Typography'
 import { motion as Motion } from 'framer-motion';
 
-import Loader from './FormComponents/Loader'
+import AppLoader from './FormComponents/AppLoader'
 import PlanCard from './FormComponents/PlanCard'
 import RogersLogo from '../assets/Rogers.svg'
 import{
@@ -43,7 +43,7 @@ export default function RogersPlans() {
   }, []);
 
   if (loading) {
-    return <Loader message="Loading Rogers plans…" />
+    return <AppLoader message="Loading Rogers plans…" />
   }
   if (error) {
     return (
