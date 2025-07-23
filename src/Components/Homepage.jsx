@@ -22,6 +22,7 @@ const plans = [
   { site: 'iprimus', title: 'IPrimus', text: 'This is the second card.' },
   { site: 'vmedia', title: 'Vmedia', text: 'This is the third card.' },
   { site: 'teksavvy', title: 'Teksavvy', text: 'This is the fourth card.' },
+  { site: 'dodo', title: 'Dodo', text: 'This is the fourth card.' },
 ];
 
 export default function HomePage() {
@@ -81,7 +82,7 @@ export default function HomePage() {
                     <CardActions sx={{ justifyContent: 'center', pb: 2 }}>
                       <Button
                         component={RouterNavLink}
-                        to={`/${plan.key}`}
+                        to={`/${plan.site}`}
                         fullWidth
                         variant="contained"
                       >
