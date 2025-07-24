@@ -20,6 +20,7 @@ import {
 
 
 import AvailablePlans from './Components/AvailablePlans';
+import DataExtractor from './Components/DataExtractor';
 // import AppLoader from './Components/FormComponents/Loader';
 // import { useState } from 'react';
 
@@ -41,6 +42,7 @@ const App = () => {
         <Route path="vmedia" element={<VmediaPlans />} />
         <Route path="teksavvy" element={<TeksavvyPlans />} />
         <Route path="aboutus" element={<Aboutus />} />
+        <Route path='data-extractor' element={<DataExtractor />} />
 
         {/* fallback */}
         <Route path="*" element={<Navigate to="/" replace />} />
