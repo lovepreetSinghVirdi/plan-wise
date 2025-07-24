@@ -25,6 +25,7 @@ export default function AppHeader() {
     { label: 'Vmedia', to: '/vmedia' },
     { label: 'Teksavvy', to: '/teksavvy' },
     { label: 'Dodo', to: '/dodo' },
+    { label: 'Data Extractor', to: '/data-extractor' },
     { label: 'About Us', to: '/aboutus' },
   ];
 
