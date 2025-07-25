@@ -46,8 +46,16 @@ export const brandLogo = (site = '') => {
 
 
 const parseFeatures = (features = '') => {
-    return features.split('|');
-}
+  return features
+    .split('|')                // split on pipe
+    .map(f => 
+      f
+        .trim()                // trim whitespace
+        .replace(/\.$/, '')    // remove trailing dot
+    )
+    .filter(f => f.length > 0); // drop empty entries
+};
+
 
 export const makePlansFromRawData = (plans = []) => {
 

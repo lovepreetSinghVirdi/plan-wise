@@ -8,22 +8,26 @@ import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import Box from '@mui/material/Box';
 import CustomCard from './CustomCard';
- import { brandLogo,capitalize } from '../../Helpers/helpers';
- 
+import { brandLogo, capitalize } from '../../Helpers/helpers';
 
 export default function PlanCard(props) {
   const { plan } = props;
-  const { description,
-     features,
-      price, 
-      planName ,
-      logo} = plan;
+  const {
+    description,
+    features = [],    // default to empty array
+    price,
+    planName,
+    logo
+  } = plan;
 
   // fallback to raw JSON keys if camelCase isn't provided
   const downloadSpeed =
     plan.downloadSpeed ?? plan.DownloadingSpeed ?? null;
   const uploadSpeed =
     plan.uploadSpeed ?? plan.uploadingspeed ?? null;
+
+  // Only keep non‑empty, non‑whitespace features
+  const validFeatures = features.filter(f => typeof f === 'string' && f.trim().length > 0);
 
   return (
     <CustomCard
@@ -32,7 +36,8 @@ export default function PlanCard(props) {
         width: '100%',
         flexDirection: 'column',
         flexGrow: 1
-      }}>
+      }}
+    >
       <CardHeader
         title={capitalize(plan.site)}
         action={
@@ -42,14 +47,12 @@ export default function PlanCard(props) {
             alt={`${plan.site} logo`}
             sx={{ width: 80, height: 80 }}
           />
-
         }
         sx={{ pb: 0 }}
       />
 
-
       <CardContent sx={{ flexGrow: 1, mt: 2 }}>
-         <Typography variant="h6">
+        <Typography variant="h6">
           {planName}
         </Typography>
         <Typography variant="body2" color="text.secondary">
@@ -57,40 +60,52 @@ export default function PlanCard(props) {
         </Typography>
 
         {downloadSpeed && (
-          <Typography sx={{ display: 'flex', mt: 3, justifyContent: 'space-between' }} variant="body2" color="text.secondary">
-            <strong style={{ marginRight: '1rem' }}>Download Speed:</strong> <Box component={'span'}>{downloadSpeed}</Box>
+          <Typography
+            sx={{ display: 'flex', mt: 3, justifyContent: 'space-between' }}
+            variant="body2"
+            color="text.secondary"
+          >
+            <strong style={{ marginRight: '1rem' }}>Download Speed:</strong>
+            <Box component="span">{downloadSpeed}</Box>
           </Typography>
         )}
         {uploadSpeed && (
-          <Typography sx={{ display: 'flex', justifyContent: 'space-between' }} variant="body2" color="text.secondary">
-            <strong style={{ marginRight: '1rem' }}>Upload Speed:</strong>  <Box component={'span'}> {uploadSpeed}</Box>
+          <Typography
+            sx={{ display: 'flex', justifyContent: 'space-between' }}
+            variant="body2"
+            color="text.secondary"
+          >
+            <strong style={{ marginRight: '1rem' }}>Upload Speed:</strong>
+            <Box component="span">{uploadSpeed}</Box>
           </Typography>
         )}
 
-        {/* {features?.length > 0 && (<>
-          <Typography sx={{ display: 'flex' }} variant="body2" color="text.secondary">
-            <strong style={{ marginRight: '1rem' }}>Features:</strong>  <Box component={'span'}>  {description}</Box>
-          </Typography>
-          <Box
-            component="ul"
-            sx={{
-              pl: 2,         // indent
-              m: 0,          // remove default margin
-              '& li': {
-                mb: 0.5,    // vertical spacing between items
-                color: 'text.secondary',
-              },
-            }}
-          >
-            {features.map((feat, i) => (
-              <Box component="li" key={i}>
-                {feat}
-              </Box>
-            ))}
-          </Box>
-        </>)
-        } */}
-      </CardContent>
+        {/* only render when there’s at least one real feature
+        {validFeatures.length > 0 && (
+          <>
+            <Typography sx={{ display: 'flex', mt: 3 }} variant="body2" color="text.secondary">
+              <strong style={{ marginRight: '1rem' }}>Features:</strong>
+            </Typography>
+            <Box
+              component="ul"
+              sx={{
+                pl: 2,     // indent
+                listStyleType: 'none',      // remove default margin
+                '& li': {
+                  mb: 0.5, // vertical spacing between items
+                  color: 'text.secondary',
+                },
+              }}
+            >
+              {validFeatures.map((feat, i) => (
+                <Box component="li" key={i}>
+                  {feat}
+                </Box>
+              ))}
+            </Box>
+          </>
+        )}
+      </CardContent> */}
 
       <CardActions
         sx={{
@@ -111,5 +126,4 @@ export default function PlanCard(props) {
       </CardActions>
     </CustomCard>
   );
-
 }
