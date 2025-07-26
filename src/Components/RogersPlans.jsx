@@ -22,17 +22,19 @@ export default function RogersPlans() {
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
 
-  useEffect(() => {
+ useEffect(() => {
     axios
-      .get(`${apiURL}${searchPlanByTextUrl}`, {
-        params: { q: 'rogers' },
-      })
+      .get(`${apiURL}${searchPlanByTextUrl}`, { params: { q: 'rogers' } })
       .then(({ data }) => {
-        
+        // 1) transform raw API JSON into enriched plan objects
         const allPlans = makePlansFromRawData(data);
+         console.log('allPlans with URLs:', allPlans.map(p => ({ site: p.site, url: p.url })));
+
+        // 2) keep only Rogers plans and add the logo
         const rogersPlans = allPlans
           .filter(p => p.site === 'Rogers')
           .map(p => ({ ...p, logo: RogersLogo }));
+        // 3) store them in state
         setPlans(rogersPlans);
       })
       .catch(err => {
@@ -42,6 +44,8 @@ export default function RogersPlans() {
         setLoading(false);
       });
   }, []);
+
+console.log('dipti');
 
   if (loading) {
     return <AppLoader message="Loading Rogers plans…" />
@@ -75,7 +79,8 @@ export default function RogersPlans() {
       <Grid container spacing={4} alignItems="stretch">
         {plans.map((plan, i) => (
           <Grid
-            key={plan.id}
+          
+          key={`${plan.site}-${i}`}
             sx={{ display: 'flex' }}
             size={{ xs: 12, sm: 6, md: 4 }}
           >
