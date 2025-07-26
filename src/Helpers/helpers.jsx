@@ -43,18 +43,32 @@ export const brandLogo = (site = '') => {
 
     }
 };
-
+const baseUrls = {
+  rogers:   'https://www.rogers.com/internet/packages',
+  iprimus:  'https://www.iprimus.com.au/nbn-plans',
+  teksavvy: 'https://www.teksavvy.com/services/internet/',
+  dodo:     'https://www.dodo.com/nbn',
+  vmedia:   'https://www.vmedia.ca/en/internet/ontario',
+};
 
 const parseFeatures = (features = '') => {
-    return features.split('|');
-}
+  return features
+    .split('|')                // split on pipe
+    .map(f => 
+      f
+        .trim()                // trim whitespace
+        .replace(/\.$/, '')    // remove trailing dot
+    )
+    .filter(f => f.length > 0); // drop empty entries
+};
 
-export const makePlansFromRawData = (plans = []) => {
-
-    return plans.map((plan) => {
-        const features = parseFeatures(plan.features);
-
-        return { ...plan, features: plan?.site?.toUpperCase() === 'DODO' ? [] : features, planName: plan?.site?.toUpperCase() === 'DODO' ? (plan.features || '') : plan.planName }
-    })
-
-}
+export const makePlansFromRawData = (plans = []) =>
+  plans.map(plan => {
+    const siteKey = plan.site?.toLowerCase() ?? '';
+    return {
+      ...plan,
+      url:      baseUrls[siteKey] || '',
+      features: parseFeatures(plan.features),     
+      planName: plan.planName,                     
+    };
+  });

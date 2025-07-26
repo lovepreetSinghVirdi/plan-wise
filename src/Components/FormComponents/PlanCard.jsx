@@ -10,14 +10,17 @@ import { brandLogo, capitalize } from '../../Helpers/helpers';
 
 export default function PlanCard(props) {
   const { plan } = props;
-  const { description, features, price, planName } = plan;
+  const { description, features, price, planName,url } = plan;
+  
 
   // fallback to raw JSON keys if camelCase isn't provided
   const downloadSpeed =
     plan.downloadSpeed ?? plan.DownloadingSpeed ?? null;
   const uploadSpeed =
     plan.uploadSpeed ?? plan.uploadingspeed ?? null;
-
+ const validFeatures = features.filter(
+    f => typeof f === 'string' && f.trim().length > 0
+  );
   return (
     <CustomCard
       sx={{
@@ -97,9 +100,18 @@ export default function PlanCard(props) {
         <Typography variant="h5" gutterBottom>
           {price}
         </Typography>
-        <Button fullWidth variant="contained">
+       {url && (
+        <Button
+          component="a"
+          href={url}
+          target="_blank"
+          rel="noopener noreferrer"
+          fullWidth
+          variant="contained"
+        >
           Shop Now
         </Button>
+      )}
       </CardActions>
     </CustomCard>
   );
