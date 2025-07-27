@@ -1,0 +1,366 @@
+[
+  
+  {
+    "id": 1,
+    "provider": "rogers",
+    "name": "Rogers Basic",
+    "DownloadingSpeed": "25Mbps",
+    "uploadingspeed": "5Mbps",
+    "description": "Great for light browsing",
+    "price": "$29.99/mo"
+  },
+  {
+    "id": 2,
+    "provider": "rogers",
+    "name": "Rogers Starter",
+    "DownloadingSpeed": "50Mbps",
+    "uploadingspeed": "10Mbps",
+    "description": "Entry‑level streaming",
+    "price": "$39.99/mo"
+  },
+  {
+    "id": 3,
+    "provider": "rogers",
+    "name": "Rogers Standard",
+    "DownloadingSpeed": "100Mbps",
+    "uploadingspeed": "20Mbps",
+    "description": "HD streaming and gaming",
+    "price": "$54.99/mo"
+  },
+  {
+    "id": 4,
+    "provider": "rogers",
+    "name": "Rogers Plus",
+    "DownloadingSpeed": "150Mbps",
+    "uploadingspeed": "30Mbps",
+    "description": "Multiple devices supported",
+    "price": "$64.99/mo"
+  },
+  {
+    "id": 5,
+    "provider": "rogers",
+    "name": "Rogers Premium",
+    "DownloadingSpeed": "200Mbps",
+    "uploadingspeed": "50Mbps",
+    "description": "Fast downloads & uploads",
+    "price": "$74.99/mo"
+  },
+  {
+    "id": 6,
+    "provider": "rogers",
+    "name": "Rogers Ultra",
+    "DownloadingSpeed": "300Mbps",
+    "uploadingspeed": "75Mbps",
+    "description": "4K streaming ready",
+    "price": "$84.99/mo"
+  },
+  {
+    "id": 7,
+    "provider": "rogers",
+    "name": "Rogers Gigabit",
+    "DownloadingSpeed": "1Gbps",
+    "uploadingspeed": "200Mbps",
+    "description": "Top‑tier speeds",
+    "price": "$109.99/mo"
+  },
+  {
+    "id": 8,
+    "provider": "rogers",
+    "name": "Rogers Business Light",
+    "DownloadingSpeed": "200Mbps",
+    "uploadingspeed": "100Mbps",
+    "description": "Small office plan",
+    "price": "$99.99/mo"
+  },
+  {
+    "id": 9,
+    "provider": "rogers",
+    "name": "Rogers Business Pro",
+    "DownloadingSpeed": "500Mbps",
+    "uploadingspeed": "200Mbps",
+    "description": "Advanced business connectivity",
+    "price": "$129.99/mo"
+  },
+  {
+    "id": 10,
+    "provider": "rogers",
+    "name": "Rogers Ultimate",
+    "DownloadingSpeed": "2Gbps",
+    "uploadingspeed": "500Mbps",
+    "description": "The fastest plan Rogers offers",
+    "price": "$199.99/mo"
+  },
+
+  {
+    "id": 1,
+    "provider": "iprimus",
+    "name": "Iprimus Fibe 75",
+    "DownloadingSpeed": "75Mbps",
+    "uploadingspeed": "75Mbps",
+    "description": "Fast home internet",
+    "price": "$49.99/mo"
+  },
+  {
+    "id": 2,
+    "provider": "iprimus",
+    "name": "Iprimus Fibe 150",
+    "DownloadingSpeed": "150Mbps",
+    "uploadingspeed": "150Mbps",
+    "description": "Faster streaming",
+    "price": "$69.99/mo"
+  },
+  {
+    "id": 3,
+    "provider": "iprimus",
+    "name": "Iprimus Fibe 250",
+    "DownloadingSpeed": "250Mbps",
+    "uploadingspeed": "250Mbps",
+    "description": "Blazing speed",
+    "price": "$109.99/mo"
+  },
+  {
+    "id": 4,
+    "provider": "iprimus",
+    "name": "Iprimus Fibe 500",
+    "DownloadingSpeed": "500Mbps",
+    "uploadingspeed": "500Mbps",
+    "description": "Ultra‑fast connectivity",
+    "price": "$139.99/mo"
+  },
+  {
+    "id": 5,
+    "provider": "iprimus",
+    "name": "Iprimus Fibe Gigabit",
+    "DownloadingSpeed": "1000Mbps",
+    "uploadingspeed": "1000Mbps",
+    "description": "Gigabit speeds",
+    "price": "$189.99/mo"
+  },
+  {
+    "id": 6,
+    "provider": "iprimus",
+    "name": "Iprimus Business Starter",
+    "DownloadingSpeed": "100Mbps",
+    "uploadingspeed": "100Mbps",
+    "description": "Reliable business starter",
+    "price": "$79.99/mo"
+  },
+  {
+    "id": 7,
+    "provider": "iprimus",
+    "name": "Iprimus Business Pro",
+    "DownloadingSpeed": "250Mbps",
+    "uploadingspeed": "250Mbps",
+    "description": "Advanced business plan",
+    "price": "$129.99/mo"
+  },
+  {
+    "id": 8,
+    "provider": "iprimus",
+    "name": "Iprimus Business Elite",
+    "DownloadingSpeed": "500Mbps",
+    "uploadingspeed": "500Mbps",
+    "description": "Premium business connectivity",
+    "price": "$179.99/mo"
+  },
+  {
+    "id": 9,
+    "provider": "iprimus",
+    "name": "Iprimus Ultimate",
+    "DownloadingSpeed": "2000Mbps",
+    "uploadingspeed": "2000Mbps",
+    "description": "2Gbps ultra plan",
+    "price": "$249.99/mo"
+  },
+  {
+    "id": 10,
+    "provider": "iprimus",
+    "name": "Iprimus Home Plus",
+    "DownloadingSpeed": "300Mbps",
+    "uploadingspeed": "300Mbps",
+    "description": "Perfect for smart homes",
+    "price": "$89.99/mo"
+  },
+
+  {
+    "id": 11,
+    "provider": "teksavvy",
+    "name": "TekSavvy Starter",
+    "DownloadingSpeed": "25Mbps",
+    "uploadingspeed": "5Mbps",
+    "description": "Budget‑friendly entry plan",
+    "price": "$29.95/mo"
+  },
+  {
+    "id": 12,
+    "provider": "teksavvy",
+    "name": "TekSavvy Basic",
+    "DownloadingSpeed": "50Mbps",
+    "uploadingspeed": "10Mbps",
+    "description": "Great for browsing and email",
+    "price": "$39.95/mo"
+  },
+  {
+    "id": 13,
+    "provider": "teksavvy",
+    "name": "TekSavvy Standard",
+    "DownloadingSpeed": "100Mbps",
+    "uploadingspeed": "20Mbps",
+    "description": "Ideal for HD streaming",
+    "price": "$54.95/mo"
+  },
+  {
+    "id": 14,
+    "provider": "teksavvy",
+    "name": "TekSavvy Plus",
+    "DownloadingSpeed": "150Mbps",
+    "uploadingspeed": "30Mbps",
+    "description": "Perfect for multiple devices",
+    "price": "$64.95/mo"
+  },
+  {
+    "id": 15,
+    "provider": "teksavvy",
+    "name": "TekSavvy Premium",
+    "DownloadingSpeed": "200Mbps",
+    "uploadingspeed": "50Mbps",
+    "description": "High‑speed for heavy usage",
+    "price": "$74.95/mo"
+  },
+  {
+    "id": 16,
+    "provider": "teksavvy",
+    "name": "TekSavvy Ultra",
+    "DownloadingSpeed": "300Mbps",
+    "uploadingspeed": "75Mbps",
+    "description": "Blazing fast speeds",
+    "price": "$84.95/mo"
+  },
+  {
+    "id": 17,
+    "provider": "teksavvy",
+    "name": "TekSavvy Business Light",
+    "DownloadingSpeed": "500Mbps",
+    "uploadingspeed": "100Mbps",
+    "description": "Small business starter",
+    "price": "$99.95/mo"
+  },
+  {
+    "id": 18,
+    "provider": "teksavvy",
+    "name": "TekSavvy Business Pro",
+    "DownloadingSpeed": "750Mbps",
+    "uploadingspeed": "150Mbps",
+    "description": "For growing businesses",
+    "price": "$129.95/mo"
+  },
+  {
+    "id": 19,
+    "provider": "teksavvy",
+    "name": "TekSavvy Enterprise",
+    "DownloadingSpeed": "1Gbps",
+    "uploadingspeed": "200Mbps",
+    "description": "Top‑tier enterprise solution",
+    "price": "$159.95/mo"
+  },
+  {
+    "id": 20,
+    "provider": "teksavvy",
+    "name": "TekSavvy Ultimate",
+    "DownloadingSpeed": "2Gbps",
+    "uploadingspeed": "500Mbps",
+    "description": "The fastest speeds available",
+    "price": "$199.95/mo"
+  },
+
+  {
+    "id": 21,
+    "provider": "vmedia",
+    "name": "Vmedia Essentials",
+    "DownloadingSpeed": "25Mbps",
+    "uploadingspeed": "5Mbps",
+    "description": "Budget‑friendly starter",
+    "price": "$39.99/mo"
+  },
+  {
+    "id": 22,
+    "provider": "vmedia",
+    "name": "Vmedia Plus",
+    "DownloadingSpeed": "50Mbps",
+    "uploadingspeed": "10Mbps",
+    "description": "More speed, more data",
+    "price": "$59.99/mo"
+  },
+  {
+    "id": 23,
+    "provider": "vmedia",
+    "name": "Vmedia Ultra",
+    "DownloadingSpeed": "100Mbps",
+    "uploadingspeed": "20Mbps",
+    "description": "Unlimited everything",
+    "price": "$79.99/mo"
+  },
+  {
+    "id": 24,
+    "provider": "vmedia",
+    "name": "Vmedia Pro",
+    "DownloadingSpeed": "150Mbps",
+    "uploadingspeed": "30Mbps",
+    "description": "For power users and gamers",
+    "price": "$69.99/mo"
+  },
+  {
+    "id": 25,
+    "provider": "vmedia",
+    "name": "Vmedia Max",
+    "DownloadingSpeed": "200Mbps",
+    "uploadingspeed": "50Mbps",
+    "description": "Blazing speeds, more data",
+    "price": "$79.99/mo"
+  },
+  {
+    "id": 26,
+    "provider": "vmedia",
+    "name": "Vmedia Extreme",
+    "DownloadingSpeed": "300Mbps",
+    "uploadingspeed": "75Mbps",
+    "description": "Perfect for 4K streaming",
+    "price": "$89.99/mo"
+  },
+  {
+    "id": 27,
+    "provider": "vmedia",
+    "name": "Vmedia Business",
+    "DownloadingSpeed": "500Mbps",
+    "uploadingspeed": "100Mbps",
+    "description": "Reliable for small offices",
+    "price": "$109.99/mo"
+  },
+  {
+    "id": 28,
+    "provider": "vmedia",
+    "name": "Vmedia Enterprise",
+    "DownloadingSpeed": "750Mbps",  
+    "uploadingspeed": "150Mbps",
+    "description": "High performance for businesses",
+    "price": "$139.99/mo"
+  },
+  {
+    "id": 29,
+    "provider": "vmedia",
+    "name": "Vmedia Gigabit",
+    "DownloadingSpeed": "1Gbps",
+    "uploadingspeed": "200Mbps",
+    "description": "Ultra‑fast speeds",
+    "price": "$169.99/mo"
+  },
+  {
+    "id": 30,
+    "provider": "vmedia",
+    "name": "Vmedia Ultimate",
+    "DownloadingSpeed": "2Gbps",
+    "uploadingspeed": "300Mbps",
+    "description": "Top plan available",
+    "price": "$199.99/mo"
+  }
+]
