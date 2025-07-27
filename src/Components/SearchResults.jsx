@@ -22,7 +22,7 @@ import { motion as Motion } from 'framer-motion';
 import AppLoader from './FormComponents/AppLoader';
 import PlanCard from './FormComponents/PlanCard';
 
-const AvailablePlans = () => {
+const SearchResults = () => {
 
     const theme = useTheme();
     const navigate = useNavigate();
@@ -86,7 +86,7 @@ const AvailablePlans = () => {
                     mb: 4
                 }}
             >
-                Available Plans
+                Search Results
             </Typography>
             <Grid container spacing={2} >
                 {plans.map((plan, index) => {
@@ -128,4 +128,4 @@ const AvailablePlans = () => {
     );
 };
 
-export default AvailablePlans;
+export default SearchResults;

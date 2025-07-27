@@ -28,7 +28,7 @@ const UrlSearchField = ({ onSearch }) => {
       component="form"
       onSubmit={handleSubmit}
       noValidate
-      sx={{ display: 'flex', alignItems: 'stretch', width: 600 }}
+      sx={{ display: 'flex', alignItems: 'stretch', }}
     >
       <TextField
         fullWidth
