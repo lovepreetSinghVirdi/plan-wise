@@ -6,7 +6,7 @@ import UrlSearchField from './FormComponents/UrlSearchField';
 
 const DataExtractor = () => {
     const theme = useTheme();
-    const cards = [{ title: 'Phone Numbers' }, { title: 'URLs' }, { title: 'Emails' }, { title: 'Dates' }, { title: 'Prices' }];
+    const cards = [{ title: 'Phone Numbers' }, { title: 'URLs' }, { title: 'Emails' }];
     return (
         <Container maxWidth="lg" sx={{ mt: 4, minHeight: '100vh' }}>
             <Typography
@@ -23,7 +23,7 @@ const DataExtractor = () => {
                 Data Extractor
             </Typography>
             < Grid container spacing={2} sx={{ mt: 10 }}>
-                <Grid size={{ xs: 12, sm: 8 }} offset={{ sm: 2 }}>
+                <Grid size={{ xs: 12, sm: 8, md: 8 }} offset={{ sm: 2, md:2 }}>
                     <UrlSearchField />
                 </Grid>
 

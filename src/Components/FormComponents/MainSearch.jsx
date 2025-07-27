@@ -1,5 +1,5 @@
 import './MainSearch.css';
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import {
     Autocomplete,
     TextField,
@@ -19,11 +19,11 @@ import LaunchIcon from '@mui/icons-material/Launch';
 import {
     apiURL,
     autocompleteURL,
-    getMostSearchedWordsURL,
+    topTrendingWordsURL,
     suggestionsURL
 } from '../../Helpers/helpers';
 
-export default function MainSearch({ handleLoadingFromParent = () => { }, onSelect }) {
+export default function MainSearch({ onSelect }) {
     const [inputValue, setInputValue] = useState('');
     const [options, setOptions] = useState([]);
     const [suggestions, setSuggestions] = useState([]);
@@ -39,10 +39,9 @@ export default function MainSearch({ handleLoadingFromParent = () => { }, onSele
         const fetchTopSearches = async () => {
             try {
                 setLoading(true);
-                const config = { params: { keyword: '' } };
-                const result = await axios.get(`${apiURL}${getMostSearchedWordsURL}`, config);
+                const result = await axios.get(`${apiURL}${topTrendingWordsURL}`);
                 console.log('result---', result);
-                setMostSearchedWords(['ab', 'xd']);
+                setMostSearchedWords(result.data || []);
             } catch {
                 setMostSearchedWords([]);
             } finally {
@@ -85,8 +84,25 @@ export default function MainSearch({ handleLoadingFromParent = () => { }, onSele
         return () => clearTimeout(timer);
     }, [inputValue]);
 
+    const getNoOptionsText = useCallback(() => {
+        if (inputValue.length < 2) {
+            return 'Type at least 2 characters';
+        }
+        else if (!options.length && !suggestions.length) {
+            return 'No such word exists in dictionary';
+        }
+        else {
+            return 'No options found'
+        }
+
+    }, [inputValue, options, suggestions]);
+
+
+
     const isDoYouMean = inputValue?.length > 2 && !options.length && suggestions.length > 0;
     const showMostSearchedWords = !isDoYouMean && mostSearchedWords.length > 0;
+    const disableSearch = inputValue.length >= 2 && (loading || !options.length);
+    const noOptionsText = getNoOptionsText();
 
     // handle form submission (Search button or Enter key)
     const handleSubmit = e => {
@@ -124,11 +140,7 @@ export default function MainSearch({ handleLoadingFromParent = () => { }, onSele
                         options={options}
                         loading={loading}
                         loadingText="Loading…"
-                        noOptionsText={
-                            inputValue.length < 2
-                                ? 'Type at least 2 characters'
-                                : 'No options found'
-                        }
+                        noOptionsText={noOptionsText}
                         popupIcon={null}
                         openOnFocus
                         sx={{
@@ -142,7 +154,7 @@ export default function MainSearch({ handleLoadingFromParent = () => { }, onSele
                         renderInput={params => (
                             <TextField
                                 {...params}
-                                label="Search whatever you want...."
+                                label="looking for..."
                                 fullWidth
                                 InputProps={{
                                     ...params.InputProps,
@@ -163,6 +175,7 @@ export default function MainSearch({ handleLoadingFromParent = () => { }, onSele
                         type="submit"
                         variant="contained"
                         disableElevation
+                        disabled={disableSearch}
                         sx={{
                             borderTopLeftRadius: 0,
                             borderBottomLeftRadius: 0,
@@ -177,7 +190,7 @@ export default function MainSearch({ handleLoadingFromParent = () => { }, onSele
 
             {/* ... Rows 2 and 3 unchanged ... */}
             {showMostSearchedWords && (
-                <Grid size={{ xs: 12, sm: 8 }} offset={{ sm: 2 }}>
+                <Grid size={{ xs: 12, sm: 8 }} offset={{ sm: 2 }} sx={{ mt: 6 }}>
                     <Box
                         sx={{
                             display: 'flex',
@@ -193,17 +206,17 @@ export default function MainSearch({ handleLoadingFromParent = () => { }, onSele
                                 label="Most searched words"
                             />
                         </Typography>
-                        {mostSearchedWords.map(s => (
+                        {mostSearchedWords.map(word => (
                             <Chip
-                                key={s}
-                                label={s}
+                                key={word.keyword}
+                                label={word.keyword}
                                 size="small"
                                 color="primary"
                                 className="suggestions-chip"
-                                onClick={() => handleSuggestionClick(s)}
+                                onClick={() => handleSuggestionClick(word.keyword)}
                                 sx={{ ml: 1 }}
                                 deleteIcon={<LaunchIcon />}
-                                onDelete={() => handleSuggestionClick(s)}
+                                onDelete={() => handleSuggestionClick(word.keyword)}
                             />
                         ))}
                     </Box>

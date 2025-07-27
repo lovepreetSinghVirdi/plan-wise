@@ -1,75 +1,71 @@
 // src/Components/HomePage.jsx
+import React, { useState, useCallback } from 'react';
 import { NavLink as RouterNavLink, useNavigate } from 'react-router-dom';
 import {
   Container,
   Grid,
+  Box,
   CardHeader,
   CardContent,
   CardActions,
   Typography,
   Button,
-  Box,
 } from '@mui/material';
 import { motion as Motion } from 'framer-motion';
 import MainSearch from './FormComponents/MainSearch';
-import CustomCard from './FormComponents/CustomCard';
-import { brandLogo } from '../Helpers/helpers';
-import { useCallback, useState } from 'react';
 import AppLoader from './FormComponents/AppLoader';
+import CustomCard from './FormComponents/CustomCard';
+import CardCarousel from './FormComponents/CardCarousel';
+import { brandLogo } from '../Helpers/helpers';
 
 const plans = [
-  { site: 'rogers', title: 'Rogers', text: 'This is the first card.' },
-  { site: 'iprimus', title: 'IPrimus', text: 'This is the second card.' },
-  { site: 'vmedia', title: 'Vmedia', text: 'This is the third card.' },
+  { site: 'rogers',   title: 'Rogers',   text: 'This is the first card.' },
+  { site: 'iprimus',  title: 'IPrimus',  text: 'This is the second card.' },
+  { site: 'vmedia',   title: 'Vmedia',   text: 'This is the third card.' },
   { site: 'teksavvy', title: 'Teksavvy', text: 'This is the fourth card.' },
-  { site: 'dodo', title: 'Dodo', text: 'This is the fourth card.' },
+  { site: 'dodo',     title: 'Dodo',     text: 'This is the fifth card.' },
 ];
 
 export default function HomePage() {
-
   const navigate = useNavigate();
   const [isLoading, setLoading] = useState(false);
 
-  const handleOptionSelect = (keyword) => {
-    navigate('/available-plans', { state: { keyword } });
-  };
+  const handleOptionSelect = useCallback(
+    (keyword) => navigate('/search-results', { state: { keyword } }),
+    [navigate]
+  );
+
   const handleLoading = useCallback((loading) => {
     setLoading(!!loading);
-  }, [setLoading])
+  }, []);
 
   return (
-    <Container maxWidth="lg" sx={{ mt: 4, width: '100%', justifyContent: 'center' }}>
-      {isLoading ? <AppLoader /> :
+    <Container maxWidth="lg" sx={{ mt: 4 }}>
+      {isLoading ? (
+        <AppLoader />
+      ) : (
         <>
-          {/* ─── Main Searchbar row ─── */}
-          < Grid container spacing={2} sx={{ mt: 20 }}>
-            <MainSearch handleLoadingFromParent={handleLoading} onSelect={handleOptionSelect} />
-
+          {/* ─── Main Search ─── */}
+          <Grid container spacing={2} sx={{ mt: 20 }}>
+            <MainSearch
+              handleLoadingFromParent={handleLoading}
+              onSelect={handleOptionSelect}
+            />
           </Grid>
 
-          {/* ─── Plan cards row ─── */}
-          <Grid container spacing={2} sx={{ mt: 10 }}>
-            {plans.map((plan, index) => (
-              <Grid
-                key={`plan_${index}_${plan.key}`}
-                size={{ xs: 12, sm: 6, md: 3 }}
-                sx={{ display: 'flex' }}
-              >
-
-                <Motion.div
-                  initial={{ y: 20, opacity: 0 }}
-                  animate={{ y: 0, opacity: 1 }}
-                  transition={{ delay: index * 0.2, duration: 0.6 }}
-                  style={{ width: '100%' }}
-                >
-                  <CustomCard>
+          {/* ─── Plans Carousel ─── */}
+          <Box sx={{ mt: 10 }}>
+            <CardCarousel>
+              {plans.map((plan) => (
+ 
+                  <CustomCard  key={plan.site} lift={false} noShadow>
                     <CardHeader
                       title={plan.title}
                       action={
                         <Box
                           component="img"
                           src={brandLogo(plan.site)}
-                          alt={`${plan.site} logo`}
+                          alt={`${plan.site} logo"`}
                           sx={{ width: 90, height: 90 }}
                         />
                       }
@@ -90,14 +86,12 @@ export default function HomePage() {
                       </Button>
                     </CardActions>
                   </CustomCard>
-                </Motion.div>
-              </Grid>
-            ))}
-          </Grid>
-
+          
+              ))}
+            </CardCarousel>
+          </Box>
         </>
-      }
+      )}
     </Container>
-
   );
 }

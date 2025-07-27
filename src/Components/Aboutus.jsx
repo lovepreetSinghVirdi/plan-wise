@@ -1,5 +1,5 @@
 // src/Components/AboutUs.jsx
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { useTheme } from '@mui/material/styles';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import Container from '@mui/material/Container';
