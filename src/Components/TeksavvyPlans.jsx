@@ -37,13 +37,15 @@ export default function TekSavvyPlans() {
         setError(err.message);
       })
       .finally(() => {
-        setLoading(false);
+        setTimeout(() => {
+          setLoading(false);
+        }, 2000);
       });
   }, []);
 
 
   if (loading) {
-    return <AppLoader message="Loading teksavvy plans…" />
+    return <AppLoader message="Loading plans…" />
   }
   if (error) {
     return (

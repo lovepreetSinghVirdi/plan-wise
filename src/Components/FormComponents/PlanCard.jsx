@@ -6,21 +6,20 @@ import Button from '@mui/material/Button';
 import Box from '@mui/material/Box';
 import CustomCard from './CustomCard';
 import { brandLogo, capitalize } from '../../Helpers/helpers';
+import LaunchIcon from '@mui/icons-material/Launch';
 
 
 export default function PlanCard(props) {
   const { plan } = props;
-  const { description, features, price, planName,url } = plan;
-  
+  const {features, price, planName, url } = plan;
+
 
   // fallback to raw JSON keys if camelCase isn't provided
   const downloadSpeed =
     plan.downloadSpeed ?? plan.DownloadingSpeed ?? null;
   const uploadSpeed =
     plan.uploadSpeed ?? plan.uploadingspeed ?? null;
- const validFeatures = features.filter(
-    f => typeof f === 'string' && f.trim().length > 0
-  );
+
   return (
     <CustomCard
       sx={{
@@ -43,16 +42,13 @@ export default function PlanCard(props) {
         sx={{ pb: 0 }}
       />
 
-      <CardContent sx={{ flexGrow: 1, mt: 2 }}>
+      <CardContent sx={{ flexGrow: 1}}>
         <Typography variant="h6">
           {planName}
         </Typography>
-        <Typography variant="body2" color="text.secondary">
-          {description}
-        </Typography>
 
         {downloadSpeed && (
-          <Typography sx={{ display: 'flex', mt: 3, justifyContent: 'space-between' }} variant="body2" color="text.secondary">
+          <Typography sx={{ display: 'flex', mt: 1, justifyContent: 'space-between' }} variant="body2" color="text.secondary">
             <strong style={{ marginRight: '1rem' }}>Download Speed:</strong> <Box component={'span'}>{downloadSpeed}</Box>
           </Typography>
         )}
@@ -100,18 +96,19 @@ export default function PlanCard(props) {
         <Typography variant="h5" gutterBottom>
           {price}
         </Typography>
-       {url && (
-        <Button
-          component="a"
-          href={url}
-          target="_blank"
-          rel="noopener noreferrer"
-          fullWidth
-          variant="contained"
-        >
-          Shop Now
-        </Button>
-      )}
+        {url && (
+          <Button
+            component="a"
+            href={url}
+            target="_blank"
+            rel="noopener noreferrer"
+            fullWidth
+            variant="contained"
+            endIcon={<LaunchIcon />}
+          >
+            Shop Now
+          </Button>
+        )}
       </CardActions>
     </CustomCard>
   );

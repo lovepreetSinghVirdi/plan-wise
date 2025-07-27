@@ -9,7 +9,7 @@ import { motion as Motion } from 'framer-motion';
 import AppLoader from './FormComponents/AppLoader';
 import vmediaLogo from '../assets/vmedia.svg';
 import PlanCard from './FormComponents/PlanCard';
-import{
+import {
   apiURL,
   searchPlanByTextUrl,
   makePlansFromRawData
@@ -26,7 +26,7 @@ export default function VmediaPlans() {
         params: { q: 'vmedia' },
       })
       .then(({ data }) => {
-        
+
         const allPlans = makePlansFromRawData(data);
         const VmediaPlans = allPlans
           .filter(p => p.site === 'VMEDIA')
@@ -37,12 +37,14 @@ export default function VmediaPlans() {
         setError(err.message);
       })
       .finally(() => {
-        setLoading(false);
+        setTimeout(() => {
+          setLoading(false);
+        }, 2000);
       });
   }, []);
 
   if (loading) {
-    return <AppLoader message="Loading Vmedia plans…" />;
+    return <AppLoader message="Loading plans…" />;
   }
   if (error) {
     return (
@@ -70,15 +72,16 @@ export default function VmediaPlans() {
         Vmedia Plans
       </Typography>
 
-      <Grid container spacing={4}alignItems="stretch">
+      <Grid container spacing={4} alignItems="stretch">
         {plans.map((plan, index) => (
           <Grid
             key={plan.id}
             sx={{ display: 'flex' }}
-            size={{ 
-              xs: 12, 
+            size={{
+              xs: 12,
               sm: 6,
-               md: 4 }}
+              md: 4
+            }}
           >
             <Motion.div
               initial={{ y: 20, opacity: 0 }}

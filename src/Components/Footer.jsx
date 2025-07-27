@@ -19,7 +19,7 @@ export default function Footer() {
           </RouterLink>
         </Box>
         <Box className="footer-social">
-          <Link to="https://github.com/lovepreetSinghVirdi" color="inherit" target="_blank" rel="noopener">
+          <Link href="https://github.com/lovepreetSinghVirdi/plan-wise" color="inherit" target="_blank" rel="noopener">
             <GitHubIcon />
           </Link>
         </Box>

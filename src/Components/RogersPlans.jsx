@@ -11,7 +11,7 @@ import AppLoader from './FormComponents/AppLoader'
 import PlanCard from './FormComponents/PlanCard'
 import RogersLogo from '../assets/Rogers.svg'
 
-import{
+import {
   apiURL,
   searchPlanByTextUrl,
   makePlansFromRawData
@@ -22,13 +22,13 @@ export default function RogersPlans() {
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
 
- useEffect(() => {
+  useEffect(() => {
     axios
       .get(`${apiURL}${searchPlanByTextUrl}`, { params: { q: 'rogers' } })
       .then(({ data }) => {
         // 1) transform raw API JSON into enriched plan objects
         const allPlans = makePlansFromRawData(data);
-         console.log('allPlans with URLs:', allPlans.map(p => ({ site: p.site, url: p.url })));
+        console.log('allPlans with URLs:', allPlans.map(p => ({ site: p.site, url: p.url })));
 
         // 2) keep only Rogers plans and add the logo
         const rogersPlans = allPlans
@@ -41,14 +41,16 @@ export default function RogersPlans() {
         setError(err.message);
       })
       .finally(() => {
-        setLoading(false);
+        setTimeout(() => {
+          setLoading(false);
+        }, 2000);
       });
   }, []);
 
-console.log('dipti');
+  console.log('dipti');
 
   if (loading) {
-    return <AppLoader message="Loading Rogers plans…" />
+    return <AppLoader message="Loading plans…" />
   }
   if (error) {
     return (
@@ -79,8 +81,8 @@ console.log('dipti');
       <Grid container spacing={4} alignItems="stretch">
         {plans.map((plan, i) => (
           <Grid
-          
-          key={`${plan.site}-${i}`}
+
+            key={`${plan.site}-${i}`}
             sx={{ display: 'flex' }}
             size={{ xs: 12, sm: 6, md: 4 }}
           >

@@ -19,11 +19,11 @@ import CardCarousel from './FormComponents/CardCarousel';
 import { brandLogo } from '../Helpers/helpers';
 
 const plans = [
-  { site: 'rogers',   title: 'Rogers',   text: 'This is the first card.' },
-  { site: 'iprimus',  title: 'IPrimus',  text: 'This is the second card.' },
-  { site: 'vmedia',   title: 'Vmedia',   text: 'This is the third card.' },
-  { site: 'teksavvy', title: 'Teksavvy', text: 'This is the fourth card.' },
-  { site: 'dodo',     title: 'Dodo',     text: 'This is the fifth card.' },
+  { site: 'rogers',   title: 'Rogers',   text: 'Extensive LTE and 5G coverage with a full spectrum of postpaid and prepaid options—from basic data bundles to unlimited family packages—featuring perks like data‑free streaming on select services.' },
+  { site: 'iprimus',  title: 'IPrimus',  text: 'Flexible SIM‑only offerings on major networks, with no‑lock‑in contracts, competitive data allowances, and the freedom to bring your own device or upgrade anytime without penalty.' },
+  { site: 'vmedia',   title: 'Vmedia',   text: 'Month‑to‑month SIM‑only plans on a leading network, combining generous data allowances with optional voice and text add‑ons, all with the flexibility of no long‑term commitments.' },
+  { site: 'teksavvy', title: 'Teksavvy', text: 'No‑contract, SIM‑only plans delivered through partner networks, offering features like data rollover, family sharing, and transparent billing—so you get full service control without hidden fees.' },
+  { site: 'dodo',     title: 'Dodo',     text: 'Budget‑focused prepaid and postpaid plans on a robust 4G network, featuring simple flat‑rate data packs, unlimited on‑net calls and texts, and an intuitive online dashboard for usage management.' },
 ];
 
 export default function HomePage() {
