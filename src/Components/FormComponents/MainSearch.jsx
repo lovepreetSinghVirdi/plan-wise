@@ -137,6 +137,24 @@ export default function MainSearch({ onSelect }) {
                         }}
                         inputValue={inputValue}
                         onInputChange={(_, v, reason) => reason === 'input' && setInputValue(v)}
+                        // getOptionLabel={(opt) => opt.label}
+                        // renderOption={(props, option) => (
+                        //     <Box
+                        //         component="li"
+                        //         {...props}
+                        //         sx={{
+                        //             display: 'flex',
+                        //             justifyContent: 'space-between',
+                        //             pr: 2, pl: 1,
+                        //         }}
+                        //     >
+                        //         <Typography noWrap>{option.label}</Typography>
+                        //         <Typography variant="body2" color="text.secondary" noWrap>
+                        //             {option.info}
+                        //         </Typography>
+                        //     </Box>
+                        // )}
+
                         options={options}
                         loading={loading}
                         loadingText="Loading…"
@@ -190,7 +208,7 @@ export default function MainSearch({ onSelect }) {
 
             {/* ... Rows 2 and 3 unchanged ... */}
             {showMostSearchedWords && (
-                <Grid size={{ xs: 12, sm: 8 }} offset={{ sm: 2 }} sx={{ mt: 6 }}>
+                <Grid size={{ xs: 12, sm: 8 }} offset={{ sm: 2 }} sx={{ mt: 5 }}>
                     <Box
                         sx={{
                             display: 'flex',
@@ -199,7 +217,7 @@ export default function MainSearch({ onSelect }) {
                             minHeight: '2rem'
                         }}
                     >
-                        <Typography variant="subtitle1" component="span" sx={{ mr: 3 }}>
+                        <Typography variant="subtitle1" component="span" sx={{ mr: 3, mb: 1 }}>
                             <Chip
                                 icon={<TrendingUpIcon />}
                                 className="custom-chip"
@@ -214,7 +232,7 @@ export default function MainSearch({ onSelect }) {
                                 color="primary"
                                 className="suggestions-chip"
                                 onClick={() => handleSuggestionClick(word.keyword)}
-                                sx={{ ml: 1 }}
+                                sx={{ ml: 1, mb: 1 }}
                                 deleteIcon={<LaunchIcon />}
                                 onDelete={() => handleSuggestionClick(word.keyword)}
                             />

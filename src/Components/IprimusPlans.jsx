@@ -9,7 +9,7 @@ import { motion as Motion } from 'framer-motion';
 import AppLoader from './FormComponents/AppLoader';
 import iprimusLogo from '../assets/iprimus_logo.svg';
 import PlanCard from './FormComponents/PlanCard';
-import{
+import {
   apiURL,
   searchPlanByTextUrl,
   makePlansFromRawData
@@ -26,7 +26,7 @@ export default function IprimusPlans() {
         params: { q: 'iprimus' },
       })
       .then(({ data }) => {
-        
+
         const allPlans = makePlansFromRawData(data);
         const IprimusPlans = allPlans
           .filter(p => p.site === 'Iprimus')
@@ -37,12 +37,14 @@ export default function IprimusPlans() {
         setError(err.message);
       })
       .finally(() => {
-        setLoading(false);
+        setTimeout(() => {
+          setLoading(false);
+        }, 2000);
       });
   }, []);
 
   if (loading) {
-    return <AppLoader message="Loading Iprimus plans…" />;
+    return <AppLoader message="Loading plans…" />;
   }
   if (error) {
     return (
