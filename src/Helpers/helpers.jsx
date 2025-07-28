@@ -15,9 +15,10 @@ import dodoLogo from  '../assets/dodo.svg';
 
 // Regex constants
 export const EMAIL_REGEX = /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,3}$/;
-export const PHONE_REGEX = /^\d{10}$/;
+export const PHONE_REGEX = /^\+[1-9][0-9]{0,2}[ -]?(\(\d{3}\)|\d{3})[ -]?\d{3}[ -]?\d{4}$/;
 export const ADDRESS_NUMBER_REGEX = /^\d+[\s,]+/;
 export const CANADA_POSTAL_REGEX = /[A-Za-z]\d[A-Za-z]\s?\d[A-Za-z]\d$/;
+export const MESSAGE_REGEX = /^.{50,}$/;
 
 
 export const capitalize = (str = '') => {
