@@ -10,26 +10,30 @@ export function validateName(value) {
 export function validateEmail(value) {
   const trimmed = value.trim();
   if (!trimmed) return 'Email is required';
-  const emailRegex = /^[A-Za-z0-9._%+-]+@[A-Za-z0-9-]+\.[A-Za-z]{2,3}$/;
+ //"" inside this anything can allow before the @
+ //any special character,capital and small letter but in one there is only zero or one dot is allow (?)
+ //@ first any letter and digit then . and (+)then unlimite time the .com or .ca or .tech 
+ const emailRegex = /^(?:"(?:\\[\x00-\x7F]|[^"\\])*"|[A-Za-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[A-Za-z0-9!#$%&'*+/=?^_`{|}~-]+)?)@[A-Za-z0-9-]+(?:\.[A-Za-z0-9-]+)+$/;
+
+
+
   if (!emailRegex.test(trimmed)) return 'Email is invalid';
   return '';
 }
 
 // 3) Phone: either +CC + 4–12 digits (total ≤ 15 digits) or 5–18 plain digits
-export function validatePhone(value) {
-  const normalized = value.trim().replace(/[\s\-\.\(\)]/g, '');
-  if (!normalized) return 'Phone is required';
+        export function validatePhone(value) {
+        const trimmed = value.trim();
+        if (!trimmed) return 'Phone is required';
 
-  // +CC + subscriber
-  const e164  = /^\+([1-9]\d{0,2})(\d{4,12})$/;
-  // plain subscriber number
-  const plain = /^\d{5,18}$/;
+        // +1, then 3 digits, then 3 digits, then 4 digits, with optional space or hyphen
+        const regex = /^\+[1-9][0-9]{0,2}[ -]?(\(\d{3}\)|\d{3})[ -]?\d{3}[ -]?\d{4}$/;
+        if (regex.test(trimmed)) {
+            return '';  // valid
+        }
+        return 'Number Must start with Country code(+1) and 10 digit long';
+        }
 
-  if (!(e164.test(normalized) || plain.test(normalized))) {
-    return 'Enter either +CCxxxxxxxx (max 15 digits) or 5–18 digits';
-  }
-  return '';
-}
 
 // 4) Address: start with number + space/comma
 export function validateAddress(value) {
