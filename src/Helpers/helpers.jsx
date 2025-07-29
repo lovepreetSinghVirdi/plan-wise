@@ -35,15 +35,6 @@ export const EMAIL_REGEX = /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4}$/;
  * 
  */
 export const PHONE_REGEX = /^\+1[ -]?(\(\d{3}\)|\d{3})[ -]?\d{3}[ -]?\d{4}$/;
-/**
- * \d+ one or more digit 
- * [\s,] one or more the white space and the ,
- * 
- * canada postal code :
- * letter digit letter and \s(space is optional) then digit letter digit 
- */
-export const ADDRESS_NUMBER_REGEX = /^\d+[\s,]+/;
-export const CANADA_POSTAL_REGEX = /[A-Za-z]\d[A-Za-z]\s?\d[A-Za-z]\d$/;
 
 /**
  * if i keep only . then it is must to be in the same line but
