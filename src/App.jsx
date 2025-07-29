@@ -6,7 +6,7 @@ import RogersPlans from './Components/RogersPlans';
 import IprimusPlans from './Components/IprimusPlans';
 import VmediaPlans from './Components/VmediaPlans';
 import TeksavvyPlans from './Components/TeksavvyPlans';
-import AboutUs from './Components/AboutUs';
+import AboutUs from './Components/Aboutus';
 import Footer from './Components/Footer';
 import DodoPlans from './Components/DodoPlans';
 

@@ -209,7 +209,7 @@ export default function AboutUs() {
             gap={2}
           >
             <TextField
-              label="Your Name"
+              label="Name"
               name="name"
               variant="standard"
               fullWidth
@@ -220,7 +220,7 @@ export default function AboutUs() {
               helperText={errors.name}
             />
             <TextField
-              label="Your E-mail"
+              label="E-mail"
               name="email"
               variant="standard"
               fullWidth
@@ -242,7 +242,7 @@ export default function AboutUs() {
               helperText={errors.phone}
             />
             <TextField
-              label="Your Address"
+              label="Address"
               name="address"
               variant="standard"
               fullWidth
