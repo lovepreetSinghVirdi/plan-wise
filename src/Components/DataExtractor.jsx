@@ -27,61 +27,59 @@ const DataExtractor = () => {
         } finally {
             setLoading(false);
         }
-    }, []);
+    }, [setCrawledData, setLoading,]);
 
     return (
         <Container maxWidth="lg" sx={{ mt: 4, minHeight: '100vh' }}>
-            {loading ? <AppLoader message='Please wait, crawling the site...' /> :
-                <>
-                    <Typography
-                        variant="h4"
-                        align="center"
-                        gutterBottom
-                        sx={{
-                            fontWeight: 700,
-                            fontSize: '2.5rem',
-                            color: theme.palette.primary.main,
-                            mb: 4
-                        }}
-                    >
-                        Data Extractor
-                    </Typography>
-                    < Grid container spacing={2} sx={{ mt: 10 }}>
-                        <Grid size={{ xs: 12, sm: 8, md: 8 }} offset={{ sm: 2, md: 2 }}>
-                            <UrlSearchField onSearch={handleSearch} />
+            {loading ? <AppLoader message='Please wait, crawling the site...' /> : null}
+
+            <Typography
+                variant="h4"
+                align="center"
+                gutterBottom
+                sx={{
+                    fontWeight: 700,
+                    fontSize: '2.5rem',
+                    color: theme.palette.primary.main,
+                    mb: 4
+                }}
+            >
+                Data Extractor
+            </Typography>
+            < Grid container spacing={2} sx={{ mt: 10 }}>
+                <Grid size={{ xs: 12, sm: 8, md: 8 }} offset={{ sm: 2, md: 2 }}>
+                    <UrlSearchField onSearch={handleSearch} />
+                </Grid>
+
+
+            </Grid>
+            {Object.keys(crawledData).length ? <Grid container spacing={2} sx={{ mt: 10 }} >
+                {cards.map((card, index) => {
+
+                    return (
+                        <Grid
+                            key={`card_${index}`}
+                            sx={{ display: 'flex' }}
+                            size={{ xs: 12, sm: 6, md: 4 }}
+                        >
+                            <Motion.div
+                                initial={{ y: 20, opacity: 0 }}
+                                animate={{ y: 0, opacity: 1 }}
+                                transition={{ delay: index * 0.2, duration: 0.6 }}
+                                style={{
+                                    flex: 1,
+                                    display: 'flex',
+                                    flexDirection: 'column',
+                                    height: '100%'
+                                }}
+                            >
+                                <DynamicListCard title={card.title} items={crawledData[card.key]} />
+                            </Motion.div>
                         </Grid>
+                    )
+                })}
+            </Grid> : null}
 
-
-                    </Grid>
-                    {Object.keys(crawledData).length ? <Grid container spacing={2} sx={{ mt: 10 }} >
-                        {cards.map((card, index) => {
-
-                            return (
-                                <Grid
-                                    key={`card_${index}`}
-                                    sx={{ display: 'flex' }}
-                                    size={{ xs: 12, sm: 6, md: 4 }}
-                                >
-                                    <Motion.div
-                                        initial={{ y: 20, opacity: 0 }}
-                                        animate={{ y: 0, opacity: 1 }}
-                                        transition={{ delay: index * 0.2, duration: 0.6 }}
-                                        style={{
-                                            flex: 1,
-                                            display: 'flex',
-                                            flexDirection: 'column',
-                                            height: '100%'
-                                        }}
-                                    >
-                                        <DynamicListCard title={card.title} items={crawledData[card.key]} />
-                                    </Motion.div>
-                                </Grid>
-                            )
-                        })}
-                    </Grid> : null}
-
-                </>
-            }
         </Container>
     );
 };
