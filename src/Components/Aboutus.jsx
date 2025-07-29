@@ -13,10 +13,6 @@ import CardContent from '@mui/material/CardContent';
 import Paper from '@mui/material/Paper';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
-import Dialog from '@mui/material/Dialog';
-import DialogTitle from '@mui/material/DialogTitle';
-import DialogContent from '@mui/material/DialogContent';
-import DialogActions from '@mui/material/DialogActions';
 import DescriptionIcon from '@mui/icons-material/Description';
 
 import diptiImg from '../assets/dipti.jpg';
@@ -30,6 +26,7 @@ import {
   validateAddress,
   validateMessage
 } from '../utils/validators';
+import axios from 'axios';
 
 const teamMembers = [
   { name: 'Lovepreet Singh Virdi', role: 'Team Leader', avatar: lovepreetImg },
@@ -51,14 +48,14 @@ export default function AboutUs() {
   // ─── Form State & Validation ───
   const [formData, setFormData] = useState({ name: '', email: '', phone: '', address: '', message: '' });
   const [errors, setErrors] = useState({});
-  const [openDialog, setOpenDialog] = useState(false);
+  // const [showAlert, setShowAlert] = useState(false);
 
   const validateField = (field, value) => {
     let error = '';
     switch (field) {
-      case 'name':    error = validateName(value);    break;
-      case 'email':   error = validateEmail(value);   break;
-      case 'phone':   error = validatePhone(value);   break;
+      case 'name': error = validateName(value); break;
+      case 'email': error = validateEmail(value); break;
+      case 'phone': error = validatePhone(value); break;
       case 'address': error = validateAddress(value); break;
       case 'message': error = validateMessage(value); break;
       default: break;
@@ -75,31 +72,26 @@ export default function AboutUs() {
   const handleSubmit = async e => {
     e.preventDefault();
     Object.entries(formData).forEach(([field, val]) => validateField(field, val));
+
     const hasErrors = Object.entries(formData).some(([key, val]) => !val || errors[key]);
     if (hasErrors) return;
 
     const payload = { ...formData, date: new Date().toISOString() };
     try {
-      const resp = await fetch('http://localhost:8080/api/contact/send', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(payload)
-      });
-      if (!resp.ok) throw new Error(`Server responded ${resp.status}`);
-      await resp.json();
+      await axios.post('http://localhost:8080/api/contact/send', payload);
+
       setFormData({ name: '', email: '', phone: '', address: '', message: '' });
+      // setShowAlert(true);
       setErrors({});
-      setOpenDialog(true);
     } catch (err) {
       console.error('Error submitting form:', err);
-      setOpenDialog(true);
     }
   };
 
-  const handleCloseDialog = () => setOpenDialog(false);
 
   return (
     <Container maxWidth="xl" sx={{ py: 6 }}>
+      {/* {showAlert ? <Alert message="sd" variant="succss"/> :null} */}
       {/* About Us Header */}
       <Box textAlign="center" mb={4}>
         <Typography variant="h2" component="h1" gutterBottom sx={{ fontWeight: 700, letterSpacing: 2, color: theme.palette.primary.main }}>
@@ -171,24 +163,6 @@ export default function AboutUs() {
         ))}
       </Grid>
 
-      {/* Fullscreen Dialog on Success */}
-      <Dialog
-        open={openDialog}
-        onClose={handleCloseDialog}
-        BackdropProps={{ style: { backdropFilter: 'blur(5px)' } }}
-        maxWidth="sm"
-        fullWidth
-      >
-        <DialogTitle>Message Sent</DialogTitle>
-        <DialogContent>
-          <Typography>Your message has been successfully sent! We will get back to you soon.</Typography>
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={handleCloseDialog} variant="contained" color="primary">
-            Close
-          </Button>
-        </DialogActions>
-      </Dialog>
     </Container>
   );
 }
