@@ -13,6 +13,10 @@ import CardContent from '@mui/material/CardContent';
 import Paper from '@mui/material/Paper';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
+import Dialog from '@mui/material/Dialog';
+import DialogTitle from '@mui/material/DialogTitle';
+import DialogContent from '@mui/material/DialogContent';
+import DialogActions from '@mui/material/DialogActions';
 import DescriptionIcon from '@mui/icons-material/Description';
 
 import diptiImg from '../assets/dipti.jpg';
@@ -43,36 +47,20 @@ export default function AboutUs() {
   const theme = useTheme();
   const isMdUp = useMediaQuery(theme.breakpoints.up('md'));
 
-  // ─── Validation State & Handlers ───
-  const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    phone: '',
-    address: '',
-    message: '',
-  });
+  // ─── Form State & Validation ───
+  const [formData, setFormData] = useState({ name: '', email: '', phone: '', address: '', message: '' });
   const [errors, setErrors] = useState({});
+  const [openDialog, setOpenDialog] = useState(false);
 
   const validateField = (field, value) => {
     let error = '';
     switch (field) {
-      case 'name':
-        error = validateName(value);
-        break;
-      case 'email':
-        error = validateEmail(value);
-        break;
-      case 'phone':
-        error = validatePhone(value);
-        break;
-      case 'address':
-        error = validateAddress(value);
-        break;
-      case 'message':
-        error = validateMessage(value);
-        break;
-      default:
-        break;
+      case 'name':    error = validateName(value);    break;
+      case 'email':   error = validateEmail(value);   break;
+      case 'phone':   error = validatePhone(value);   break;
+      case 'address': error = validateAddress(value); break;
+      case 'message': error = validateMessage(value); break;
+      default: break;
     }
     setErrors(prev => ({ ...prev, [field]: error }));
   };
@@ -83,220 +71,91 @@ export default function AboutUs() {
     validateField(name, value);
   };
 
-  const handleSubmit = e => {
+  const handleSubmit = async e => {
     e.preventDefault();
-    // validate all
     Object.entries(formData).forEach(([field, val]) => validateField(field, val));
+    const hasErrors = Object.entries(formData).some(([key, val]) => !val || errors[key]);
+    if (hasErrors) return;
 
-    // check for errors
-    const hasErrors = Object.values(formData).some((v, i) => {
-      const key = Object.keys(formData)[i];
-      return !v || errors[key];
-    });
-
-    if (!hasErrors) {
-      alert('Form submitted!');
-      // …submission logic
+    const payload = { ...formData, date: new Date().toISOString() };
+    try {
+      const resp = await fetch('http://localhost:8080/api/contact/send', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      });
+      if (!resp.ok) throw new Error(`Server responded ${resp.status}`);
+      await resp.json();
+      setFormData({ name: '', email: '', phone: '', address: '', message: '' });
+      setErrors({});
+      setOpenDialog(true);
+    } catch (err) {
+      console.error('Error submitting form:', err);
+      setOpenDialog(true);
     }
   };
 
+  const handleCloseDialog = () => setOpenDialog(false);
+
   return (
     <Container maxWidth="xl" sx={{ py: 6 }}>
-      {/* ─── About Us Header ─── */}
+      {/* About Us Header */}
       <Box textAlign="center" mb={4}>
-        <Typography
-          variant="h2"
-          component="h1"
-          gutterBottom
-          sx={{ fontWeight: 700, letterSpacing: 2, color: theme.palette.primary.main }}
-        >
+        <Typography variant="h2" component="h1" gutterBottom sx={{ fontWeight: 700, letterSpacing: 2, color: theme.palette.primary.main }}>
           About Us
         </Typography>
-        <Typography
-          variant="subtitle1"
-          align="center"
-          sx={{
-            fontStyle: 'italic',
-            color: 'text.secondary',
-            maxWidth: 600,
-            mx: 'auto',
-            letterSpacing: 0.5,
-            lineHeight: 1.6
-          }}
-        >
-          At PlanWise, our mission is to empower users to find the perfect internet plans
-          seamlessly, delivering clarity, value, and peace of mind in a dynamic digital world.
+        <Typography variant="subtitle1" align="center" sx={{ fontStyle: 'italic', color: 'text.secondary', maxWidth: 600, mx: 'auto', letterSpacing: 0.5, lineHeight: 1.6 }}>
+          At PlanWise, our mission is to empower users to find the perfect internet plans seamlessly,
+          delivering clarity, value, and peace of mind in a dynamic digital world.
         </Typography>
       </Box>
-
       <Divider sx={{ my: 6 }} />
 
-      {/* ─── Team Section ─── */}
+      {/* Team Section */}
       <Box textAlign="center" mb={4}>
-        <Typography
-          variant="h4"
-          component="h2"
-          gutterBottom
-          sx={{ fontWeight: 600, textTransform: 'uppercase', color: theme.palette.primary.main }}
-        >
+        <Typography variant="h4" component="h2" gutterBottom sx={{ fontWeight: 600, textTransform: 'uppercase', color: theme.palette.primary.main }}>
           Our Team
         </Typography>
       </Box>
       <Grid container spacing={6} justifyContent="center" mb={6}>
         {teamMembers.map(member => (
           <Grid key={member.name} item xs={12} sm={6} md={3} display="flex" justifyContent="center">
-            <Card
-              elevation={6}
-              sx={{
-                width: 260,
-                height: 400,
-                borderRadius: 4,
-                p: 2,
-                textAlign: 'center',
-                transition: 'transform .3s, box-shadow .3s',
-                '&:hover': { transform: 'translateY(-10px)', boxShadow: 12 }
-              }}
-            >
-              <Avatar
-                src={member.avatar}
-                alt={member.name}
-                sx={{ width: 200, height: 200, mx: 'auto', mb: 2, mt: 2 }}
-              />
+            <Card elevation={6} sx={{ width: 260, height: 400, borderRadius: 4, p: 2, textAlign: 'center', transition: 'transform .3s, box-shadow .3s', '&:hover': { transform: 'translateY(-10px)', boxShadow: 12 } }}>
+              <Avatar src={member.avatar} alt={member.name} sx={{ width: 200, height: 200, mx: 'auto', mb: 2, mt: 2 }} />
               <CardContent sx={{ p: 1, textAlign: 'center' }}>
-                <Typography variant="h6" sx={{ fontWeight: 600, mb: 1 }}>
-                  {member.name}
-                </Typography>
-                <Typography variant="body2" color="text.secondary">
-                  {member.role}
-                </Typography>
+                <Typography variant="h6" sx={{ fontWeight: 600, mb: 1 }}>{member.name}</Typography>
+                <Typography variant="body2" color="text.secondary">{member.role}</Typography>
               </CardContent>
             </Card>
           </Grid>
         ))}
       </Grid>
 
-      {/* ─── Contact Us Section ─── */}
+      {/* Contact Us Form */}
       <Box display="flex" flexDirection={{ xs: 'column', md: 'row' }} gap={4}>
-        <Paper
-          elevation={3}
-          sx={{
-            flexBasis: { xs: '100%', md: '30%' },
-            p: 6,
-            bgcolor: '#00000066',
-            color: '#fff',
-            borderRadius: 2,
-            textAlign: 'center'
-          }}
-        >
+        <Paper elevation={3} sx={{ flexBasis: { xs: '100%', md: '30%' }, p: 6, bgcolor: '#00000066', color: '#fff', borderRadius: 2, textAlign: 'center' }}>
           <DescriptionIcon sx={{ fontSize: 48, mb: 2, color: theme.palette.primary.main }} />
-          <Typography variant="h4" gutterBottom sx={{ fontWeight: 700 }}>
-            Contact Us
-          </Typography>
-          <Typography variant="body1" sx={{ lineHeight: 1.6 }}>
-            Got any questions or suggestions?<br />
-            Fill out this form and we’ll get back to you as soon as possible.
-          </Typography>
+          <Typography variant="h4" gutterBottom sx={{ fontWeight: 700 }}>Contact Us</Typography>
+          <Typography variant="body1" sx={{ lineHeight: 1.6 }}>Got any questions or suggestions?<br />Fill out this form and we’ll get back to you as soon as possible.</Typography>
         </Paper>
-
         <Box flexBasis={{ xs: '100%', md: '70%' }}>
-          <Box
-            component="form"
-            onSubmit={handleSubmit}
-            noValidate
-            autoComplete="off"
-            display="grid"
-            gridTemplateColumns={{ xs: '1fr', sm: '1fr 1fr' }}
-            gap={2}
-          >
-            <TextField
-              label="Name"
-              name="name"
-              variant="standard"
-              fullWidth
-              placeholder="John Doe"
-              value={formData.name}
-              onChange={handleChange}
-              error={!!errors.name}
-              helperText={errors.name}
-            />
-            <TextField
-              label="E-mail"
-              name="email"
-              variant="standard"
-              fullWidth
-              placeholder="you@example.com"
-              value={formData.email}
-              onChange={handleChange}
-              error={!!errors.email}
-              helperText={errors.email}
-            />
-            <TextField
-              label="Enter Phone Number"
-              name="phone"
-              variant="standard"
-              fullWidth
-              placeholder="+1 416 123 4567"
-              value={formData.phone}
-              onChange={handleChange}
-              error={!!errors.phone}
-              helperText={errors.phone}
-            />
-            <TextField
-              label="Address"
-              name="address"
-              variant="standard"
-              fullWidth
-              placeholder="123 Main St, City, State, postal code"
-              value={formData.address}
-              onChange={handleChange}
-              error={!!errors.address}
-              helperText={errors.address}
-            />
-            <TextField
-              label="Message"
-              name="message"
-              variant="standard"
-              fullWidth
-              multiline
-              rows={6}
-              placeholder="Type your message here…"
-              sx={{ gridColumn: '1 / -1' }}
-              value={formData.message}
-              onChange={handleChange}
-              error={!!errors.message}
-              helperText={errors.message}
-            />
-
+          <Box component="form" onSubmit={handleSubmit} noValidate autoComplete="off" display="grid" gridTemplateColumns={{ xs: '1fr', sm: '1fr 1fr' }} gap={2}>
+            <TextField label="Name" name="name" variant="standard" fullWidth placeholder="John Doe" value={formData.name} onChange={handleChange} error={!!errors.name} helperText={errors.name} />
+            <TextField label="E‑mail" name="email" variant="standard" fullWidth placeholder="you@example.com" value={formData.email} onChange={handleChange} error={!!errors.email} helperText={errors.email} />
+            <TextField label="Enter Phone Number" name="phone" variant="standard" fullWidth placeholder="+1 416 123 4567" value={formData.phone} onChange={handleChange} error={!!errors.phone} helperText={errors.phone} />
+            <TextField label="Address" name="address" variant="standard" fullWidth placeholder="123 Main St, City, State, postal code" value={formData.address} onChange={handleChange} error={!!errors.address} helperText={errors.address} />
+            <TextField label="Message" name="message" variant="standard" fullWidth multiline rows={6} placeholder="Type your message here…" sx={{ gridColumn: '1 / -1' }} value={formData.message} onChange={handleChange} error={!!errors.message} helperText={errors.message} />
             <Box gridColumn="1 / -1" textAlign={isMdUp ? 'right' : 'center'} mt={2}>
-              <Button
-                type="submit"
-                fullWidth
-                variant="contained"
-                sx={{
-                  backgroundColor: theme.palette.primary.main,
-                  color: '#fff',
-                  px: 4,
-                  py: 1.5,
-                  '&:hover': { backgroundColor: theme.palette.primary.dark },
-                }}
-              >
-                Send a Message
-              </Button>
+              <Button type="submit" fullWidth variant="contained" sx={{ backgroundColor: theme.palette.primary.main, color: '#fff', px: 4, py: 1.5, '&:hover': { backgroundColor: theme.palette.primary.dark } }}>Send a Message</Button>
             </Box>
           </Box>
         </Box>
       </Box>
-
       <Divider sx={{ my: 8 }} />
 
-      {/* ─── Values Section ─── */}
+      {/* Values Section */}
       <Box textAlign="center" mb={4}>
-        <Typography
-          variant="h4"
-          component="h2"
-          gutterBottom
-          sx={{ fontWeight: 600, textTransform: 'uppercase', color: theme.palette.primary.main }}
-        >
+        <Typography variant="h4" component="h2" gutterBottom sx={{ fontWeight: 600, textTransform: 'uppercase', color: theme.palette.primary.main }}>
           Our Values
         </Typography>
       </Box>
@@ -304,16 +163,31 @@ export default function AboutUs() {
         {values.map(val => (
           <Grid key={val.title} item xs={12} sm={4} display="flex" justifyContent="center">
             <Box sx={{ maxWidth: 300, textAlign: 'center', px: 2 }}>
-              <Typography variant="h6" sx={{ fontStyle: 'italic', fontWeight: 600, mb: 1 }}>
-                {val.title}
-              </Typography>
-              <Typography variant="body2" color="text.secondary" sx={{ fontStyle: 'italic', lineHeight: 1.6 }}>
-                {val.text}
-              </Typography>
+              <Typography variant="h6" sx={{ fontStyle: 'italic', fontWeight: 600, mb: 1 }}>{val.title}</Typography>
+              <Typography variant="body2" color="text.secondary" sx={{ fontStyle: 'italic', lineHeight: 1.6 }}>{val.text}</Typography>
             </Box>
           </Grid>
         ))}
       </Grid>
+
+      {/* Fullscreen Dialog on Success */}
+      <Dialog
+        open={openDialog}
+        onClose={handleCloseDialog}
+        BackdropProps={{ style: { backdropFilter: 'blur(5px)' } }}
+        maxWidth="sm"
+        fullWidth
+      >
+        <DialogTitle>Message Sent</DialogTitle>
+        <DialogContent>
+          <Typography>Your message has been successfully sent! We will get back to you soon.</Typography>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleCloseDialog} variant="contained" color="primary">
+            Close
+          </Button>
+        </DialogActions>
+      </Dialog>
     </Container>
   );
 }
