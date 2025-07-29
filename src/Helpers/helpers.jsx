@@ -1,5 +1,4 @@
 //api endpoints
-console.log("url---", import.meta.env.VITE_API_URL, 'env--', import.meta.env)
 export const apiURL = import.meta.env.VITE_API_URL;
 export const autocompleteURL = 'autocomplete';
 export const suggestionsURL = 'spellcheck';
