@@ -18,11 +18,47 @@ import dodoLogo from '../assets/dodo.svg';
 
 
 // Regex constants
+
+ /**
+  * [A-Za-z0-9._%+-]+ local part before the @ one ore more 
+  * @ seperating the local part to the domain
+  * [A-Za-z0-9.-]+ domain one or more( dot and hyphen)
+  * \. literal before the top level domain
+  * [A-Za-z]{2,4} excatly 2to 4 letters 
+  */
 export const EMAIL_REGEX = /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4}$/;
-export const PHONE_REGEX = /^\+[1-9][0-9]{0,2}[ -]?(\(\d{3}\)|\d{3})[ -]?\d{3}[ -]?\d{4}$/;
+
+/**
+ * \+1 country code allowed 
+ * [ -] eaither the space or the hyphen 
+ * (\(\d{3}\)|\d{3}) three digit with the pranthesis and without it allowed
+ * 
+ */
+export const PHONE_REGEX = /^\+1[ -]?(\(\d{3}\)|\d{3})[ -]?\d{3}[ -]?\d{4}$/;
+/**
+ * \d+ one or more digit 
+ * [\s,] one or more the white space and the ,
+ * 
+ * canada postal code :
+ * letter digit letter and \s(space is optional) then digit letter digit 
+ */
 export const ADDRESS_NUMBER_REGEX = /^\d+[\s,]+/;
 export const CANADA_POSTAL_REGEX = /[A-Za-z]\d[A-Za-z]\s?\d[A-Za-z]\d$/;
-export const MESSAGE_REGEX = /^.{50,}$/;
+
+/**
+ * if i keep only . then it is must to be in the same line but
+ * after putting s in the end it is allowing me to use the new line 
+ */
+export const MESSAGE_REGEX = /^.{50,}$/s;
+
+/**
+ * [A-Za-z\d]                # 1st char: letter or digit
+(?:                        # ── start non‑capturing group
+   [A-Za-z\d-]*            #   zero or more letters/digits/hyphens
+   [A-Za-z\d]              #   one letter or digit
+)?                         # ── the entire group is “optional”
+can not start and the end with the - must be the digit or the number 
+ */
 export const URL_REGEX = /^(https?:\/\/)?(?:([A-Za-z\d](?:[A-Za-z\d-]*[A-Za-z\d])?\.)+[A-Za-z]{2,}|localhost)(?::\d{2,5})?(?:\/[^\s?#]*)?(?:\?[^\s#]*)?(?:\#[^\s]*)?$/;
 
 
