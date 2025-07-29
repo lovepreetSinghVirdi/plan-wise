@@ -5,17 +5,18 @@ import {
     TextField,
     CircularProgress,
     Box,
-    Typography,
     Grid,
     Chip,
     Button,
     InputAdornment
 } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
-import axios from 'axios';
+import BarChartIcon from '@mui/icons-material/BarChart';
 import TrendingUpIcon from '@mui/icons-material/TrendingUp';
 import TroubleshootIcon from '@mui/icons-material/Troubleshoot';
 import LaunchIcon from '@mui/icons-material/Launch';
+import axios from 'axios';
+
 import {
     apiURL,
     autocompleteURL,
@@ -35,13 +36,13 @@ export default function MainSearch({ onSelect }) {
         if (onSelect) onSelect(s);
     };
 
+    // Fetch top trending on mount
     useEffect(() => {
         const fetchTopSearches = async () => {
             try {
                 setLoading(true);
-                const result = await axios.get(`${apiURL}${topTrendingWordsURL}`);
-                console.log('result---', result);
-                setMostSearchedWords(result.data || []);
+                const { data } = await axios.get(`${apiURL}${topTrendingWordsURL}`);
+                setMostSearchedWords(data || []);
             } catch {
                 setMostSearchedWords([]);
             } finally {
@@ -51,9 +52,11 @@ export default function MainSearch({ onSelect }) {
         fetchTopSearches();
     }, []);
 
+    // Fetch autocomplete + suggestions
     useEffect(() => {
         if (inputValue.length < 2) {
             setOptions([]);
+            setSuggestions([]);
             setLoading(false);
             return;
         }
@@ -61,17 +64,18 @@ export default function MainSearch({ onSelect }) {
         setLoading(true);
         const timer = setTimeout(async () => {
             try {
-                const url = `${apiURL}${autocompleteURL}`;
-                const { data } = await axios.get(url, {
-                    params: { prefix: inputValue, max: 5 }
+                const { data: ac } = await axios.get(`${apiURL}${autocompleteURL}`, {
+                    params: { prefix: inputValue, max: 5 },
                 });
-                setOptions(data);
-                if (!data.length) {
-                    const url2 = `${apiURL}${suggestionsURL}`;
-                    const { data: sugg } = await axios.get(url2, {
-                        params: { word: inputValue, max: 3 }
+                setOptions(ac.map((option => ({ ...option, label: option, occurrences: 2, searchCount: 5 }))));
+
+                if (!ac.length) {
+                    const { data: sugg } = await axios.get(`${apiURL}${suggestionsURL}`, {
+                        params: { word: inputValue, max: 3 },
                     });
                     setSuggestions(sugg || []);
+                } else {
+                    setSuggestions([]);
                 }
             } catch {
                 setOptions([]);
@@ -79,32 +83,23 @@ export default function MainSearch({ onSelect }) {
             } finally {
                 setLoading(false);
             }
-        }, 500);
+        }, 300);
 
         return () => clearTimeout(timer);
     }, [inputValue]);
 
     const getNoOptionsText = useCallback(() => {
-        if (inputValue.length < 2) {
-            return 'Type at least 2 characters';
-        }
-        else if (!options.length && !suggestions.length) {
-            return 'No such word exists in dictionary';
-        }
-        else {
-            return 'No options found'
-        }
-
+        if (inputValue.length < 2) return 'Type at least 2 characters';
+        if (!options.length && !suggestions.length) return 'No such word exists in dictionary';
+        return 'No options found';
     }, [inputValue, options, suggestions]);
 
-
-
-    const isDoYouMean = inputValue?.length > 2 && !options.length && suggestions.length > 0;
+    const isDoYouMean = inputValue.length > 2 && !options.length && suggestions.length > 0;
     const showMostSearchedWords = !isDoYouMean && mostSearchedWords.length > 0;
     const disableSearch = inputValue.length >= 2 && (loading || !options.length);
     const noOptionsText = getNoOptionsText();
 
-    // handle form submission (Search button or Enter key)
+    // Submit handler
     const handleSubmit = e => {
         e.preventDefault();
         if (inputValue.length >= 2) {
@@ -114,7 +109,7 @@ export default function MainSearch({ onSelect }) {
 
     return (
         <>
-            {/* Row 1: full‑width search bar with attached button */}
+            {/* Search bar */}
             <Grid size={{ xs: 12, sm: 8 }} offset={{ sm: 2 }}>
                 <Box
                     component="form"
@@ -128,34 +123,58 @@ export default function MainSearch({ onSelect }) {
                         autoHighlight
                         filterOptions={x => x}
                         value={value}
-                        onChange={(_, newVal, reason, details) => {
+                        onChange={(_, newVal, reason) => {
                             setValue(newVal);
                             if (reason === 'selectOption') {
                                 onSelect?.(newVal);
                             }
-                            console.log('details---', details);
                         }}
                         inputValue={inputValue}
                         onInputChange={(_, v, reason) => reason === 'input' && setInputValue(v)}
-                        // getOptionLabel={(opt) => opt.label}
-                        // renderOption={(props, option) => (
-                        //     <Box
-                        //         component="li"
-                        //         {...props}
-                        //         sx={{
-                        //             display: 'flex',
-                        //             justifyContent: 'space-between',
-                        //             pr: 2, pl: 1,
-                        //         }}
-                        //     >
-                        //         <Typography noWrap>{option.label}</Typography>
-                        //         <Typography variant="body2" color="text.secondary" noWrap>
-                        //             {option.info}
-                        //         </Typography>
-                        //     </Box>
-                        // )}
 
+                        // Show both metrics with Search + BarChart icons
                         options={options}
+                        getOptionLabel={opt => opt.label}
+                        renderOption={(props, opt) => (
+                            <li
+                                {...props}
+                                style={{
+                                    display: 'flex',
+                                    justifyContent: 'space-between',
+                                    alignItems: 'center',
+                                    padding: '4px 8px',
+                                }}
+                            >
+                                <Box component="span" sx={{ flex: 1, overflow: 'hidden', textOverflow: 'ellipsis' }}>
+                                    {opt.label}
+                                </Box>
+                                <Box sx={{ display: 'flex', gap: 1, ml: 2 }}>
+                                    <Chip
+                                        size="small"
+                                        icon={<SearchIcon fontSize="small" />}
+                                        label={opt.searchCount}
+                                        sx={{
+                                            '& .MuiChip-icon': {
+                                                color: '#1E88E5',
+                                            },
+
+                                        }}
+                                    />
+                                    <Chip
+                                        size="small"
+                                        icon={<BarChartIcon fontSize="small" />}
+                                        label={opt.occurrences}
+                                        sx={{
+                                            '& .MuiChip-icon': {
+                                                color: '#43A047',
+                                            },
+
+                                        }}
+                                    />
+                                </Box>
+                            </li>
+                        )}
+
                         loading={loading}
                         loadingText="Loading…"
                         noOptionsText={noOptionsText}
@@ -167,7 +186,7 @@ export default function MainSearch({ onSelect }) {
                                 borderTopRightRadius: 0,
                                 borderBottomRightRadius: 0,
                                 paddingRight: '1rem !important',
-                            }
+                            },
                         }}
                         renderInput={params => (
                             <TextField
@@ -184,7 +203,7 @@ export default function MainSearch({ onSelect }) {
                                                     <SearchIcon />
                                                 </InputAdornment>
                                             </>
-                                        )
+                                        ),
                                     },
                                 }}
                             />
@@ -200,7 +219,7 @@ export default function MainSearch({ onSelect }) {
                             borderTopLeftRadius: 0,
                             borderBottomLeftRadius: 0,
                             height: '56px',
-                            px: 3
+                            px: 3,
                         }}
                     >
                         Search
@@ -208,24 +227,15 @@ export default function MainSearch({ onSelect }) {
                 </Box>
             </Grid>
 
-            {/* ... Rows 2 and 3 unchanged ... */}
+            {/* Top trending words */}
             {showMostSearchedWords && (
                 <Grid size={{ xs: 12, sm: 8 }} offset={{ sm: 2 }} sx={{ mt: 5 }}>
-                    <Box
-                        sx={{
-                            display: 'flex',
-                            flexWrap: 'wrap',
-                            alignItems: 'center',
-                            minHeight: '2rem'
-                        }}
-                    >
-                        <Typography variant="subtitle1" component="span" sx={{ mr: 3, mb: 1 }}>
-                            <Chip
-                                icon={<TrendingUpIcon />}
-                                className="custom-chip"
-                                label="Most searched words"
-                            />
-                        </Typography>
+                    <Box sx={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center' }}>
+                        <Chip
+                            icon={<TrendingUpIcon />}
+                            label="Most searched words"
+                            className="custom-chip"
+                        />
                         {mostSearchedWords.map(word => (
                             <Chip
                                 key={word.keyword}
@@ -243,30 +253,22 @@ export default function MainSearch({ onSelect }) {
                 </Grid>
             )}
 
+            {/* "Did you mean" suggestions */}
             {isDoYouMean && (
                 <Grid size={{ xs: 12, sm: 8 }} offset={{ sm: 2 }} sx={{ mt: 6 }}>
-                    <Box
-                        sx={{
-                            display: 'flex',
-                            flexWrap: 'wrap',
-                            alignItems: 'center',
-                            minHeight: '2rem'
-                        }}
-                    >
-                        <Typography variant="subtitle1" component="span" sx={{ mr: 3 }}>
-                            <Chip
-                                icon={<TroubleshootIcon />}
-                                className="custom-chip-red-icon"
-                                label="Did you mean"
-                            />
-                        </Typography>
+                    <Box sx={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center' }}>
+                        <Chip
+                            icon={<TroubleshootIcon />}
+                            label="Did you mean"
+                            className="custom-chip-red-icon"
+                        />
                         {suggestions.map(s => (
                             <Chip
                                 key={s}
                                 label={s}
                                 size="small"
-                                className="suggestions-chip"
                                 color="primary"
+                                className="suggestions-chip"
                                 onClick={() => handleSuggestionClick(s)}
                                 sx={{ ml: 1 }}
                                 deleteIcon={<LaunchIcon />}

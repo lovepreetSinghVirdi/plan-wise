@@ -1,3 +1,4 @@
+//api endpoints
 export const apiURL = 'http://localhost:8080/api/';
 export const autocompleteURL = 'autocomplete';
 export const suggestionsURL = 'spellcheck';
@@ -6,6 +7,7 @@ export const topTrendingWordsURL = 'freq/top';
 export const crawlSiteUrl = 'crawl';
 
 
+//images
 import rogersLogo from '../assets/Rogers.svg';
 import iprimusLogo from '../assets/iprimus_logo.svg';
 import vmediaLogo from '../assets/vmedia.svg';
@@ -20,7 +22,8 @@ export const PHONE_REGEX = /^\+[1-9][0-9]{0,2}[ -]?(\(\d{3}\)|\d{3})[ -]?\d{3}[ 
 export const ADDRESS_NUMBER_REGEX = /^\d+[\s,]+/;
 export const CANADA_POSTAL_REGEX = /[A-Za-z]\d[A-Za-z]\s?\d[A-Za-z]\d$/;
 export const MESSAGE_REGEX = /^.{50,}$/;
-export const URL_REGEX = /^(https?:\/\/)(([\da-z.-]+)\.([a-z.]{2,6})|((\d{1,3}\.){3}\d{1,3}))(:\d+)?(\/[\w\-./?%&=]*)?$/;
+export const URL_REGEX = /^(https?:\/\/)?(?:([A-Za-z\d](?:[A-Za-z\d-]*[A-Za-z\d])?\.)+[A-Za-z]{2,}|localhost)(?::\d{2,5})?(?:\/[^\s?#]*)?(?:\?[^\s#]*)?(?:\#[^\s]*)?$/;
+
 
 
 export const capitalize = (str = '') => {
@@ -46,7 +49,9 @@ export const brandLogo = (site = '') => {
 
   }
 };
-const baseUrls = {
+
+// ISP urls 
+const ispUrls = {
   rogers: 'https://www.rogers.com/internet/packages',
   iprimus: 'https://www.iprimus.com.au/nbn-plans',
   teksavvy: 'https://www.teksavvy.com/services/internet/',
@@ -70,7 +75,7 @@ export const makePlansFromRawData = (plans = []) =>
     const siteKey = plan.site?.toLowerCase() ?? '';
     return {
       ...plan,
-      url: baseUrls[siteKey] || '',
+      url: ispUrls[siteKey] || '',
       features: parseFeatures(plan.features),
       planName: plan.planName,
     };
