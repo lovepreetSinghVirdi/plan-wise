@@ -29,7 +29,7 @@ const App = () => {
       overflowX: 'visible',     // allow anything that bleeds out to show
       overflowY: 'visible',
     }}>
-      <BrowserRouter>
+      <BrowserRouter basename={import.meta.env.BASE_URL}>
         <AppHeader />
 
         <Routes>
