@@ -9,16 +9,16 @@ const CustomCard = ({ children, lift = true, noShadow = false, sx = {} }) => {
   const liftStyles = lift
     ? noShadow
       ? {
-          transition: 'transform 0.3s',
-          '&:hover': { transform: 'translateY(-10px)' },
-        }
+        transition: 'transform 0.3s',
+        '&:hover': { transform: 'translateY(-10px)' },
+      }
       : {
-          transition: 'transform 0.3s, box-shadow 0.3s',
-          '&:hover': {
-            transform: 'translateY(-10px)',
-            boxShadow: 12,
-          },
-        }
+        transition: 'transform 0.3s, box-shadow 0.3s',
+        '&:hover': {
+          transform: 'translateY(-10px)',
+          boxShadow: 12,
+        },
+      }
     : {};
 
   const shadowStyles = noShadow
@@ -30,13 +30,15 @@ const CustomCard = ({ children, lift = true, noShadow = false, sx = {} }) => {
       elevation={elevation}
       sx={{
         width: '100%',
-        height: '100%',
-        minHeight: 300,
+        maxWidth: '100%',
         display: 'flex',
         flexDirection: 'column',
+        height: '25rem',
+        minHeight: '25rem',
         borderRadius: 4,
         p: 2,
         pb: 3,
+        overflow: 'hidden',
         ...shadowStyles,
         ...liftStyles,
         ...sx,
