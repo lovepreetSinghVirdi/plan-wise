@@ -1,19 +1,10 @@
 import {
     Container,
     Grid,
-    Card,
-    CardContent,
-    CardActions,
     Typography,
-    Button,
-    List,
-    ListItem,
-    ListItemIcon,
-    ListItemText,
 } from '@mui/material';
 import { useCallback, useEffect, useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import FiberManualRecordIcon from '@mui/icons-material/FiberManualRecord';
 import { apiURL, makePlansFromRawData, searchPlanByTextUrl } from '../Helpers/helpers';
 import axios from 'axios';
 import { useTheme } from '@mui/material/styles';
@@ -21,6 +12,7 @@ import { motion as Motion } from 'framer-motion';
 
 import AppLoader from './FormComponents/AppLoader';
 import PlanCard from './FormComponents/PlanCard';
+import AlertMsg from './FormComponents/AlertMsg';
 
 const SearchResults = () => {
 
@@ -29,9 +21,22 @@ const SearchResults = () => {
     const location = useLocation();
     const [plans, setPlans] = useState([]);
     const [isLoading, setLoading] = useState(false);
+    const [alert, setAlert] = useState({ open: false, severity: 'success', title: '', message: '' });
+
+    const showAlert = (sev) => {
+        setAlert({
+            open: true,
+            severity: sev,
+            title: sev === 'success' ? 'Success!' : 'Error!',
+            message: sev === 'success'
+                ? 'Response submited successfully.'
+                : 'Something went wrong. Please retry.',
+        });
+    };
+
 
     // Safely grab keyword (or default to empty string)
-    const keyword = location.state?.keyword?.trim() ?? '';
+    const keyword = location?.state?.keyword?.trim() ?? '';
 
 
 
@@ -48,6 +53,7 @@ const SearchResults = () => {
 
         } catch {
             setPlans([]);
+            showAlert('error');
         } finally {
             setTimeout(() => setLoading(false), 2000);
 
@@ -122,8 +128,16 @@ const SearchResults = () => {
     return (
 
         <Container maxWidth="lg" sx={{ mt: 4, minHeight: '100vh' }}>
-            {isLoading ? <AppLoader /> :
-                renderCards()}
+            {isLoading ? <AppLoader /> : null}
+            <AlertMsg
+                open={alert.open}
+                severity={alert.severity}
+                title={alert.title}
+                onClose={() => setAlert(a => ({ ...a, open: false }))}
+            >
+                {alert.message}
+            </AlertMsg>
+            {renderCards()}
         </Container>
     );
 };

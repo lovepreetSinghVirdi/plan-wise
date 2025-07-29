@@ -5,6 +5,7 @@ export const suggestionsURL = 'spellcheck';
 export const searchPlanByTextUrl = 'search';
 export const topTrendingWordsURL = 'freq/top';
 export const crawlSiteUrl = 'crawl';
+export const submitFormUrl = 'contact/send';
 
 
 //images

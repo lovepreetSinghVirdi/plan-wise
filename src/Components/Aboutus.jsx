@@ -1,4 +1,3 @@
-// src/Components/AboutUs.jsx
 import { useState } from 'react';
 import { useTheme } from '@mui/material/styles';
 import useMediaQuery from '@mui/material/useMediaQuery';
@@ -27,6 +26,8 @@ import {
   validateMessage
 } from '../utils/validators';
 import axios from 'axios';
+import AlertMsg from './FormComponents/AlertMsg';
+import { apiURL, submitFormUrl } from '../Helpers/helpers';
 
 const teamMembers = [
   { name: 'Lovepreet Singh Virdi', role: 'Team Leader', avatar: lovepreetImg },
@@ -48,7 +49,18 @@ export default function AboutUs() {
   // ─── Form State & Validation ───
   const [formData, setFormData] = useState({ name: '', email: '', phone: '', address: '', message: '' });
   const [errors, setErrors] = useState({});
-  // const [showAlert, setShowAlert] = useState(false);
+  const [alert, setAlert] = useState({ open: false, severity: 'success', title: '', message: '' });
+
+  const showAlert = (sev) => {
+    setAlert({
+      open: true,
+      severity: sev,
+      title: sev === 'success' ? 'Success!' : 'Error!',
+      message: sev === 'success'
+        ? 'Response submited successfully.'
+        : 'Something went wrong. Please retry.',
+    });
+  };
 
   const validateField = (field, value) => {
     let error = '';
@@ -78,20 +90,29 @@ export default function AboutUs() {
 
     const payload = { ...formData, date: new Date().toISOString() };
     try {
-      await axios.post('http://localhost:8080/api/contact/send', payload);
+      await axios.post(`${apiURL}${submitFormUrl}`, payload);
 
       setFormData({ name: '', email: '', phone: '', address: '', message: '' });
-      // setShowAlert(true);
+      showAlert('success');
       setErrors({});
     } catch (err) {
       console.error('Error submitting form:', err);
+      showAlert('error');
     }
   };
 
 
   return (
     <Container maxWidth="xl" sx={{ py: 6 }}>
-      {/* {showAlert ? <Alert message="sd" variant="succss"/> :null} */}
+      <AlertMsg
+        open={alert.open}
+        severity={alert.severity}
+        title={alert.title}
+        onClose={() => setAlert(a => ({ ...a, open: false }))}
+      >
+        {alert.message}
+      </AlertMsg>
+
       {/* About Us Header */}
       <Box textAlign="center" mb={4}>
         <Typography variant="h2" component="h1" gutterBottom sx={{ fontWeight: 700, letterSpacing: 2, color: theme.palette.primary.main }}>
