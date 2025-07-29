@@ -24,6 +24,7 @@ import {
     topTrendingWordsURL,
     suggestionsURL
 } from '../../Helpers/helpers';
+import AlertMsg from './AlertMsg';
 
 export default function MainSearch({ onSelect }) {
     const [inputValue, setInputValue] = useState('');
@@ -32,6 +33,18 @@ export default function MainSearch({ onSelect }) {
     const [mostSearchedWords, setMostSearchedWords] = useState([]);
     const [loading, setLoading] = useState(false);
     const [value, setValue] = useState(null);
+    const [alert, setAlert] = useState({ open: false, severity: 'success', title: '', message: '' });
+
+    const showAlert = (sev) => {
+        setAlert({
+            open: true,
+            severity: sev,
+            title: sev === 'success' ? 'Success!' : 'Error!',
+            message: sev === 'success'
+                ? 'Response submited successfully.'
+                : 'Something went wrong. Please retry.',
+        });
+    };
 
     const handleSuggestionClick = s => {
         if (onSelect) onSelect(s);
@@ -81,6 +94,7 @@ export default function MainSearch({ onSelect }) {
             } catch {
                 setOptions([]);
                 setSuggestions([]);
+                showAlert('error');
             } finally {
                 setLoading(false);
             }
@@ -108,8 +122,17 @@ export default function MainSearch({ onSelect }) {
 
     return (
         <>
+            <AlertMsg
+                open={alert.open}
+                severity={alert.severity}
+                title={alert.title}
+                onClose={() => setAlert(a => ({ ...a, open: false }))}
+            >
+                {alert.message}
+            </AlertMsg>
             {/* Search bar */}
             <Grid size={{ xs: 12, sm: 8 }} offset={{ sm: 2 }}>
+
                 <Box
                     component="form"
                     onSubmit={handleSubmit}
