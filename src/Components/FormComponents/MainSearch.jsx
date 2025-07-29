@@ -8,7 +8,8 @@ import {
     Grid,
     Chip,
     Button,
-    InputAdornment
+    InputAdornment,
+    Tooltip
 } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 import BarChartIcon from '@mui/icons-material/BarChart';
@@ -65,9 +66,9 @@ export default function MainSearch({ onSelect }) {
         const timer = setTimeout(async () => {
             try {
                 const { data: ac } = await axios.get(`${apiURL}${autocompleteURL}`, {
-                    params: { prefix: inputValue, max: 5 },
+                    params: { prefix: inputValue, max: 10 },
                 });
-                setOptions(ac.map((option => ({ ...option, label: option, occurrences: 2, searchCount: 5 }))));
+                setOptions(ac.map((option => ({ label: option.word, occurrences: option.wordFrequency, searchCount: option.searchFrequency }))));
 
                 if (!ac.length) {
                     const { data: sugg } = await axios.get(`${apiURL}${suggestionsURL}`, {
@@ -94,17 +95,15 @@ export default function MainSearch({ onSelect }) {
         return 'No options found';
     }, [inputValue, options, suggestions]);
 
-    const isDoYouMean = inputValue.length > 2 && !options.length && suggestions.length > 0;
-    const showMostSearchedWords = !isDoYouMean && mostSearchedWords.length > 0;
+    const isDidYouMean = inputValue.length > 2 && !options.length && suggestions.length > 0;
+    const showMostSearchedWords = !isDidYouMean && mostSearchedWords.length > 0;
     const disableSearch = inputValue.length >= 2 && (loading || !options.length);
     const noOptionsText = getNoOptionsText();
 
     // Submit handler
     const handleSubmit = e => {
         e.preventDefault();
-        if (inputValue.length >= 2) {
-            onSelect?.(inputValue);
-        }
+        if (inputValue.length >= 2) handleSuggestionClick(inputValue.label)
     };
 
     return (
@@ -125,9 +124,7 @@ export default function MainSearch({ onSelect }) {
                         value={value}
                         onChange={(_, newVal, reason) => {
                             setValue(newVal);
-                            if (reason === 'selectOption') {
-                                onSelect?.(newVal);
-                            }
+                            if (reason === 'selectOption') handleSuggestionClick(newVal.label);
                         }}
                         inputValue={inputValue}
                         onInputChange={(_, v, reason) => reason === 'input' && setInputValue(v)}
@@ -135,45 +132,57 @@ export default function MainSearch({ onSelect }) {
                         // Show both metrics with Search + BarChart icons
                         options={options}
                         getOptionLabel={opt => opt.label}
-                        renderOption={(props, opt) => (
-                            <li
-                                {...props}
-                                style={{
-                                    display: 'flex',
-                                    justifyContent: 'space-between',
-                                    alignItems: 'center',
-                                    padding: '4px 8px',
-                                }}
-                            >
-                                <Box component="span" sx={{ flex: 1, overflow: 'hidden', textOverflow: 'ellipsis' }}>
-                                    {opt.label}
-                                </Box>
-                                <Box sx={{ display: 'flex', gap: 1, ml: 2 }}>
-                                    <Chip
-                                        size="small"
-                                        icon={<SearchIcon fontSize="small" />}
-                                        label={opt.searchCount}
-                                        sx={{
-                                            '& .MuiChip-icon': {
-                                                color: '#1E88E5',
-                                            },
+                        renderOption={(props, opt, other) => {
+                            const parsedProps = { ...props };
+                            delete parsedProps.key;
 
-                                        }}
-                                    />
-                                    <Chip
-                                        size="small"
-                                        icon={<BarChartIcon fontSize="small" />}
-                                        label={opt.occurrences}
-                                        sx={{
-                                            '& .MuiChip-icon': {
-                                                color: '#43A047',
-                                            },
+                            return (
+                                <li
+                                    {...parsedProps}
+                                    key={`option_${opt.label}_${other.index}`}
+                                    style={{
+                                        display: 'flex',
+                                        justifyContent: 'space-between',
+                                        alignItems: 'center',
+                                        padding: '4px 8px',
+                                    }}
+                                >
+                                    <Box component="span" sx={{ flex: 1, overflow: 'hidden', textOverflow: 'ellipsis' }}>
+                                        {opt.label}
+                                    </Box>
+                                    <Box sx={{ display: 'flex', gap: 1, ml: 2 }}>
+                                        <Tooltip title="Number of times searched" arrow>
+                                            <Chip
+                                                size="small"
+                                                icon={<SearchIcon fontSize="small" />}
+                                                label={opt.searchCount}
+                                                sx={{
+                                                    '& .MuiChip-icon': {
+                                                        color: '#1E88E5',
+                                                    },
+                                                    width: '4rem',
 
-                                        }}
-                                    />
-                                </Box>
-                            </li>
-                        )}
+                                                }}
+                                            />
+                                        </Tooltip>
+                                        <Tooltip title="Total ocurrences in database" arrow>
+                                            <Chip
+                                                size="small"
+                                                icon={<BarChartIcon fontSize="small" />}
+                                                label={opt.occurrences}
+
+                                                sx={{
+                                                    '& .MuiChip-icon': {
+                                                        color: '#43A047',
+                                                    },
+                                                    width: '4rem',
+                                                }}
+                                            />
+                                        </Tooltip>
+                                    </Box>
+                                </li>
+                            )
+                        }}
 
                         loading={loading}
                         loadingText="Loading…"
@@ -235,10 +244,11 @@ export default function MainSearch({ onSelect }) {
                             icon={<TrendingUpIcon />}
                             label="Most searched words"
                             className="custom-chip"
+                            sx={{ mb: 1 }}
                         />
-                        {mostSearchedWords.map(word => (
+                        {mostSearchedWords.map((word, index) => (
                             <Chip
-                                key={word.keyword}
+                                key={`most_searched_${word.keyword}_${index}`}
                                 label={word.keyword}
                                 size="small"
                                 color="primary"
@@ -254,17 +264,17 @@ export default function MainSearch({ onSelect }) {
             )}
 
             {/* "Did you mean" suggestions */}
-            {isDoYouMean && (
-                <Grid size={{ xs: 12, sm: 8 }} offset={{ sm: 2 }} sx={{ mt: 6 }}>
+            {isDidYouMean && (
+                <Grid size={{ xs: 12, sm: 8 }} offset={{ sm: 2 }} sx={{ mt: 5 }}>
                     <Box sx={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center' }}>
                         <Chip
                             icon={<TroubleshootIcon />}
                             label="Did you mean"
                             className="custom-chip-red-icon"
                         />
-                        {suggestions.map(s => (
+                        {suggestions.map((s, index) => (
                             <Chip
-                                key={s}
+                                key={`suggestion_${s}_${index}`}
                                 label={s}
                                 size="small"
                                 color="primary"
@@ -274,7 +284,8 @@ export default function MainSearch({ onSelect }) {
                                 deleteIcon={<LaunchIcon />}
                                 onDelete={() => handleSuggestionClick(s)}
                             />
-                        ))}
+                        )
+                        )}
                     </Box>
                 </Grid>
             )}
