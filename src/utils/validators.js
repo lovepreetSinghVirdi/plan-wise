@@ -1,5 +1,7 @@
 // src/utils/validators.js
 
+import { EMAIL_REGEX } from "../Helpers/helpers";
+
 // 1) Name: non‑empty
 export function validateName(value) {
   if (!value.trim()) return 'Name is required';
@@ -10,12 +12,12 @@ export function validateName(value) {
 export function validateEmail(value) {
   const trimmed = value.trim();
   if (!trimmed) return 'Email is required';
-  const emailRegex = /^[A-Za-z0-9._%+-]+@[A-Za-z0-9-]+\.[A-Za-z]{2,3}$/;
-  if (!emailRegex.test(trimmed)) return 'Email is invalid';
+
+  if (!EMAIL_REGEX.test(trimmed)) return 'Email is invalid';
   return '';
 }
 
-// 3) Phone: either +CC + 4–12 digits (total ≤ 15 digits) or 5–18 plain digits
+// 3) Phone: either +CC + 4–12 digits (total ≤ 15 digits) or 5–18 plain digits
 export function validatePhone(value) {
   const normalized = value.trim().replace(/[\s\-\.\(\)]/g, '');
   if (!normalized) return 'Phone is required';

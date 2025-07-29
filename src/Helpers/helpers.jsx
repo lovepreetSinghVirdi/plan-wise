@@ -3,58 +3,60 @@ export const autocompleteURL = 'autocomplete';
 export const suggestionsURL = 'spellcheck';
 export const searchPlanByTextUrl = 'search';
 export const topTrendingWordsURL = 'freq/top';
+export const crawlSiteUrl = 'crawl';
 
 
 import rogersLogo from '../assets/Rogers.svg';
 import iprimusLogo from '../assets/iprimus_logo.svg';
 import vmediaLogo from '../assets/vmedia.svg';
 import teksavvyLogo from '../assets/teksavvy.svg';
-import dodoLogo from  '../assets/dodo.svg';
+import dodoLogo from '../assets/dodo.svg';
 
 
 
 // Regex constants
-export const EMAIL_REGEX = /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,3}$/;
+export const EMAIL_REGEX = /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4}$/;
 export const PHONE_REGEX = /^\d{10}$/;
 export const ADDRESS_NUMBER_REGEX = /^\d+[\s,]+/;
 export const CANADA_POSTAL_REGEX = /[A-Za-z]\d[A-Za-z]\s?\d[A-Za-z]\d$/;
+export const URL_REGEX = /^(https?:\/\/)(([\da-z.-]+)\.([a-z.]{2,6})|((\d{1,3}\.){3}\d{1,3}))(:\d+)?(\/[\w\-./?%&=]*)?$/;
 
 
 export const capitalize = (str = '') => {
-    return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
+  return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
 }
 
 
 export const brandLogo = (site = '') => {
-    switch (site.toLowerCase()) {
-        case 'rogers':
-            return rogersLogo;
-        case 'iprimus':
-            return iprimusLogo;
-        case 'vmedia':
-            return vmediaLogo;
-        case 'teksavvy':
-            return teksavvyLogo;
-        case 'dodo':
-            return dodoLogo;
-        default:
-            return '';
+  switch (site.toLowerCase()) {
+    case 'rogers':
+      return rogersLogo;
+    case 'iprimus':
+      return iprimusLogo;
+    case 'vmedia':
+      return vmediaLogo;
+    case 'teksavvy':
+      return teksavvyLogo;
+    case 'dodo':
+      return dodoLogo;
+    default:
+      return '';
 
 
-    }
+  }
 };
 const baseUrls = {
-  rogers:   'https://www.rogers.com/internet/packages',
-  iprimus:  'https://www.iprimus.com.au/nbn-plans',
+  rogers: 'https://www.rogers.com/internet/packages',
+  iprimus: 'https://www.iprimus.com.au/nbn-plans',
   teksavvy: 'https://www.teksavvy.com/services/internet/',
-  dodo:     'https://www.dodo.com/nbn',
-  vmedia:   'https://www.vmedia.ca/en/internet/ontario',
+  dodo: 'https://www.dodo.com/nbn',
+  vmedia: 'https://www.vmedia.ca/en/internet/ontario',
 };
 
 const parseFeatures = (features = '') => {
   return features
     .split('|')                // split on pipe
-    .map(f => 
+    .map(f =>
       f
         .trim()                // trim whitespace
         .replace(/\.$/, '')    // remove trailing dot
@@ -67,8 +69,8 @@ export const makePlansFromRawData = (plans = []) =>
     const siteKey = plan.site?.toLowerCase() ?? '';
     return {
       ...plan,
-      url:      baseUrls[siteKey] || '',
-      features: parseFeatures(plan.features),     
-      planName: plan.planName,                     
+      url: baseUrls[siteKey] || '',
+      features: parseFeatures(plan.features),
+      planName: plan.planName,
     };
   });

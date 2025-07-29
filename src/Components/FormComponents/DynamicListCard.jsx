@@ -14,25 +14,33 @@ export default function DynamicListCard({ title, items = [] }) {
 
     return (
         <CustomCard>
-            <CardContent>
+            <CardContent sx={{
+                flex: 1,
+                overflowY: 'auto',
+                px: 2,
+            }}>
                 <Typography variant="h6" gutterBottom>
                     {title}
                 </Typography>
 
                 {hasItems ? (
                     <Box
-                        component="ul"
+                        component="ol"
                         sx={{
-                            pl: 2,
                             m: 0,
-                            '& li': {
-                                mb: 0.5,
-                                color: 'text.secondary',
-                            },
+                            p: 0,
+                            pl: '1.25em',         // indent so text lines up under bullet
                         }}
                     >
                         {items.map((item, index) => (
-                            <Box component="li" key={index}>
+                            <Box component="li" sx={{
+                                mb: 1,
+                                // allow breaking inside long words/emails:
+                                wordBreak: 'break-all',
+                                whiteSpace: 'normal',
+                                color: 'text.secondary',
+                            }}
+                                key={index}>
                                 {item}
                             </Box>
                         ))}
