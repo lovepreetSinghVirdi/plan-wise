@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useCallback, useState } from 'react'
 import {
   Box,
   TextField,
@@ -10,7 +10,7 @@ import { URL_REGEX } from '../../Helpers/helpers'
 
 const UrlSearchField = ({ onSearch = () => { } }) => {
   const [url, setUrl] = useState('')
-  const [error, setError] = useState(false)
+  const [error, setError] = useState(false);
 
   const handleSubmit = e => {
     e.preventDefault()
@@ -21,6 +21,10 @@ const UrlSearchField = ({ onSearch = () => { } }) => {
       setError(true)
     }
   }
+  const handleInputChange = useCallback((e) => {
+    setUrl(e.target.value)
+  }, [setUrl]);
+
 
   return (
     <Box
@@ -34,7 +38,7 @@ const UrlSearchField = ({ onSearch = () => { } }) => {
         label="Enter URL"
         variant="outlined"
         value={url}
-        onChange={e => setUrl(e.target.value)}
+        onChange={handleInputChange}
         error={error}
         helperText={error ? 'Please enter a valid URL.' : ''}
         slotProps={{
