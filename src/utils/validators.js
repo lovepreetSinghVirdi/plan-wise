@@ -3,8 +3,6 @@
 import {
   EMAIL_REGEX,
   PHONE_REGEX,
-  ADDRESS_NUMBER_REGEX,
-  CANADA_POSTAL_REGEX,
   MESSAGE_REGEX,
 } from '../Helpers/helpers.jsx';
 
@@ -27,7 +25,7 @@ export function validatePhone(value) {
   const trimmed = value.trim();
   if (!trimmed) return 'Phone is required';
   if (!PHONE_REGEX.test(trimmed))
-    return 'phone must be start with the +1 and 10 digit long';
+    return 'phone Number is not valid';
   return '';
 }
 
@@ -35,10 +33,6 @@ export function validatePhone(value) {
 export function validateAddress(value) {
   const trimmed = value.trim();
   if (!trimmed) return 'Address is required';
-  if (!ADDRESS_NUMBER_REGEX.test(trimmed))
-    return 'Address must start with a street number (e.g., "123 Main St, …")';
-  if (!CANADA_POSTAL_REGEX.test(trimmed))
-    return 'Address must include a valid Canadian postal code (e.g., A1A 1A1)';
   return '';
 }
 
@@ -46,6 +40,6 @@ export function validateAddress(value) {
 export function validateMessage(value) {
   if (!value.trim()) return 'Message is required';
   if (!MESSAGE_REGEX.test(value))
-    return 'Message must be 1–50 characters';
+    return 'Message must be more than 50 characters';
   return '';
 }
