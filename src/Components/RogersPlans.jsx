@@ -28,7 +28,6 @@ export default function RogersPlans() {
       .then(({ data }) => {
         // 1) transform raw API JSON into enriched plan objects
         const allPlans = makePlansFromRawData(data);
-        console.log('allPlans with URLs:', allPlans.map(p => ({ site: p.site, url: p.url })));
 
         // 2) keep only Rogers plans and add the logo
         const rogersPlans = allPlans
@@ -46,8 +45,6 @@ export default function RogersPlans() {
         }, 2000);
       });
   }, []);
-
-  console.log('dipti');
 
   if (loading) {
     return <AppLoader message="Loading plans…" />
