@@ -43,7 +43,7 @@ export default function AboutUs() {
   const theme = useTheme();
   const isMdUp = useMediaQuery(theme.breakpoints.up('md'));
 
-  // ─── Validation State & Handlers ───
+  // Form state and errors
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -53,6 +53,7 @@ export default function AboutUs() {
   });
   const [errors, setErrors] = useState({});
 
+  // Validate individual field and update errors state
   const validateField = (field, value) => {
     let error = '';
     switch (field) {
@@ -75,34 +76,61 @@ export default function AboutUs() {
         break;
     }
     setErrors(prev => ({ ...prev, [field]: error }));
+    return error;
   };
 
+  // Handle change in inputs, update form data and validate field
   const handleChange = e => {
     const { name, value } = e.target;
     setFormData(prev => ({ ...prev, [name]: value }));
     validateField(name, value);
   };
 
-  const handleSubmit = e => {
-    e.preventDefault();
-    // validate all
-    Object.entries(formData).forEach(([field, val]) => validateField(field, val));
+  // Validate all fields and return whether form is valid
+  const validateAllFields = () => {
+    let valid = true;
+    const newErrors = {};
 
-    // check for errors
-    const hasErrors = Object.values(formData).some((v, i) => {
-      const key = Object.keys(formData)[i];
-      return !v || errors[key];
+    Object.entries(formData).forEach(([field, val]) => {
+      const error = validateField(field, val);
+      if (error) {
+        valid = false;
+        newErrors[field] = error;
+      }
     });
 
-    if (!hasErrors) {
-      alert('Form submitted!');
-      // …submission logic
+    setErrors(newErrors);
+    return valid;
+  };
+
+  // Submit handler
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    if (!validateAllFields()) return;
+
+    try {
+      const response = await fetch('http://localhost:8080/api/contact/send', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(formData),
+      });
+
+      if (response.ok) {
+        alert('Message sent successfully!');
+        setFormData({ name: '', email: '', phone: '', address: '', message: '' });
+        setErrors({});
+      } else {
+        alert('Failed to send message. Please try again later.');
+      }
+    } catch (error) {
+      alert('Error connecting to server.');
     }
   };
 
   return (
     <Container maxWidth="xl" sx={{ py: 6 }}>
-      {/* ─── About Us Header ─── */}
+      {/* Header */}
       <Box textAlign="center" mb={4}>
         <Typography
           variant="h2"
@@ -131,7 +159,7 @@ export default function AboutUs() {
 
       <Divider sx={{ my: 6 }} />
 
-      {/* ─── Team Section ─── */}
+      {/* Team Section */}
       <Box textAlign="center" mb={4}>
         <Typography
           variant="h4"
@@ -175,7 +203,7 @@ export default function AboutUs() {
         ))}
       </Grid>
 
-      {/* ─── Contact Us Section ─── */}
+      {/* Contact Us Section */}
       <Box display="flex" flexDirection={{ xs: 'column', md: 'row' }} gap={4}>
         <Paper
           elevation={3}
@@ -289,7 +317,7 @@ export default function AboutUs() {
 
       <Divider sx={{ my: 8 }} />
 
-      {/* ─── Values Section ─── */}
+      {/* Values Section */}
       <Box textAlign="center" mb={4}>
         <Typography
           variant="h4"
