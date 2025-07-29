@@ -21,6 +21,7 @@ import DescriptionIcon from '@mui/icons-material/Description';
 
 import diptiImg from '../assets/dipti.jpg';
 import lovepreetImg from '../assets/lovepreet.jpg';
+import tusharbirImg from '../assets/tusharbir.jpeg';
 
 import {
   validateName,
@@ -32,7 +33,7 @@ import {
 
 const teamMembers = [
   { name: 'Lovepreet Singh Virdi', role: 'Team Leader', avatar: lovepreetImg },
-  { name: 'Tusharbir Singh Mutty', role: 'Back-End Developer' },
+  { name: 'Tusharbir Singh Mutty', role: 'Back-End Developer', avatar: tusharbirImg },
   { name: 'Kunal Rastogi', role: 'Back-End Developer' },
   { name: 'Dipti Patel', role: 'Front-End Developer', avatar: diptiImg },
 ];

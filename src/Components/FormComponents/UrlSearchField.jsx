@@ -6,16 +6,15 @@ import {
   Button
 } from '@mui/material'
 import SearchIcon from '@mui/icons-material/Search'
+import { URL_REGEX } from '../../Helpers/helpers'
 
-const UrlSearchField = ({ onSearch }) => {
+const UrlSearchField = ({ onSearch = () => { } }) => {
   const [url, setUrl] = useState('')
   const [error, setError] = useState(false)
 
-  const urlRegex = /^(https?:\/\/)(([\da-z.-]+)\.([a-z.]{2,6})|((\d{1,3}\.){3}\d{1,3}))(:\d+)?(\/[\w\-./?%&=]*)?$/
-
   const handleSubmit = e => {
     e.preventDefault()
-    if (urlRegex.test(url)) {
+    if (URL_REGEX.test(url)) {
       setError(false)
       onSearch?.(url)
     } else {
@@ -38,12 +37,14 @@ const UrlSearchField = ({ onSearch }) => {
         onChange={e => setUrl(e.target.value)}
         error={error}
         helperText={error ? 'Please enter a valid URL.' : ''}
-        InputProps={{
-          endAdornment: (
-            <InputAdornment position="end">
-              <SearchIcon />
-            </InputAdornment>
-          )
+        slotProps={{
+          input: {
+            endAdornment: (
+              <InputAdornment position="end">
+                <SearchIcon />
+              </InputAdornment>
+            ),
+          },
         }}
         sx={{
           // remove the field's right rounding so it mates with the button
@@ -51,8 +52,9 @@ const UrlSearchField = ({ onSearch }) => {
             borderTopRightRadius: 0,
             borderBottomRightRadius: 0,
             paddingRight: '1rem !important',
-          }
-        }}
+          },
+        }
+        }
       />
 
       <Button

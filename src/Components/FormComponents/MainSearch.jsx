@@ -174,16 +174,18 @@ export default function MainSearch({ onSelect }) {
                                 {...params}
                                 label="looking for..."
                                 fullWidth
-                                InputProps={{
-                                    ...params.InputProps,
-                                    endAdornment: (
-                                        <>
-                                            {loading && <CircularProgress size={20} />}
-                                            <InputAdornment position="end">
-                                                <SearchIcon />
-                                            </InputAdornment>
-                                        </>
-                                    )
+                                slotProps={{
+                                    input: {
+                                        ...params.InputProps,
+                                        endAdornment: (
+                                            <>
+                                                {loading && <CircularProgress size={20} />}
+                                                <InputAdornment position="end">
+                                                    <SearchIcon />
+                                                </InputAdornment>
+                                            </>
+                                        )
+                                    },
                                 }}
                             />
                         )}

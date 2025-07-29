@@ -55,6 +55,16 @@ const darkTheme = createTheme({
         // if you use outlined/text variants too, repeat similarly under `outlined` / `text`
       },
     },
+
+     MuiCssBaseline: {
+      styleOverrides: {
+        'input:-webkit-autofill, textarea:-webkit-autofill, select:-webkit-autofill': {
+          WebkitBoxShadow: '0 0 0 1000px transparent inset !important',
+          WebkitTextFillColor: 'inherit !important',
+          transition: 'background-color 5000s ease-in-out 0s !important',
+        },
+      },
+    },
   },
 });
 
