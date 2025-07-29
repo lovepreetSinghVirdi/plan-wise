@@ -1,5 +1,7 @@
 //api endpoints
-export const apiURL = 'http://localhost:8080/api/';
+const apiLocalURL = 'http://localhost:8080/api/';
+const apiProductionURL = 'https://planwiseapi-production.up.railway.app';
+export const apiURL = import.meta.env.DEV ? apiLocalURL : apiProductionURL;
 export const autocompleteURL = 'autocomplete';
 export const suggestionsURL = 'spellcheck';
 export const searchPlanByTextUrl = 'search';
@@ -19,13 +21,13 @@ import dodoLogo from '../assets/dodo.svg';
 
 // Regex constants
 
- /**
-  * [A-Za-z0-9._%+-]+ local part before the @ one ore more 
-  * @ seperating the local part to the domain
-  * [A-Za-z0-9.-]+ domain one or more( dot and hyphen)
-  * \. literal before the top level domain
-  * [A-Za-z]{2,4} excatly 2to 4 letters 
-  */
+/**
+ * [A-Za-z0-9._%+-]+ local part before the @ one ore more 
+ * @ seperating the local part to the domain
+ * [A-Za-z0-9.-]+ domain one or more( dot and hyphen)
+ * \. literal before the top level domain
+ * [A-Za-z]{2,4} excatly 2to 4 letters 
+ */
 export const EMAIL_REGEX = /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4}$/;
 
 /**
