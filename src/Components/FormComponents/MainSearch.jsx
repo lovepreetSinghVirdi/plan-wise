@@ -83,12 +83,9 @@ export default function MainSearch({ onSelect }) {
     }, [showAlert]);
 
     const handleSuggestionClick = useCallback((s) => {
-        if (!options.length) {
-            fetchPageData(s);
-            return;
-        }
+
         if (onSelect) onSelect(s);
-    }, [fetchPageData, onSelect, options]);
+    }, [onSelect]);
 
     // Fetch top trending on mount
     useEffect(() => {
@@ -158,10 +155,16 @@ export default function MainSearch({ onSelect }) {
     const noOptionsText = getNoOptionsText();
 
     // Submit handler
-    const handleSubmit = e => {
+    const handleSubmit = useCallback((e) => {
         e.preventDefault();
-        if (inputValue.length >= 2) handleSuggestionClick(inputValue);
-    };
+        if (inputValue.length >= 2) {
+            if (!options.length) {
+                fetchPageData(inputValue);
+                return;
+            }
+            if (onSelect) onSelect(inputValue);
+        }
+    }, [inputValue, fetchPageData, options, onSelect]);
 
     return (
         <>
