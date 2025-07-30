@@ -155,7 +155,7 @@ export default function AboutUs() {
             <TextField label="Address" name="address" variant="standard" fullWidth placeholder="123 Main St, City, State, postal code" value={formData.address} onChange={handleChange} error={!!errors.address} helperText={errors.address} />
             <TextField label="Message" name="message" variant="standard" fullWidth multiline rows={6} placeholder="Type your message here…" sx={{ gridColumn: '1 / -1' }} value={formData.message} onChange={handleChange} error={!!errors.message} helperText={errors.message} />
             <Box gridColumn="1 / -1" textAlign={isMdUp ? 'right' : 'center'} mt={2}>
-              <Button type="submit" fullWidth variant="contained" sx={{ backgroundColor: theme.palette.primary.main, color: '#fff', px: 4, py: 1.5, '&:hover': { backgroundColor: theme.palette.primary.dark } }}>Send a Message</Button>
+              <Button type="submit" fullWidth variant="contained" sx={{ backgroundColor: theme.palette.primary.main, color: '#fff', px: 4, py: 1.5, '&:hover': { backgroundColor: theme.palette.primary.dark } }}>Send Message</Button>
             </Box>
           </Box>
         </Box>
