@@ -1,4 +1,3 @@
-// src/App.jsx
 import './App.css';
 import AppHeader from './Components/AppHeader';
 import HomePage from './Components/Homepage';
@@ -11,7 +10,7 @@ import Footer from './Components/Footer';
 import DodoPlans from './Components/DodoPlans';
 
 import {
-  BrowserRouter,
+  BrowserRouter as Router,
   Routes,
   Route,
   Navigate
@@ -25,11 +24,11 @@ import { Box } from '@mui/material';
 const App = () => {
   return (
     <Box sx={{
-      width: '100%',            // full width of its parent
-      overflowX: 'visible',     // allow anything that bleeds out to show
+      width: '100%',
+      overflowX: 'visible',
       overflowY: 'visible',
     }}>
-      <BrowserRouter basename={import.meta.env.BASE_URL}>
+      <Router basename={import.meta.env.BASE_URL}>
         <AppHeader />
 
         <Routes>
@@ -42,11 +41,11 @@ const App = () => {
           <Route path='teksavvy' element={<TeksavvyPlans />} />
           <Route path='aboutus' element={<AboutUs />} />
           <Route path='crawler' element={<Crawler />} />
-          <Route path="*" element={<Navigate to="/" replace />} />
+          <Route path='*' element={<Navigate to='/' replace />} />
         </Routes>
 
         <Footer />
-      </BrowserRouter>
+      </Router>
     </Box>
   );
 }
