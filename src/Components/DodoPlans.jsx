@@ -100,7 +100,7 @@ export default function DodoPlans() {
             </Motion.div>
           </Grid>
         ))}
-      </Grid>s
+      </Grid>
     </Container>
   )
 }
