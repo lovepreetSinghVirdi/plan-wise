@@ -11,7 +11,7 @@ import Footer from './Components/Footer';
 import DodoPlans from './Components/DodoPlans';
 
 import {
-  BrowserRouter,
+  HashRouter ,
   Routes,
   Route,
   Navigate
@@ -29,7 +29,7 @@ const App = () => {
       overflowX: 'visible',     // allow anything that bleeds out to show
       overflowY: 'visible',
     }}>
-      <BrowserRouter basename={import.meta.env.BASE_URL}>
+      <HashRouter  basename={import.meta.env.BASE_URL}>
         <AppHeader />
 
         <Routes>
@@ -46,7 +46,7 @@ const App = () => {
         </Routes>
 
         <Footer />
-      </BrowserRouter>
+      </HashRouter >
     </Box>
   );
 }
