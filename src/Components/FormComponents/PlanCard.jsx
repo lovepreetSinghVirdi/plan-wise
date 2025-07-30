@@ -11,7 +11,7 @@ import LaunchIcon from '@mui/icons-material/Launch';
 
 export default function PlanCard(props) {
   const { plan } = props;
-  const {features, price, planName, url } = plan;
+  const {features, price, planName, url, technology } = plan;
 
 
   // fallback to raw JSON keys if camelCase isn't provided
@@ -26,7 +26,10 @@ export default function PlanCard(props) {
         display: 'flex',
         width: '100%',
         flexDirection: 'column',
-        flexGrow: 1
+        flexGrow: 1,
+        height: '35rem',
+        minHeight: '35rem',
+
       }}>
       <CardHeader
         title={capitalize(plan.site)}
@@ -55,6 +58,11 @@ export default function PlanCard(props) {
         {uploadSpeed && (
           <Typography sx={{ display: 'flex', justifyContent: 'space-between' }} variant="body2" color="text.secondary">
             <strong style={{ marginRight: '1rem' }}>Upload Speed:</strong>  <Box component={'span'}> {uploadSpeed}</Box>
+          </Typography>
+        )}
+        {technology && (
+          <Typography sx={{ display: 'flex', justifyContent: 'space-between' }} variant="body2" color="text.secondary">
+            <strong style={{ marginRight: '1rem' }}>Technology:</strong>  <Box component={'span'}> {technology}</Box>
           </Typography>
         )}
 

@@ -66,7 +66,7 @@ export default function MainSearch({ onSelect }) {
 
     const fetchPageData = useCallback(async (keyword) => {
         try {
-            // First, trigger the search API
+            // dummy hit search to trigger the search API and increase search frequency
             const url = `${apiURL}${searchPlanByTextUrl}`;
             await axios.get(url, { params: { q: keyword, max: 50 } });
 
@@ -83,12 +83,9 @@ export default function MainSearch({ onSelect }) {
     }, [showAlert]);
 
     const handleSuggestionClick = useCallback((s) => {
-        if (!options.length) {
-            fetchPageData(s);
-            return;
-        }
+
         if (onSelect) onSelect(s);
-    }, [fetchPageData, onSelect, options]);
+    }, [onSelect]);
 
     // Fetch top trending on mount
     useEffect(() => {
@@ -158,10 +155,40 @@ export default function MainSearch({ onSelect }) {
     const noOptionsText = getNoOptionsText();
 
     // Submit handler
-    const handleSubmit = e => {
+    const handleSubmit = useCallback((e) => {
         e.preventDefault();
-        if (inputValue.length >= 2) handleSuggestionClick(inputValue);
-    };
+        if (inputValue.length >= 2) {
+            if (!options.length) {
+                fetchPageData(inputValue);
+                return;
+            }
+            if (onSelect) onSelect(inputValue);
+        }
+    }, [inputValue, fetchPageData, options, onSelect]);
+
+    const handleTopSearchWordClick = useCallback(async (word) => {
+        try {
+            const url = `${apiURL}${searchPlanByTextUrl}`;
+            const { data: result } = await axios.get(url, { params: { q: word, max: 50 } });
+
+            if (!result.length) {
+                // Then fetch the search frequency
+                const frequencyURL = `${apiURL}${frequencyCountURL}`;
+                const { data: { frequency } } = await axios.get(frequencyURL, { params: { keyword: word } });
+
+                // Show an informational alert with the real frequency count
+                showAlert('info', frequency);
+                return;
+            }
+            //navigate to search-results page from parent onSelect method
+            if (onSelect) onSelect(word);
+
+        } catch {
+            // On any error, show the error alert (without frequency)
+            showAlert('error');
+        }
+
+    }, [onSelect, showAlert])
 
     return (
         <>
@@ -280,10 +307,10 @@ export default function MainSearch({ onSelect }) {
                                 size="small"
                                 color="primary"
                                 className="suggestions-chip"
-                                onClick={() => handleSuggestionClick(word.keyword)}
+                                onClick={() => handleTopSearchWordClick(word.keyword)}
                                 sx={{ ml: 1, mb: 1 }}
                                 deleteIcon={<LaunchIcon />}
-                                onDelete={() => handleSuggestionClick(word.keyword)}
+                                onDelete={() => handleTopSearchWordClick(word.keyword)}
                             />
                         ))}
                     </Box>
