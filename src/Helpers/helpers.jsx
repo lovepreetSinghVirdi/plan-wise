@@ -3,6 +3,7 @@ export const apiURL = import.meta.env.VITE_API_URL;
 export const autocompleteURL = 'autocomplete';
 export const suggestionsURL = 'spellcheck';
 export const searchPlanByTextUrl = 'search';
+export const frequencyCountURL = 'freq/get';
 export const topTrendingWordsURL = 'freq/top';
 export const crawlSiteUrl = 'crawl';
 export const submitFormUrl = 'contact/send';
