@@ -34,7 +34,7 @@ export const EMAIL_REGEX = /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4}$/;
  * (\(\d{3}\)|\d{3}) three digit with the pranthesis and without it allowed
  * 
  */
-export const PHONE_REGEX = /^\+(1|91|44|61|49|33)[ -]?(\(\d{3}\)|\d{3})[ -]?\d{3}[ -]?\d{4}$/;
+export const PHONE_REGEX = /^(?:\+?(?:1|91|44|61))?(?:[\s-.()]*\d){10}$/;
 
 /**
  * if i keep only . then it is must to be in the same line but

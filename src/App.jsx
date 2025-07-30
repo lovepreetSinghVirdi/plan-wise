@@ -18,7 +18,7 @@ import {
 } from 'react-router-dom';
 
 import SearchResults from './Components/SearchResults';
-import DataExtractor from './Components/DataExtractor';
+import Crawler from './Components/Crawler';
 
 import { Box } from '@mui/material';
 
@@ -41,7 +41,7 @@ const App = () => {
           <Route path='vmedia' element={<VmediaPlans />} />
           <Route path='teksavvy' element={<TeksavvyPlans />} />
           <Route path='aboutus' element={<AboutUs />} />
-          <Route path='data-extractor' element={<DataExtractor />} />
+          <Route path='crawler' element={<Crawler />} />
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
 

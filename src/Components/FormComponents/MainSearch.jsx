@@ -22,9 +22,11 @@ import {
     apiURL,
     autocompleteURL,
     topTrendingWordsURL,
-    suggestionsURL
+    suggestionsURL,
+    searchPlanByTextUrl
 } from '../../Helpers/helpers';
 import AlertMsg from './AlertMsg';
+const NoSuchWord = 'No such word exists in dictionary';
 
 export default function MainSearch({ onSelect }) {
     const [inputValue, setInputValue] = useState('');
@@ -35,20 +37,48 @@ export default function MainSearch({ onSelect }) {
     const [value, setValue] = useState(null);
     const [alert, setAlert] = useState({ open: false, severity: 'success', title: '', message: '' });
 
-    const showAlert = (sev) => {
+    const showAlert = useCallback((sev) => {
+        let title = '';
+        if (sev === 'success') {
+            title = 'Success!'
+        }
+        if (sev === 'error') {
+            title = 'Error!'
+        }
+        else {
+            title = 'Opps!'
+        }
         setAlert({
             open: true,
             severity: sev,
-            title: sev === 'success' ? 'Success!' : 'Error!',
+            title,
             message: sev === 'success'
                 ? 'Response submited successfully.'
-                : 'Something went wrong. Please retry.',
+                : NoSuchWord,
         });
-    };
+    }, [setAlert]);
 
-    const handleSuggestionClick = s => {
+    const fetchPageData = useCallback(async (keyword) => {
+        try {
+            const url = `${apiURL}${searchPlanByTextUrl}`;
+            await axios.get(url, {
+                params: { q: keyword, max: 50 }
+            });
+        } catch {
+            showAlert('error');
+        } finally {
+            showAlert('info');
+
+        }
+    }, [showAlert]);
+
+    const handleSuggestionClick = useCallback((s) => {
+        if (!options.length) {
+            fetchPageData(s);
+            return;
+        }
         if (onSelect) onSelect(s);
-    };
+    }, [fetchPageData, onSelect, options]);
 
     // Fetch top trending on mount
     useEffect(() => {
@@ -101,23 +131,22 @@ export default function MainSearch({ onSelect }) {
         }, 300);
 
         return () => clearTimeout(timer);
-    }, [inputValue]);
+    }, [inputValue, showAlert]);
 
     const getNoOptionsText = useCallback(() => {
         if (inputValue.length < 2) return 'Type at least 2 characters';
-        if (!options.length && !suggestions.length) return 'No such word exists in dictionary';
+        if (!options.length && !suggestions.length) return NoSuchWord;
         return 'No options found';
     }, [inputValue, options, suggestions]);
 
     const isDidYouMean = inputValue.length > 2 && !options.length && suggestions.length > 0;
     const showMostSearchedWords = !isDidYouMean && mostSearchedWords.length > 0;
-    const disableSearch = inputValue.length >= 2 && (loading || !options.length);
     const noOptionsText = getNoOptionsText();
 
     // Submit handler
     const handleSubmit = e => {
         e.preventDefault();
-        if (inputValue.length >= 2) handleSuggestionClick(inputValue.label)
+        if (inputValue.length >= 2) handleSuggestionClick(inputValue)
     };
 
     return (
@@ -246,7 +275,6 @@ export default function MainSearch({ onSelect }) {
                         type="submit"
                         variant="contained"
                         disableElevation
-                        disabled={disableSearch}
                         sx={{
                             borderTopLeftRadius: 0,
                             borderBottomLeftRadius: 0,

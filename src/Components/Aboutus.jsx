@@ -156,8 +156,8 @@ export default function AboutUs() {
         <Box flexBasis={{ xs: '100%', md: '70%' }}>
           <Box component="form" onSubmit={handleSubmit} noValidate autoComplete="off" display="grid" gridTemplateColumns={{ xs: '1fr', sm: '1fr 1fr' }} gap={2}>
             <TextField label="Name" name="name" variant="standard" fullWidth placeholder="John Doe" value={formData.name} onChange={handleChange} error={!!errors.name} helperText={errors.name} />
-            <TextField label="E‑mail" name="email" variant="standard" fullWidth placeholder="you@example.com" value={formData.email} onChange={handleChange} error={!!errors.email} helperText={errors.email} />
-            <TextField label="Enter Phone Number" name="phone" variant="standard" fullWidth placeholder="+1 416 123 4567" value={formData.phone} onChange={handleChange} error={!!errors.phone} helperText={errors.phone} />
+            <TextField label="Email" name="email" variant="standard" fullWidth placeholder="you@example.com" value={formData.email} onChange={handleChange} error={!!errors.email} helperText={errors.email} />
+            <TextField label="Phone Number" name="phone" variant="standard" fullWidth placeholder="+1 416 123 4567" value={formData.phone} onChange={handleChange} error={!!errors.phone} helperText={errors.phone} />
             <TextField label="Address" name="address" variant="standard" fullWidth placeholder="123 Main St, City, State, postal code" value={formData.address} onChange={handleChange} error={!!errors.address} helperText={errors.address} />
             <TextField label="Message" name="message" variant="standard" fullWidth multiline rows={6} placeholder="Type your message here…" sx={{ gridColumn: '1 / -1' }} value={formData.message} onChange={handleChange} error={!!errors.message} helperText={errors.message} />
             <Box gridColumn="1 / -1" textAlign={isMdUp ? 'right' : 'center'} mt={2}>
@@ -168,12 +168,6 @@ export default function AboutUs() {
       </Box>
       <Divider sx={{ my: 8 }} />
 
-      {/* Values Section */}
-      <Box textAlign="center" mb={4}>
-        <Typography variant="h4" component="h2" gutterBottom sx={{ fontWeight: 600, textTransform: 'uppercase', color: theme.palette.primary.main }}>
-          Our Values
-        </Typography>
-      </Box>
       <Grid container spacing={4} justifyContent="center" mb={6}>
         {values.map(val => (
           <Grid key={val.title} item xs={12} sm={4} display="flex" justifyContent="center">

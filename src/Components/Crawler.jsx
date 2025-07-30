@@ -9,7 +9,7 @@ import { apiURL, crawlSiteUrl } from '../Helpers/helpers';
 import AppLoader from './FormComponents/AppLoader';
 import AlertMsg from './FormComponents/AlertMsg';
 
-const DataExtractor = () => {
+const Crawler = () => {
     const theme = useTheme();
     const [loading, setLoading] = useState(false);
     const [crawledData, setCrawledData] = useState({
@@ -67,7 +67,7 @@ const DataExtractor = () => {
                     mb: 4
                 }}
             >
-                Data Extractor
+                Crawler
             </Typography>
             < Grid container spacing={2} sx={{ mt: 10 }}>
                 <Grid size={{ xs: 12, sm: 8, md: 8 }} offset={{ sm: 2, md: 2 }}>
@@ -108,4 +108,4 @@ const DataExtractor = () => {
 };
 
 
-export default DataExtractor;
+export default Crawler;
