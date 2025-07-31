@@ -1,5 +1,5 @@
 // src/Components/HomePage.jsx
-import React, { useState, useCallback } from 'react';
+import { useState, useCallback } from 'react';
 import { NavLink as RouterNavLink, useNavigate } from 'react-router-dom';
 import {
   Container,
@@ -11,7 +11,6 @@ import {
   Typography,
   Button,
 } from '@mui/material';
-import { motion as Motion } from 'framer-motion';
 import MainSearch from './FormComponents/MainSearch';
 import AppLoader from './FormComponents/AppLoader';
 import CustomCard from './FormComponents/CustomCard';

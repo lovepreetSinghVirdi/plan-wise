@@ -82,26 +82,30 @@ export default function MainSearch({ onSelect }) {
         }
     }, [showAlert]);
 
+    const fetchTopSearches = useCallback(async () => {
+        setLoading(true);
+        try {
+            const { data } = await axios.get(`${apiURL}${topTrendingWordsURL}`);
+            setMostSearchedWords(data || []);
+        } catch {
+            setMostSearchedWords([]);
+        } finally {
+            setLoading(false);
+        }
+    }, []);
+
     const handleSuggestionClick = useCallback((s) => {
 
         if (onSelect) onSelect(s);
-    }, [onSelect]);
 
-    // Fetch top trending on mount
-    useEffect(() => {
-        const fetchTopSearches = async () => {
-            try {
-                setLoading(true);
-                const { data } = await axios.get(`${apiURL}${topTrendingWordsURL}`);
-                setMostSearchedWords(data || []);
-            } catch {
-                setMostSearchedWords([]);
-            } finally {
-                setLoading(false);
-            }
-        };
         fetchTopSearches();
-    }, []);
+
+    }, [fetchTopSearches, onSelect]);
+
+    //Fetch most searched words on intial mount
+    useEffect(() => {
+        fetchTopSearches();
+    }, [fetchTopSearches]);
 
     // Fetch autocomplete + suggestions
     useEffect(() => {
@@ -162,6 +166,7 @@ export default function MainSearch({ onSelect }) {
                 fetchPageData(inputValue);
                 return;
             }
+            //navigate to serch-results from parent
             if (onSelect) onSelect(inputValue);
         }
     }, [inputValue, fetchPageData, options, onSelect]);
@@ -169,7 +174,8 @@ export default function MainSearch({ onSelect }) {
     const handleTopSearchWordClick = useCallback(async (word) => {
         try {
             const url = `${apiURL}${searchPlanByTextUrl}`;
-            const { data: result } = await axios.get(url, { params: { q: word, max: 50 } });
+            //call api to check result without incrementing the search frequency
+            const { data: result } = await axios.get(url, { params: { q: word, max: 50, increment: false } });
 
             if (!result.length) {
                 // Then fetch the search frequency
@@ -178,6 +184,7 @@ export default function MainSearch({ onSelect }) {
 
                 // Show an informational alert with the real frequency count
                 showAlert('info', frequency);
+                fetchTopSearches();
                 return;
             }
             //navigate to search-results page from parent onSelect method
@@ -188,7 +195,7 @@ export default function MainSearch({ onSelect }) {
             showAlert('error');
         }
 
-    }, [onSelect, showAlert])
+    }, [fetchTopSearches, onSelect, showAlert])
 
     return (
         <>
